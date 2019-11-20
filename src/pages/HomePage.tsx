@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import MainBar from "../Components/MainBar";
+import MainBar from "../components/MainBar";
 
 const HomePage: FC = () => {
   return (
