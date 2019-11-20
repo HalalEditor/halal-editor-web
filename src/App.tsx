@@ -6,6 +6,7 @@ import "./App.css";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { FIREBASE_CONFIG } from "./.config";
+import ReduxContextProvider, { ReduxContext } from "./contexts/redux-context";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -30,7 +31,11 @@ const App: React.FC = () => {
     );
   }
 
-  return <Router>{pages}</Router>;
+  return (
+    <ReduxContextProvider>
+      <Router>{pages}</Router>
+    </ReduxContextProvider>
+  );
 };
 
 export default App;
