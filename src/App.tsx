@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import app from "firebase/app";
 
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import { FIREBASE_CONFIG } from "./.config";
 
 const App: React.FC = () => {
-  const isAuth = false;
+  useEffect(() => {
+    console.log("[app.tsx]: useEffect");
+    app.initializeApp(FIREBASE_CONFIG);
+  }, []);
 
+  const isAuth = false;
   let pages = null;
 
   if (isAuth) {
