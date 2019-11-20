@@ -1,14 +1,30 @@
 import React from "react";
-import logo from "./logo.svg";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import "./App.css";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <HomePage></HomePage>
-    </div>
-  );
+  const isAuth = false;
+
+  let pages = null;
+
+  if (isAuth) {
+    pages = (
+      <div className="page-container">
+        <Route path="/" exact component={HomePage} />
+      </div>
+    );
+  } else {
+    pages = (
+      <div className="page-container">
+        <LoginPage />
+      </div>
+    );
+  }
+
+  return <Router>{pages}</Router>;
 };
 
 export default App;
