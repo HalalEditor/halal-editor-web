@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import {
   Button,
+  Divider,
   Form,
   Grid,
   Header,
@@ -47,9 +48,20 @@ const LoginPage: FC = () => {
               }}
             />
 
-            <Button color="teal" fluid size="large" onClick={loginButtonHandle}>
-              Login
-            </Button>
+            <Button
+              color="teal"
+              fluid
+              content="Login"
+              onClick={loginButtonHandle}
+            />
+            <Divider horizontal>Or</Divider>
+            <Button
+              fluid
+              color="google plus"
+              content="Sign in with Google"
+              icon="google plus"
+              labelPosition="left"
+            />
           </Segment>
         </Form>
         <Message>
