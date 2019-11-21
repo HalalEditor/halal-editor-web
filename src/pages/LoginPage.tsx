@@ -7,6 +7,7 @@ import { useReduxContextValue } from "../contexts/redux-context";
 import { useHistory } from "react-router";
 
 const LoginPage: FC = () => {
+  const { isAuth } = useReduxContextValue().store.userState;
   const { userService } = useReduxContextValue().services;
   let history = useHistory();
   const [email, setEmail] = useState("");
@@ -19,6 +20,12 @@ const LoginPage: FC = () => {
       history.replace("/");
     }
   };
+
+  if (isAuth) {
+    console.log("logged");
+  } else {
+    console.log("not logged");
+  }
 
   return (
     <Page className="page-single middle">
@@ -39,7 +46,8 @@ const LoginPage: FC = () => {
                 </div>
                 <Form.Group label="User Name">
                   <Form.Input
-                    name="example-text-input"
+                    name="email"
+                    icon="user"
                     placeholder="E-mail address..."
                     onChange={event => {
                       setEmail(event.target.value);
@@ -48,7 +56,9 @@ const LoginPage: FC = () => {
                 </Form.Group>
                 <Form.Group label="Password">
                   <Form.Input
-                    name="example-text-input"
+                    name="password"
+                    type="password"
+                    icon="lock"
                     placeholder="Password..."
                     onChange={event => {
                       setPassword(event.target.value);
