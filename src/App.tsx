@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import app from "firebase/app";
 
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
 import { FIREBASE_CONFIG } from "./.config";
 import ReduxContextProvider, { ReduxContext } from "./contexts/redux-context";
 
@@ -20,13 +21,18 @@ const App: React.FC = () => {
   if (isAuth) {
     pages = (
       <div className="page-container">
-        <Route path="/" exact component={HomePage} />
+        <Switch>
+          <Route path="/" exact component={DashboardPage} />
+        </Switch>
       </div>
     );
   } else {
     pages = (
       <div className="page-container">
-        <LoginPage />
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/login" exact component={LoginPage} />
+        </Switch>
       </div>
     );
   }
