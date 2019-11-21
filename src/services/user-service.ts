@@ -1,3 +1,4 @@
+import { User } from "./../models/user";
 import { UserActionType } from "./../store/user-store";
 import { Dispatch } from "react";
 
@@ -7,11 +8,30 @@ export class UserService {
   constructor(private dispatch: Dispatch<UserActionType>) {}
 
   signInWithEmailAndPassword(email: string, password: string) {
-    app
+    return app
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(res => {
-        console.log(`signInWithEmailAndPassword result ${res}`);
+        const fireUser = res.user;
+
+        if (!!fireUser) {
+          const currentUser: User = {
+            _id: fireUser.uid,
+            email: !!fireUser.email ? fireUser.email : "",
+            emailVerified: fireUser.emailVerified,
+            userCategory: "normal"
+          };
+
+          this.dispatch({
+            type: "SetCurrentUser",
+            payload: { user: currentUser }
+          });
+        } else {
+          this.dispatch({
+            type: "SetCurrentUser",
+            payload: { user: undefined }
+          });
+        }
       });
   }
 
