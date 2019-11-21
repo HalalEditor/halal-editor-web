@@ -12,7 +12,7 @@ const Router: FC = () => {
 
   if (isAuth) {
     pages = (
-      <div className="page-container">
+      <div className="page">
         <Switch>
           <Route path="/" exact component={DashboardPage} />
         </Switch>
@@ -20,14 +20,10 @@ const Router: FC = () => {
     );
   } else {
     pages = (
-      <div className="page-container">
+      <div className="page">
         <Switch>
           <Route path="/" exact component={HomePage} />
-          {isAuth ? (
-            <Redirect to="/" />
-          ) : (
-            <Route path="/login" exact component={LoginPage} />
-          )}
+          {isAuth ? <Redirect to="/" /> : <Route path="/login" exact component={LoginPage} />}
         </Switch>
       </div>
     );
