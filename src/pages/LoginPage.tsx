@@ -7,7 +7,6 @@ import { useReduxContextValue } from "../contexts/redux-context";
 import { useHistory } from "react-router";
 
 const LoginPage: FC = () => {
-  const { isAuth } = useReduxContextValue().store.userState;
   const { userService } = useReduxContextValue().services;
   let history = useHistory();
   const [email, setEmail] = useState("");
@@ -16,16 +15,11 @@ const LoginPage: FC = () => {
   const loginButtonHandle = async () => {
     const result = await userService.signInWithEmailAndPassword(email, password);
     console.log(result);
+
     if (result === undefined) {
       history.replace("/");
     }
   };
-
-  if (isAuth) {
-    console.log("logged");
-  } else {
-    console.log("not logged");
-  }
 
   return (
     <Page className="page-single middle">
@@ -36,7 +30,8 @@ const LoginPage: FC = () => {
               <img alt="Halal Editor" src={logo} className="h-8" />
               <Header.H1 className="text-success mb-0 mt-4">Halal Editor</Header.H1>
             </div>
-            <Form className="card" autoComplete="off">
+
+            <Form className="card" autoComplete="off" onSubmit={event => console.log("clicked")}>
               <div className="card-body p-6">
                 <Button block social="google" className="text-left mb-6">
                   Sign in with Google
@@ -46,7 +41,6 @@ const LoginPage: FC = () => {
                 </div>
                 <Form.Group label="User Name">
                   <Form.Input
-                    name="email"
                     icon="user"
                     placeholder="E-mail address..."
                     onChange={event => {
@@ -56,7 +50,6 @@ const LoginPage: FC = () => {
                 </Form.Group>
                 <Form.Group label="Password">
                   <Form.Input
-                    name="password"
                     type="password"
                     icon="lock"
                     placeholder="Password..."
@@ -65,7 +58,7 @@ const LoginPage: FC = () => {
                     }}
                   />
                 </Form.Group>
-                <Button block type="submit" color="primary" onClick={loginButtonHandle}>
+                <Button block color="primary" onClick={loginButtonHandle}>
                   Login
                 </Button>
               </div>
