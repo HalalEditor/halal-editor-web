@@ -1,13 +1,8 @@
 import React, { FC } from "react";
 import { Header } from "tabler-react";
-import { SiteWrapper } from "../../layout/SiteWrapper";
 
 const ProfilePage: FC = () => {
-  return (
-    <SiteWrapper>
-      <Header.H1>Profile</Header.H1>
-    </SiteWrapper>
-  );
+  return <Header.H1>Profile</Header.H1>;
 };
 
 export default ProfilePage;

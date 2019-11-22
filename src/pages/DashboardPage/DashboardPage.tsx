@@ -1,13 +1,8 @@
 import React, { FC } from "react";
 import { Header } from "tabler-react";
-import { SiteWrapper } from "../../layout/SiteWrapper";
 
 const DashboardPage: FC = () => {
-  return (
-    <SiteWrapper>
-      <Header.H1>Dashboard</Header.H1>
-    </SiteWrapper>
-  );
+  return <Header.H1>Dashboard</Header.H1>;
 };
 
 export default DashboardPage;
