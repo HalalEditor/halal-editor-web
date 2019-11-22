@@ -1,10 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useReduxContextValue } from "./contexts/redux-context";
-import DashboardPage from "./pages/DashboardPage";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import ProfilePage from "./pages/ProfilePage";
+import { DashboardPage, HomePage, LoginPage, ProfilePage } from "./pages";
 import { Unsubscribe } from "firebase";
 
 const Router: FC = () => {
