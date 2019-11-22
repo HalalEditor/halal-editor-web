@@ -15,7 +15,7 @@ const Router: FC = () => {
     let unsubscribe: Unsubscribe;
     setTimeout(() => {
       unsubscribe = services.userService.subscribeAuth();
-    }, 500);
+    }, 300);
     return () => {
       unsubscribe();
     };
