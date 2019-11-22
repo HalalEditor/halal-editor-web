@@ -43,4 +43,22 @@ export class UserService {
         console.log(`createUserWithEmailAndPassword result ${res}`);
       });
   }
+
+  subscribeAuth = () => {
+    const unSubscribe = app.auth().onAuthStateChanged(async res => {
+      const currentUser: User | undefined = !res
+        ? undefined
+        : {
+            _id: res.uid,
+            email: !!res.email ? res.email : "",
+            emailVerified: res.emailVerified,
+            userCategory: "normal"
+          };
+      this.dispatch({
+        type: "SetCurrentUser",
+        payload: { user: currentUser }
+      });
+    });
+    return unSubscribe;
+  };
 }
