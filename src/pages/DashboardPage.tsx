@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import MainBar from "../components/MainBar";
+import { Header } from "tabler-react";
+import SiteWrapper from "../SiteWrapper";
 
 const DashboardPage: FC = () => {
   return (
-    <div>
-      <MainBar></MainBar>
-      Dashboard Page
-    </div>
+    <SiteWrapper>
+      <Header.H1>Dashboard</Header.H1>
+    </SiteWrapper>
   );
 };
 
