@@ -4,6 +4,8 @@ import { useReduxContextValue } from "./contexts/redux-context";
 import DashboardPage from "./pages/DashboardPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const Router: FC = () => {
   const { isAuth } = useReduxContextValue().store.userState;
@@ -12,20 +14,20 @@ const Router: FC = () => {
 
   if (isAuth) {
     pages = (
-      <div className="page">
+      <div className="page-container">
         <Switch>
-          <Route path="/" exact component={DashboardPage} />
+          <Route path="/" exact component={HomePage} />
         </Switch>
       </div>
     );
   } else {
     pages = (
-      <div className="page">
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          {isAuth ? <Redirect to="/" /> : <Route path="/login" exact component={LoginPage} />}
-        </Switch>
-      </div>
+      <Switch>
+        <Route path="/" exact component={HomePage} />
+        <Route path="/dashboard" exact component={DashboardPage} />
+        <Route path="/profile" exact component={ProfilePage} />
+        {isAuth ? <Redirect to="/" /> : <Route path="/login" exact component={LoginPage} />}
+      </Switch>
     );
   }
   return <BrowserRouter>{pages}</BrowserRouter>;
