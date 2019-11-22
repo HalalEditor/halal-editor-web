@@ -1,8 +1,8 @@
 import React from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import logo from "../assets/logo-text.svg";
 
-import { Site, Nav, Grid, List, Button } from "tabler-react";
+import { Site, Nav, Grid } from "tabler-react";
 import { getAccountDropDownMenu } from "./AccountMenu";
 import { useReduxContextValue } from "../contexts/redux-context";
 
@@ -33,7 +33,7 @@ type navItem = {
 };
 
 const withRouterNavLink = (to: string) =>
-  withRouter((props: any) => <NavLink {...props} to={to} />);
+  withRouter((props: any) => <Nav.Link {...props} to={to} />);
 
 const navBarItems: Array<navItem> = [
   {
@@ -68,16 +68,6 @@ const SiteWrapper = (props: Props) => {
         imageURL: logo,
         navItems: (
           <Nav.Item type="div" className="d-none d-md-flex">
-            <Button
-              href="https://github.com/cangir/udacity-reactnd-would-you-rather"
-              target="_blank"
-              outline
-              size="sm"
-              RootComponent="a"
-              color="dark"
-            >
-              Source code
-            </Button>
             {/* {loginLink} */}
           </Nav.Item>
         ),
@@ -85,26 +75,7 @@ const SiteWrapper = (props: Props) => {
       }}
       navProps={{ itemsObjects: navBarItems }}
       footerProps={{
-        copyright: <React.Fragment>Copyright © 2019. All rights reserved.</React.Fragment>,
-        nav: (
-          <React.Fragment>
-            <Grid.Col auto={true}>
-              <List className="list-inline list-inline-dots mb-0">
-                <List.Item className="list-inline-item">
-                  <a href="#">Documentation</a>
-                </List.Item>
-                <List.Item className="list-inline-item">
-                  <a href="#">Issues</a>
-                </List.Item>
-              </List>
-            </Grid.Col>
-            <Grid.Col auto={true}>
-              <Button href="#" size="sm" outline color="primary" RootComponent="a">
-                Source code
-              </Button>
-            </Grid.Col>
-          </React.Fragment>
-        )
+        copyright: <React.Fragment>Copyright © 2019. All rights reserved.</React.Fragment>
       }}
     >
       <div className="my-3 my-md-5">
