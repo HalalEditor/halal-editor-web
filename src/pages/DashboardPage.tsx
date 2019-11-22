@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Header } from "tabler-react";
-import SiteWrapper from "../SiteWrapper";
+import SiteWrapper from "../layout/SiteWrapper";
 
 const DashboardPage: FC = () => {
   return (
