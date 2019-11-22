@@ -89,10 +89,4 @@ const SiteWrapper = (props: Props) => {
   );
 };
 
-// class SiteWrapper extends React.Component<Props, State> {
-//   render() {
-
-//   }
-// }
-
 export default SiteWrapper;
