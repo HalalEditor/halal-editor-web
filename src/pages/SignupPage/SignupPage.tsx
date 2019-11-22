@@ -1,14 +1,14 @@
 import React, { FC, useState } from "react";
 import { Button, Form, Grid, Header, Page, Text } from "tabler-react";
-import logo from "../assets/logo.svg";
-import "../styles.scss";
+import logo from "../../assets/logo.svg";
+import "../../styles.scss";
 
-import { useReduxContextValue } from "../contexts/redux-context";
-import { useHistory } from "react-router";
+import { useReduxContextValue } from "../../contexts/redux-context";
+// import { useHistory } from "react-router";
 
 const SignupPage: FC = () => {
   const { userService } = useReduxContextValue().services;
-  let history = useHistory();
+  // let history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

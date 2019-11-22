@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
 import { Button, Form, Grid, Header, Page, Text } from "tabler-react";
-import logo from "../assets/logo.svg";
-import "../styles.scss";
+import logo from "../../assets/logo.svg";
+import "../../styles.scss";
 
-import { useReduxContextValue } from "../contexts/redux-context";
+import { useReduxContextValue } from "../../contexts/redux-context";
 import { Redirect } from "react-router";
 
 const LoginPage: FC = () => {
