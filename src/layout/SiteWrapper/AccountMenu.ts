@@ -1,6 +1,6 @@
-import userAvatar from "../assets/user.svg";
-import { UserService } from "../services/user-service";
-import { User } from "../models/user";
+import userAvatar from "../../assets/user.svg";
+import { UserService } from "../../services/user-service";
+import { User } from "../../models/user";
 
 export const getAccountDropDownMenu = (userService: UserService, currentUser?: User) => {
   if (!currentUser) return undefined;

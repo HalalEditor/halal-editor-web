@@ -1,10 +1,10 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import logo from "../assets/logo-text.svg";
+import logo from "../../assets/logo-text.svg";
 
 import { Site, Nav, Grid } from "tabler-react";
 import { getAccountDropDownMenu } from "./AccountMenu";
-import { useReduxContextValue } from "../contexts/redux-context";
+import { useReduxContextValue } from "../../contexts/redux-context";
 
 type Props = {
   children: React.ReactNode;
