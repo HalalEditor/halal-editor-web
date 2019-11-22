@@ -4,16 +4,16 @@ import logo from "../assets/logo.svg";
 import "../styles.scss";
 
 import { useReduxContextValue } from "../contexts/redux-context";
-import { useHistory } from "react-router";
+import { useHistory, Redirect } from "react-router";
 
 const LoginPage: FC = () => {
-  const { userService } = useReduxContextValue().services;
+  const { services, store } = useReduxContextValue();
   let history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const loginButtonHandle = async () => {
-    const result = await userService.signInWithEmailAndPassword(email, password);
+    const result = await services.userService.signInWithEmailAndPassword(email, password);
     console.log(result);
 
     if (result === undefined) {
@@ -21,7 +21,9 @@ const LoginPage: FC = () => {
     }
   };
 
-  return (
+  return store.userState.isAuth ? (
+    <Redirect to="/"></Redirect>
+  ) : (
     <Page className="page-single middle">
       <div className="container">
         <div className="row">
@@ -30,7 +32,6 @@ const LoginPage: FC = () => {
               <img alt="Halal Editor" src={logo} className="h-8" />
               <Header.H1 className="text-success mb-0 mt-4">Halal Editor</Header.H1>
             </div>
-
             <Form className="card" autoComplete="off" onSubmit={event => console.log("clicked")}>
               <div className="card-body p-6">
                 <Button block social="google" className="text-left mb-6">
