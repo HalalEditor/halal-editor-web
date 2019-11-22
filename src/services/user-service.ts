@@ -61,4 +61,8 @@ export class UserService {
     });
     return unSubscribe;
   };
+
+  logout = () => {
+    app.auth().signOut();
+  };
 }
