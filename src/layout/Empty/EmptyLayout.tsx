@@ -1,13 +1,13 @@
 import React from "react";
 import { Container, Box } from "@material-ui/core";
-import { useReduxContextValue } from "../../contexts/redux-context";
+// import { useReduxContextValue } from "../../contexts/redux-context";
 
 type Props = {
   children: React.ReactNode;
 };
 
 const EmptyLayout = (props: Props) => {
-  const { services, store } = useReduxContextValue();
+  // const { services, store } = useReduxContextValue();
   return (
     <React.Fragment>
       <Container>
