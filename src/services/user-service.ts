@@ -8,30 +8,30 @@ export class UserService {
   constructor(private dispatch: Dispatch<UserActionType>) {}
 
   signInWithEmailAndPassword(email: string, password: string) {
+    console.log("signInWithEmailAndPassword", app);
+
     return app
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(res => {
         const fireUser = res.user;
+        let currentUser;
 
         if (!!fireUser) {
-          const currentUser: User = {
+          currentUser = {
             _id: fireUser.uid,
             email: !!fireUser.email ? fireUser.email : "",
             emailVerified: fireUser.emailVerified,
             userCategory: "normal"
-          };
-
-          this.dispatch({
-            type: "SetCurrentUser",
-            payload: { user: currentUser }
-          });
-        } else {
-          this.dispatch({
-            type: "SetCurrentUser",
-            payload: { user: undefined }
-          });
+          } as User;
         }
+        this.dispatch({
+          type: "SetCurrentUser",
+          payload: { user: currentUser }
+        });
+      })
+      .catch(err => {
+        return err.message;
       });
   }
 
