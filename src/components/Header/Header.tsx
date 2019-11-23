@@ -1,20 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { createStyles, fade, makeStyles, Theme } from "@material-ui/core/styles";
 import {
   AppBar,
   Toolbar,
   Typography,
   IconButton,
-  Switch,
-  FormControlLabel,
-  FormGroup,
   MenuItem,
   Menu,
   InputBase
 } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import SearchIcon from "@material-ui/icons/Search";
+import { Menu as MenuIcon, AccountCircle, Search as SearchIcon } from "@material-ui/icons";
 import { useReduxContextValue } from "../../contexts/redux-context";
 import { useHistory } from "react-router-dom";
 
@@ -29,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
       display: "none",
+      cursor: "pointer",
       [theme.breakpoints.up("sm")]: {
         display: "block"
       }
@@ -103,7 +99,7 @@ export default function MenuAppBar() {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={classes.title} onClick={() => history.push("/")}>
             Halal Editor
           </Typography>
           <div className={classes.search}>

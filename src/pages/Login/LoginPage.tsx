@@ -12,7 +12,7 @@ import {
   Grid,
   Typography
 } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { LockOutlined } from "@material-ui/icons";
 import { Copyright } from "../../components";
 import { useStyles } from "./styles";
 
@@ -34,7 +34,7 @@ const LoginPage: FC = () => {
     <Grid container direction="row" justify="center" alignItems="center">
       <Grid className={classes.paper} item xs={12} sm={6} md={4}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LockOutlined />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
