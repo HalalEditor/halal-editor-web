@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStyles, fade, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
+import { useReduxContextValue } from "../../contexts/redux-context";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,13 +72,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function MenuAppBar() {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
+  const { services, store } = useReduxContextValue();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -110,7 +108,7 @@ export default function MenuAppBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          {auth && (
+          {store.userState.isAuth && (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -138,17 +136,12 @@ export default function MenuAppBar() {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={() => services.userService.logout()}>Logout</MenuItem>
               </Menu>
             </div>
           )}
         </Toolbar>
       </AppBar>
-      <FormGroup>
-        <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup>
     </div>
   );
 }
