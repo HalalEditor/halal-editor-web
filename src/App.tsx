@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import app from "firebase/app";
+import * as firebase from "firebase/app";
+
 import { FIREBASE_CONFIG } from "./.config";
 import ReduxContextProvider from "./contexts/redux-context";
 import Router from "./Router";
@@ -11,7 +12,7 @@ import theme from "./theme";
 const App: React.FC = () => {
   useEffect(() => {
     console.log("[app.tsx]: useEffect");
-    app.initializeApp(FIREBASE_CONFIG);
+    firebase.initializeApp(FIREBASE_CONFIG);
   }, []);
 
   return (

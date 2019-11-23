@@ -3,14 +3,14 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useReduxContextValue } from "./contexts/redux-context";
 import { DashboardPage, HomePage, LoginPage, ProfilePage } from "./pages";
 import { DefaultLayout } from "./layout";
-import { Unsubscribe } from "firebase";
+import * as firebase from "firebase/app";
 
 const Router: FC = () => {
   const { services, store } = useReduxContextValue();
   const { isAuth } = store.userState;
 
   useEffect(() => {
-    let unsubscribe: Unsubscribe;
+    let unsubscribe: firebase.Unsubscribe;
     setTimeout(() => {
       unsubscribe = services.userService.subscribeAuth();
     }, 300);

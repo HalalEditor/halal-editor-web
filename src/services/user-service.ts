@@ -2,15 +2,16 @@ import { User } from "./../models/user";
 import { UserActionType } from "./../store/user-store";
 import { Dispatch } from "react";
 
-import app from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 export class UserService {
   constructor(private dispatch: Dispatch<UserActionType>) {}
 
   signInWithEmailAndPassword(email: string, password: string) {
-    console.log("signInWithEmailAndPassword", app);
+    console.log("signInWithEmailAndPassword", firebase);
 
-    return app
+    return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(res => {
@@ -36,7 +37,7 @@ export class UserService {
   }
 
   createUserWithEmailAndPassword(email: string, password: string) {
-    app
+    firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
@@ -45,7 +46,7 @@ export class UserService {
   }
 
   subscribeAuth = () => {
-    const unSubscribe = app.auth().onAuthStateChanged(async res => {
+    const unSubscribe = firebase.auth().onAuthStateChanged(async res => {
       const currentUser: User | undefined = !res
         ? undefined
         : {
@@ -63,6 +64,6 @@ export class UserService {
   };
 
   logout = () => {
-    app.auth().signOut();
+    firebase.auth().signOut();
   };
 }
