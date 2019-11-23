@@ -16,6 +16,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import { useReduxContextValue } from "../../contexts/redux-context";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -74,8 +75,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function MenuAppBar() {
+  let history = useHistory();
+
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const { services, store } = useReduxContextValue();
@@ -86,6 +89,11 @@ export default function MenuAppBar() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleProfileMenuClose = (to: string) => {
+    setAnchorEl(null);
+    history.push(to);
   };
 
   return (
@@ -111,7 +119,7 @@ export default function MenuAppBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          {store.userState.isAuth && (
+          {store.userState.isAuth ? (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -137,10 +145,14 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={() => handleProfileMenuClose("/profile")}>Profile</MenuItem>
+                <MenuItem onClick={() => handleProfileMenuClose("/dashboard")}>Dashboard</MenuItem>
                 <MenuItem onClick={() => services.userService.logout()}>Logout</MenuItem>
               </Menu>
+            </div>
+          ) : (
+            <div>
+              <MenuItem onClick={() => history.push("/login")}>Login</MenuItem>
             </div>
           )}
         </Toolbar>
