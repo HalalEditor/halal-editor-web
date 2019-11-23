@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { useReduxContextValue } from "../../contexts/redux-context";
-import { Redirect } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import {
   Avatar,
   Button,
@@ -17,6 +17,7 @@ import { Copyright } from "../../components";
 import { useStyles } from "./styles";
 
 const LoginPage: FC = () => {
+  let history = useHistory();
   const classes = useStyles();
   const { services, store } = useReduxContextValue();
   const [email, setEmail] = useState("");
@@ -28,11 +29,15 @@ const LoginPage: FC = () => {
     console.log("loginButtonHandle:", result);
   };
 
+  const handleLink = (to: string) => {
+    history.push(to);
+  };
+
   return store.userState.isAuth ? (
     <Redirect to="/"></Redirect>
   ) : (
     <Grid container direction="row" justify="center" alignItems="center">
-      <Grid className={classes.paper} item xs={12} sm={6} md={4}>
+      <Grid className={classes.paper} item xs={10} sm={8} md={6} lg={4}>
         <Avatar className={classes.avatar}>
           <LockOutlined />
         </Avatar>
@@ -89,9 +94,7 @@ const LoginPage: FC = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Link onClick={() => handleLink("/signup")}>{"Don't have an account? Sign Up"}</Link>
             </Grid>
           </Grid>
           <Box mt={5}>

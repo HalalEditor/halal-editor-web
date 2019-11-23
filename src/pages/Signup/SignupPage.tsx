@@ -40,7 +40,7 @@ const SignupPage: FC = () => {
     <Redirect to="/"></Redirect>
   ) : (
     <Grid container direction="row" justify="center" alignItems="center">
-      <Grid className={classes.paper} item xs={12} sm={6} md={4}>
+      <Grid className={classes.paper} item xs={10} sm={8} md={6} lg={4}>
         <Avatar className={classes.avatar}>
           <LockOutlined />
         </Avatar>
