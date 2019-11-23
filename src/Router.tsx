@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useReduxContextValue } from "./contexts/redux-context";
 import { DashboardPage, HomePage, LoginPage, ProfilePage } from "./pages";
-import { SiteWrapper } from "./layout/SiteWrapper";
+import { DefaultLayout } from "./layout";
 import { Unsubscribe } from "firebase";
 
 const Router: FC = () => {
@@ -40,7 +40,7 @@ const Router: FC = () => {
   }
   return (
     <BrowserRouter>
-      <SiteWrapper>{pages}</SiteWrapper>
+      <DefaultLayout>{pages}</DefaultLayout>
     </BrowserRouter>
   );
 };
