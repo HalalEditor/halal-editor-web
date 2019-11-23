@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useReduxContextValue } from "./contexts/redux-context";
-import { DashboardPage, HomePage, LoginPage, ProfilePage } from "./pages";
+import { DashboardPage, HomePage, LoginPage, ProfilePage, SignupPage } from "./pages";
 import { DefaultLayout } from "./layout";
 import * as firebase from "firebase/app";
 
@@ -26,6 +26,7 @@ const Router: FC = () => {
       <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/login" exact component={LoginPage} />
+        <Route path="/signup" exact component={SignupPage} />
       </Switch>
     );
   } else {
