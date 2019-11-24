@@ -1,8 +1,8 @@
 import React, { FC, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useReduxContextValue } from "./contexts/redux-context";
-import { DashboardPage, HomePage, LoginPage, ProfilePage, SignupPage } from "./pages";
 import { DefaultLayout } from "./layout";
+import * as pages from "./pages";
 import * as firebase from "firebase/app";
 
 const Router: FC = () => {
@@ -19,29 +19,33 @@ const Router: FC = () => {
     };
   }, []);
 
-  let pages = null;
+  let routes = null;
 
   if (!isAuth) {
-    pages = (
+    routes = (
       <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/login" exact component={LoginPage} />
-        <Route path="/signup" exact component={SignupPage} />
+        <Route path="/" exact component={pages.HomePage} />
+        <Route path="/login" exact component={pages.LoginPage} />
+        <Route path="/signup" exact component={pages.SignupPage} />
       </Switch>
     );
   } else {
-    pages = (
+    routes = (
       <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/dashboard" exact component={DashboardPage} />
-        <Route path="/profile" exact component={ProfilePage} />
-        <Route path="/login" exact component={LoginPage} />
+        <Route path="/" exact component={pages.HomePage} />
+        <Route path="/dashboard" exact component={pages.DashboardPage} />
+        <Route path="/profile" exact component={pages.ProfilePage} />
+        <Route path="/product" exact component={pages.ProductPage} />
+        <Route path="/product/add" exact component={pages.ProductAddPage} />
+        <Route path="/product/edit" exact component={pages.ProductEditPage} />
+        <Route path="/products" exact component={pages.ProductListPage} />
+        <Route path="/login" exact component={pages.LoginPage} />
       </Switch>
     );
   }
   return (
     <BrowserRouter>
-      <DefaultLayout>{pages}</DefaultLayout>
+      <DefaultLayout>{routes}</DefaultLayout>
     </BrowserRouter>
   );
 };
