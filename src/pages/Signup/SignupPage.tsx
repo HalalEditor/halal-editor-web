@@ -1,35 +1,26 @@
 import React, { FC, useState } from "react";
 import { useReduxContextValue } from "../../contexts/redux-context";
 import { Redirect, useHistory } from "react-router";
-import {
-  Avatar,
-  Button,
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Link,
-  Box,
-  Grid,
-  Typography
-} from "@material-ui/core";
+import { Avatar, Button, Link, Box, Grid, Typography } from "@material-ui/core";
 import { LockOutlined } from "@material-ui/icons";
 import { Copyright } from "../../components";
 import { useStyles } from "./styles";
+import MailInput from "../../components/UI/MailInput";
+import PasswordInput from "../../components/UI/PasswordInput";
 
 const SignupPage: FC = () => {
   let history = useHistory();
   const classes = useStyles();
-  const { userService } = useReduxContextValue().services;
-  const { store } = useReduxContextValue();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { store, services } = useReduxContextValue();
+  const { userService } = services;
+
+  const [email, setEmail] = useState({ value: "", isValid: false });
+  const [password, setPassword] = useState({ value: "", isValid: false });
+  const [rePassword, setRePassword] = useState({ value: "", isValid: false });
 
   const onSubmitSignupButtonHandle = async () => {
-    const result = await userService.createUserWithEmailAndPassword(email, password);
+    const result = await userService.createUserWithEmailAndPassword(email.value, password.value);
     console.log(result);
-    if (result === undefined) {
-      history.replace("/");
-    }
   };
 
   const handleLink = (to: string) => {
@@ -48,50 +39,41 @@ const SignupPage: FC = () => {
           Sign up
         </Typography>
         <div className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={event => {
-              setEmail(event.target.value);
+          <MailInput
+            onChange={data => {
+              setEmail({ ...data });
             }}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={event => {
-              setPassword(event.target.value);
+          ></MailInput>
+
+          <PasswordInput
+            isMatchInput={false}
+            onChange={data => {
+              setPassword({ ...data });
             }}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+          ></PasswordInput>
+
+          <PasswordInput
+            isMatchInput={true}
+            matchPassword={password.value}
+            onChange={data => {
+              setRePassword({ ...data });
+            }}
+          ></PasswordInput>
           <Button
             type="submit"
             fullWidth
             variant="contained"
+            disabled={!email.isValid || !password.isValid || !rePassword.isValid}
             color="primary"
             className={classes.submit}
             onClick={onSubmitSignupButtonHandle}
           >
-            Sign In
+            Sign Up
           </Button>
           <Grid container justify="flex-end">
-            <Link onClick={() => handleLink("/login")}>Already have an account? Sign in</Link>
+            <Link component="button" onClick={() => handleLink("/login")}>
+              Already have an account? Sign in
+            </Link>
           </Grid>
           <Box mt={5}>
             <Copyright />
