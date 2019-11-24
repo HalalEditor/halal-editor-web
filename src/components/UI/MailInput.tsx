@@ -14,9 +14,7 @@ const MailInput = ({ onChange, defaultValue }: PropType) => {
 
   const handleOnChange = (event: any) => {
     const value = event.target.value;
-
     const isValid = validateEmail(value);
-    console.log(isValid);
 
     if (isValid) {
       setErrorMessage("");
