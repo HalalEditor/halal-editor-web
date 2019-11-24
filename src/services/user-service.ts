@@ -37,11 +37,14 @@ export class UserService {
   }
 
   createUserWithEmailAndPassword(email: string, password: string) {
-    firebase
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
         console.log(`createUserWithEmailAndPassword result ${res}`);
+      })
+      .catch(err => {
+        return err.message;
       });
   }
 
