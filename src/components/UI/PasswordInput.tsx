@@ -3,22 +3,23 @@ import { TextField } from "@material-ui/core";
 import { validatePassword } from "../../services/helper";
 
 type PropType = {
+  isMatchInput: boolean;
+  matchPassword?: string;
   onChange: (data: { value: string; isDirty: boolean; isValid: boolean }) => void;
 };
 
-const PasswordInput = ({ onChange }: PropType) => {
+const PasswordInput = ({ onChange, isMatchInput, matchPassword }: PropType) => {
   const [errorMessage, setErrorMessage] = useState("");
+  const label = isMatchInput ? "Re-Password" : "Password";
 
   const handleOnChange = (event: any) => {
     const value = event.target.value;
-
-    const isValid = validatePassword(value);
-    console.log(isValid);
+    const isValid = isMatchInput ? value === matchPassword : validatePassword(value);
 
     if (isValid) {
       setErrorMessage("");
     } else {
-      setErrorMessage("must be more than six character");
+      setErrorMessage(isMatchInput ? "password not matched" : "must be more than six character");
     }
     onChange({ value: value, isDirty: !!value, isValid: isValid });
   };
@@ -27,9 +28,9 @@ const PasswordInput = ({ onChange }: PropType) => {
     <TextField
       error
       id="outlined-error-helper-text"
-      label="Password"
-      name="password"
-      autoComplete="current-password"
+      label={label}
+      name={isMatchInput ? "re-password" : "password"}
+      autoComplete={isMatchInput ? "" : "current-password"}
       type="password"
       required
       fullWidth
@@ -40,10 +41,10 @@ const PasswordInput = ({ onChange }: PropType) => {
     />
   ) : (
     <TextField
-      id="password"
-      label="Password"
-      name="password"
-      autoComplete="current-password"
+      id={isMatchInput ? "re-password" : "password"}
+      label={label}
+      name={isMatchInput ? "re-password" : "password"}
+      autoComplete={isMatchInput ? "" : "current-password"}
       type="password"
       required
       fullWidth
