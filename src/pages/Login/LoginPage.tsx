@@ -4,7 +4,6 @@ import { Redirect, useHistory } from "react-router";
 import {
   Avatar,
   Button,
-  TextField,
   FormControlLabel,
   Checkbox,
   Link,
@@ -15,18 +14,24 @@ import {
 import { LockOutlined } from "@material-ui/icons";
 import { Copyright } from "../../components";
 import { useStyles } from "./styles";
+import MailInput from "../../components/UI/MailInput";
+import PasswordInput from "../../components/UI/PasswordInput";
 
 const LoginPage: FC = () => {
   let history = useHistory();
   const classes = useStyles();
   const { services, store } = useReduxContextValue();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState({ value: "", isValid: false });
+  const [password, setPassword] = useState({ value: "", isValid: false });
 
   const onSubmitLoginFormHandle = async () => {
-    console.log("loging....");
-    const result = await services.userService.signInWithEmailAndPassword(email, password);
-    console.log("loginButtonHandle:", result);
+    if (email.isValid && password.isValid) {
+      const result = await services.userService.signInWithEmailAndPassword(
+        email.value,
+        password.value
+      );
+      console.log("loginButtonHandle:", result);
+    }
   };
 
   const handleLink = (to: string) => {
@@ -45,34 +50,18 @@ const LoginPage: FC = () => {
           Sign in
         </Typography>
         <div className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={event => {
-              setEmail(event.target.value);
+          <MailInput
+            onChange={data => {
+              setEmail({ ...data });
             }}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={event => {
-              setPassword(event.target.value);
+          ></MailInput>
+
+          <PasswordInput
+            onChange={data => {
+              setPassword({ ...data });
             }}
-          />
+          ></PasswordInput>
+
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -82,6 +71,7 @@ const LoginPage: FC = () => {
             fullWidth
             variant="contained"
             color="primary"
+            disabled={!email.isValid || !password.isValid}
             className={classes.submit}
             onClick={onSubmitLoginFormHandle}
           >
@@ -89,12 +79,14 @@ const LoginPage: FC = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link component="button" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link onClick={() => handleLink("/signup")}>{"Don't have an account? Sign Up"}</Link>
+              <Link component="button" onClick={() => handleLink("/signup")}>
+                {"Don't have an account? Sign Up"}
+              </Link>
             </Grid>
           </Grid>
           <Box mt={5}>
