@@ -10,6 +10,9 @@ const HomePage: FC = () => {
         Home Page
       </Typography>
       <Grid container justify="space-around">
+        <Button variant="contained" color="primary" onClick={() => history.push("/login")}>
+          Login
+        </Button>
         <Button variant="contained" color="primary" onClick={() => history.push("/product")}>
           Single Product
         </Button>
