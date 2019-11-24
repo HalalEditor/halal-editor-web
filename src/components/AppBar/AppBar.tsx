@@ -12,27 +12,13 @@ import { Menu as MenuIcon, AccountCircle, Search as SearchIcon } from "@material
 import { useReduxContextValue } from "../../contexts/redux-context";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./styles";
+import AccountMenu from "./AccountMenu";
 
 const AppBar: FC = () => {
   let history = useHistory();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const isMenuOpen = Boolean(anchorEl);
 
-  const { services, store } = useReduxContextValue();
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleProfileMenuLink = (to: string) => {
-    history.push(to);
-    setAnchorEl(null);
-  };
+  const { store } = useReduxContextValue();
 
   return (
     <MaterialAppBar position="static">
@@ -57,28 +43,7 @@ const AppBar: FC = () => {
           />
         </div>
         {store.userState.isAuth ? (
-          <div>
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              open={isMenuOpen}
-              getContentAnchorEl={null}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={() => handleProfileMenuLink("/profile")}>Profile</MenuItem>
-              <MenuItem onClick={() => handleProfileMenuLink("/dashboard")}>Dashboard</MenuItem>
-              <MenuItem onClick={() => services.userService.logout()}>Logout</MenuItem>
-            </Menu>
-          </div>
+          <AccountMenu />
         ) : (
           <div>
             <MenuItem onClick={() => history.push("/login")}>Login</MenuItem>
