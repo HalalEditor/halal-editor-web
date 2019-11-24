@@ -27,38 +27,29 @@ const Router: FC = () => {
     const Component = component; // JSX Elements have to be uppercase.
     const render = (props: RouteComponentProps<any>): React.ReactNode => {
       if (isAuth) {
-        return (
-          <DefaultLayout>
-            <Component {...props} />{" "}
-          </DefaultLayout>
-        );
+        return <Component {...props} />;
       }
       return <Redirect to={{ pathname: "/login" }} />;
     };
-    return (
-      <EmptyLayout>
-        <Route {...rest} render={render} />{" "}
-      </EmptyLayout>
-    );
+    return <Route {...rest} render={render} />;
   };
 
   return (
     <BrowserRouter>
-      <Switch>
-        {isAuth ? (
+      <DefaultLayout>
+        <Switch>
           <PrivateRoute path="/" exact component={pages.HomePage} />
-        ) : (
           <Route path="/" exact component={pages.HomePage} />
-        )}
-        <Route path="/login" exact component={pages.LoginPage} />
-        <Route path="/signup" exact component={pages.SignupPage} />
-        <PrivateRoute path="/dashboard" exact component={pages.DashboardPage} />
-        <PrivateRoute path="/profile" exact component={pages.ProfilePage} />
-        <PrivateRoute path="/product" exact component={pages.ProductPage} />
-        <PrivateRoute path="/product/add" exact component={pages.ProductAddPage} />
-        <PrivateRoute path="/product/edit" exact component={pages.ProductEditPage} />
-        <PrivateRoute path="/products" exact component={pages.ProductListPage} />
-      </Switch>
+          <Route path="/login" exact component={pages.LoginPage} />
+          <Route path="/signup" exact component={pages.SignupPage} />
+          <PrivateRoute path="/dashboard" exact component={pages.DashboardPage} />
+          <PrivateRoute path="/profile" exact component={pages.ProfilePage} />
+          <PrivateRoute path="/product" exact component={pages.ProductPage} />
+          <PrivateRoute path="/product/add" exact component={pages.ProductAddPage} />
+          <PrivateRoute path="/product/edit" exact component={pages.ProductEditPage} />
+          <PrivateRoute path="/products" exact component={pages.ProductListPage} />
+        </Switch>
+      </DefaultLayout>
     </BrowserRouter>
   );
 };
