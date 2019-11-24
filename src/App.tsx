@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import * as firebase from "firebase/app";
 
 import { FIREBASE_CONFIG } from "./.config";
@@ -9,7 +9,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 
-const App: React.FC = () => {
+const App: FC = () => {
   useEffect(() => {
     console.log("[app.tsx]: useEffect");
     firebase.initializeApp(FIREBASE_CONFIG);
