@@ -57,6 +57,7 @@ const LoginPage: FC = () => {
           ></MailInput>
 
           <PasswordInput
+            isMatchInput={false}
             onChange={data => {
               setPassword({ ...data });
             }}
