@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Box } from "@material-ui/core";
-import { Header } from "../../components";
+import { AppBar } from "../../components";
 
 type Props = {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ type Props = {
 const DefaultLayout = (props: Props) => {
   return (
     <React.Fragment>
-      <Header />
+      <AppBar />
       <Container>
         <Box my={4}>{props.children}</Box>
       </Container>

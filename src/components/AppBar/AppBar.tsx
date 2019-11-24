@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import {
-  AppBar,
+  AppBar as MaterialAppBar,
   Toolbar,
   Typography,
   IconButton,
@@ -13,7 +13,7 @@ import { useReduxContextValue } from "../../contexts/redux-context";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./styles";
 
-const Header: FC = () => {
+const AppBar: FC = () => {
   let history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -35,7 +35,7 @@ const Header: FC = () => {
   };
 
   return (
-    <AppBar position="static">
+    <MaterialAppBar position="static">
       <Toolbar>
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
           <MenuIcon />
@@ -85,8 +85,8 @@ const Header: FC = () => {
           </div>
         )}
       </Toolbar>
-    </AppBar>
+    </MaterialAppBar>
   );
 };
 
-export default Header;
+export default AppBar;
