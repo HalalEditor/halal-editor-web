@@ -1,52 +1,17 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import Drawer from "@material-ui/core/Drawer";
 import { AppBar } from "../../components";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import { Menu as MenuIcon } from "@material-ui/icons";
 import { useStyles } from "./styles";
 
 type Props = {
   children: React.ReactNode;
 };
 
-const DrawerItemsData = [
-  { label: "Dashboard", path: "/dashboard", icon: <MenuIcon />, key: 0 },
-  { label: "Product List", path: "/products", icon: <MenuIcon />, key: 1 },
-  { label: "Add Product", path: "/product/add", icon: <MenuIcon />, key: 2 },
-  { label: "Edit Product", path: "/product/edit", icon: <MenuIcon />, key: 3 },
-  { label: "Profile", path: "/profile", icon: <MenuIcon />, key: 4 }
-];
-
 const DefaultLayout = (props: Props) => {
-  let history = useHistory();
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar />
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.toolbar} />
-        <List>
-          {DrawerItemsData.map((item, index) => (
-            <ListItem button key={item.key} onClick={() => history.push(item.path)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-      </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {props.children}
