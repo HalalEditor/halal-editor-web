@@ -20,6 +20,22 @@ const Router: FC = () => {
     };
   }, []);
 
+  /**
+   * Renders the Layout and component, passing props as new object.
+   * @param Component A React Component
+   */
+  const layoutDefault: any = (Component: any) => (props: any) => (
+    <DefaultLayout {...props}>
+      <Component {...props} />
+    </DefaultLayout>
+  );
+
+  const layoutEmpty: any = (Component: any) => (props: any) => (
+    <EmptyLayout {...props}>
+      <Component {...props} />
+    </EmptyLayout>
+  );
+
   const PrivateRoute = ({ component, ...rest }: RouteProps) => {
     if (!component) {
       throw Error("component is undefined");
@@ -36,20 +52,17 @@ const Router: FC = () => {
 
   return (
     <BrowserRouter>
-      <DefaultLayout>
-        <Switch>
-          <PrivateRoute path="/" exact component={pages.HomePage} />
-          <Route path="/" exact component={pages.HomePage} />
-          <Route path="/login" exact component={pages.LoginPage} />
-          <Route path="/signup" exact component={pages.SignupPage} />
-          <PrivateRoute path="/dashboard" exact component={pages.DashboardPage} />
-          <PrivateRoute path="/profile" exact component={pages.ProfilePage} />
-          <PrivateRoute path="/product" exact component={pages.ProductPage} />
-          <PrivateRoute path="/product/add" exact component={pages.ProductAddPage} />
-          <PrivateRoute path="/product/edit" exact component={pages.ProductEditPage} />
-          <PrivateRoute path="/products" exact component={pages.ProductListPage} />
-        </Switch>
-      </DefaultLayout>
+      <Switch>
+        <Route path="/" exact component={layoutDefault(pages.HomePage)} />
+        <Route path="/login" exact component={layoutEmpty(pages.LoginPage)} />
+        <Route path="/signup" exact component={layoutEmpty(pages.SignupPage)} />
+        <PrivateRoute path="/dashboard" exact component={layoutDefault(pages.DashboardPage)} />
+        <PrivateRoute path="/profile" exact component={layoutDefault(pages.ProfilePage)} />
+        <PrivateRoute path="/product" exact component={layoutDefault(pages.ProductPage)} />
+        <PrivateRoute path="/product/add" exact component={layoutDefault(pages.ProductAddPage)} />
+        <PrivateRoute path="/product/edit" exact component={layoutDefault(pages.ProductEditPage)} />
+        <PrivateRoute path="/products" exact component={layoutDefault(pages.ProductListPage)} />
+      </Switch>
     </BrowserRouter>
   );
 };
