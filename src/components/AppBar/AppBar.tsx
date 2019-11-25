@@ -20,7 +20,7 @@ const AppBar: FC = () => {
   const { store } = useReduxContextValue();
 
   return (
-    <MaterialAppBar position="static">
+    <MaterialAppBar position="fixed">
       <Toolbar>
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
           <MenuIcon />
