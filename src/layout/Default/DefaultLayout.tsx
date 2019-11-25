@@ -10,7 +10,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Menu as MenuIcon } from "@material-ui/icons";
-import AccountMenu from "../../components/AppBar/AccountMenu";
 
 type Props = {
   children: React.ReactNode;
