@@ -1,7 +1,5 @@
 import React from "react";
-import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-
 import Drawer from "@material-ui/core/Drawer";
 import { AppBar } from "../../components";
 import List from "@material-ui/core/List";
@@ -10,32 +8,11 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Menu as MenuIcon } from "@material-ui/icons";
+import { useStyles } from "./styles";
 
 type Props = {
   children: React.ReactNode;
 };
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex"
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0
-    },
-    drawerPaper: {
-      width: drawerWidth
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3)
-    },
-    toolbar: theme.mixins.toolbar
-  })
-);
 
 const DrawerItemsData = [
   { label: "Dashboard", path: "/dashboard", icon: <MenuIcon />, key: 0 },
