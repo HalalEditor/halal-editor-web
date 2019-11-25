@@ -21,6 +21,20 @@ const SignupPage: FC = () => {
   const onSubmitSignupButtonHandle = async () => {
     const result = await userService.createUserWithEmailAndPassword(email.value, password.value);
     console.log(result);
+
+    if (!!result) {
+      services.appService.showSnackbarMessage({
+        message: String(result),
+        show: true,
+        variant: "error"
+      });
+    } else {
+      services.appService.showSnackbarMessage({
+        message: "Account has been created",
+        show: true,
+        variant: "success"
+      });
+    }
   };
 
   const handleLink = (to: string) => {

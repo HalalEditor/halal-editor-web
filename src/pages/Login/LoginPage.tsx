@@ -31,6 +31,13 @@ const LoginPage: FC = () => {
         password.value
       );
       console.log("loginButtonHandle:", result);
+      if (!!result) {
+        services.appService.showSnackbarMessage({
+          message: String(result),
+          show: true,
+          variant: "error"
+        });
+      }
     }
   };
 
@@ -49,6 +56,7 @@ const LoginPage: FC = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+
         <div className={classes.form}>
           <MailInput
             onChange={data => {
