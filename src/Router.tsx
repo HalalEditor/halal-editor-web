@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { Redirect, Route, Switch, RouteProps, RouteComponentProps } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { useReduxContextValue } from "./contexts/redux-context";
-import { DefaultLayout, EmptyLayout } from "./layout";
+import { AdminLayout, DefaultLayout, EmptyLayout } from "./layout";
 import * as pages from "./pages";
 import * as firebase from "firebase/app";
 
@@ -28,6 +28,12 @@ const Router: FC = () => {
     <DefaultLayout {...props}>
       <Component {...props} />
     </DefaultLayout>
+  );
+
+  const layoutAdmin: any = (Component: any) => (props: any) => (
+    <AdminLayout {...props}>
+      <Component {...props} />
+    </AdminLayout>
   );
 
   const layoutEmpty: any = (Component: any) => (props: any) => (
@@ -56,16 +62,16 @@ const Router: FC = () => {
         <Route
           path="/"
           exact
-          component={isAuth ? layoutDefault(pages.HomePage) : layoutEmpty(pages.HomePage)}
+          component={isAuth ? layoutAdmin(pages.HomePage) : layoutDefault(pages.HomePage)}
         />
         <Route path="/login" exact component={layoutEmpty(pages.LoginPage)} />
         <Route path="/signup" exact component={layoutEmpty(pages.SignupPage)} />
-        <PrivateRoute path="/dashboard" exact component={layoutDefault(pages.DashboardPage)} />
-        <PrivateRoute path="/profile" exact component={layoutDefault(pages.ProfilePage)} />
-        <PrivateRoute path="/product" exact component={layoutDefault(pages.ProductPage)} />
-        <PrivateRoute path="/product/add" exact component={layoutDefault(pages.ProductAddPage)} />
-        <PrivateRoute path="/product/edit" exact component={layoutDefault(pages.ProductEditPage)} />
-        <PrivateRoute path="/products" exact component={layoutDefault(pages.ProductListPage)} />
+        <PrivateRoute path="/dashboard" exact component={layoutAdmin(pages.DashboardPage)} />
+        <PrivateRoute path="/profile" exact component={layoutAdmin(pages.ProfilePage)} />
+        <PrivateRoute path="/product" exact component={layoutAdmin(pages.ProductPage)} />
+        <PrivateRoute path="/product/add" exact component={layoutAdmin(pages.ProductAddPage)} />
+        <PrivateRoute path="/product/edit" exact component={layoutAdmin(pages.ProductEditPage)} />
+        <PrivateRoute path="/products" exact component={layoutAdmin(pages.ProductListPage)} />
       </Switch>
     </BrowserRouter>
   );
