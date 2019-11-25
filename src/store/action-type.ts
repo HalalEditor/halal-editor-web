@@ -1,1 +1,1 @@
-export type ActionType = "SetCurrentUser";
+export type ActionType = "SetCurrentUser" | "SetSnackbarMessage";
