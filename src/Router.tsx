@@ -5,6 +5,7 @@ import { useReduxContextValue } from "./contexts/redux-context";
 import { DefaultLayout, EmptyLayout } from "./layout";
 import * as pages from "./pages";
 import * as firebase from "firebase/app";
+import CustomSnackbar from "./components/CustomSnackbar/CustomSnackbar";
 
 const Router: FC = () => {
   const { services, store } = useReduxContextValue();
@@ -67,6 +68,7 @@ const Router: FC = () => {
         <PrivateRoute path="/product/edit" exact component={layoutDefault(pages.ProductEditPage)} />
         <PrivateRoute path="/products" exact component={layoutDefault(pages.ProductListPage)} />
       </Switch>
+      <CustomSnackbar />
     </BrowserRouter>
   );
 };
