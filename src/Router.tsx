@@ -53,7 +53,11 @@ const Router: FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={layoutDefault(pages.HomePage)} />
+        <Route
+          path="/"
+          exact
+          component={isAuth ? layoutDefault(pages.HomePage) : layoutEmpty(pages.HomePage)}
+        />
         <Route path="/login" exact component={layoutEmpty(pages.LoginPage)} />
         <Route path="/signup" exact component={layoutEmpty(pages.SignupPage)} />
         <PrivateRoute path="/dashboard" exact component={layoutDefault(pages.DashboardPage)} />
