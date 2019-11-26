@@ -4,6 +4,7 @@ import { Dispatch } from "react";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firebase-firestore";
 
 export class UserService {
   constructor(private dispatch: Dispatch<UserActionType>) {}
@@ -28,14 +29,10 @@ export class UserService {
 
   subscribeAuth = () => {
     const unSubscribe = firebase.auth().onAuthStateChanged(async res => {
-      const currentUser: User | undefined = !res
+      const currentUser = !res
         ? undefined
-        : {
-            _id: res.uid,
-            email: !!res.email ? res.email : "",
-            emailVerified: res.emailVerified,
-            userCategory: "normal"
-          };
+        : await this.getUser(res.uid, !!res.email ? res.email : "");
+
       this.dispatch({
         type: "SetCurrentUser",
         payload: { user: currentUser }
@@ -47,4 +44,33 @@ export class UserService {
   logout = () => {
     firebase.auth().signOut();
   };
+
+  private async getUser(uid: string, email: string): Promise<User> {
+    let defaultUser = <User>{
+      _id: uid,
+      email: email,
+      emailVerified: false,
+      userCategory: "normal"
+    };
+    try {
+      let result = await firebase
+        .firestore()
+        .doc(`/users/${uid}`)
+        .get();
+
+      if (result.exists) {
+        const data = result.data() as User;
+        return data;
+      } else {
+        await firebase
+          .firestore()
+          .doc(`/users/${uid}`)
+          .set(defaultUser);
+        return defaultUser;
+      }
+    } catch (error) {
+      console.error(error);
+      return defaultUser;
+    }
+  }
 }
