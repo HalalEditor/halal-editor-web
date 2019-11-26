@@ -6,20 +6,23 @@ export const useStyles = makeStyles((theme: Theme) =>
       display: "flex"
     },
     drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
+      [theme.breakpoints.up("sm")]: {
+        width: drawerWidth,
+        flexShrink: 0
+      },
       zIndex: theme.zIndex.appBar - 1
     },
     drawerPaper: {
-      width: drawerWidth
+      width: drawerWidth,
+      backgroundColor: "#18202c"
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3)
     },
     categoryHeader: {
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2)
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(0)
     },
     categoryHeaderPrimary: {
       color: theme.palette.common.white
@@ -30,7 +33,8 @@ export const useStyles = makeStyles((theme: Theme) =>
       color: "rgba(255, 255, 255, 0.7)",
       "&:hover,&:focus": {
         backgroundColor: "rgba(255, 255, 255, 0.08)"
-      }
+      },
+      cursor: "pointer"
     },
     itemCategory: {
       backgroundColor: "#232f3e",
@@ -46,11 +50,18 @@ export const useStyles = makeStyles((theme: Theme) =>
       color: "#4fc3f7"
     },
     itemPrimary: {
-      fontSize: "inherit"
+      fontSize: "inherit",
+      fontWeight: "bold",
+      marginBottom: 0
     },
     itemIcon: {
       minWidth: "auto",
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
+      color: "rgba(255, 255, 255, 0.7)",
+      "&:hover,&:focus": {
+        backgroundColor: "rgba(255, 255, 255, 0.08)"
+      },
+      fontSize: 12
     },
     divider: {
       marginTop: theme.spacing(2)
