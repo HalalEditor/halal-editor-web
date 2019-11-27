@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import {
   AppBar as MaterialAppBar,
+  Hidden,
   Toolbar,
   Typography,
   IconButton,
@@ -22,9 +23,11 @@ const AppBar: FC = () => {
   return (
     <MaterialAppBar position="fixed">
       <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
+        <Hidden smUp>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
         <Typography variant="h6" className={classes.title} onClick={() => history.push("/")}>
           Halal Editor
         </Typography>
