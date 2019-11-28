@@ -27,11 +27,23 @@ export class UserService {
     }
   }
 
+  async signInWithGoogle() {
+    try {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope("profile");
+      provider.addScope("email");
+      const result = await firebase.auth().signInWithPopup(provider);
+      console.log("signInWithGoogle:", result);
+    } catch (error) {
+      return error.message;
+    }
+  }
+
   subscribeAuth = () => {
     const unSubscribe = firebase.auth().onAuthStateChanged(async res => {
-      const currentUser = !res
-        ? undefined
-        : await this.getUser(res.uid, !!res.email ? res.email : "");
+      console.log("subscribeAuth:", res);
+
+      const currentUser = !res ? undefined : await this.getUser(res);
 
       this.dispatch({
         type: "SetCurrentUser",
@@ -45,26 +57,38 @@ export class UserService {
     firebase.auth().signOut();
   };
 
-  private async getUser(uid: string, email: string): Promise<User> {
-    let defaultUser = <User>{
-      _id: uid,
-      email: email,
-      emailVerified: false,
+  private async getUser(firebaseUser: firebase.User): Promise<User> {
+    let defaultUser = {
+      _id: firebaseUser.uid,
+      username: !!firebaseUser.displayName
+        ? firebaseUser.displayName
+        : (firebaseUser.email as string).split("@")[0],
+      email: firebaseUser.email,
+      emailVerified: firebaseUser.emailVerified,
+      photoURL: firebaseUser.photoURL,
       userCategory: "normal"
-    };
+    } as User;
+
     try {
       let result = await firebase
         .firestore()
-        .doc(`/users/${uid}`)
+        .doc(`/users/${firebaseUser.uid}`)
         .get();
 
       if (result.exists) {
         const data = result.data() as User;
-        return data;
+        const resultChecking = this.checkUserMissingInfo(data, firebaseUser);
+        if (resultChecking.isUserUpdate) {
+          firebase
+            .firestore()
+            .doc(`/users/${firebaseUser.uid}`)
+            .update(resultChecking.updatedUser);
+        }
+        return resultChecking.updatedUser;
       } else {
         await firebase
           .firestore()
-          .doc(`/users/${uid}`)
+          .doc(`/users/${firebaseUser.uid}`)
           .set(defaultUser);
         return defaultUser;
       }
@@ -72,5 +96,32 @@ export class UserService {
       console.error(error);
       return defaultUser;
     }
+  }
+
+  private checkUserMissingInfo(
+    dbUser: User,
+    firebaseUser: firebase.User
+  ): { isUserUpdate: boolean; updatedUser: User } {
+    let isUserUpdate = false;
+
+    if (dbUser.emailVerified != firebaseUser.emailVerified) {
+      dbUser.emailVerified = firebaseUser.emailVerified;
+      isUserUpdate = true;
+    }
+
+    if (!dbUser.photoURL && !!firebaseUser.photoURL) {
+      dbUser.photoURL = firebaseUser.photoURL;
+      isUserUpdate = true;
+    }
+
+    if (!dbUser.username && !!firebaseUser.displayName) {
+      dbUser.username = firebaseUser.displayName;
+      isUserUpdate = true;
+    }
+
+    return {
+      isUserUpdate: isUserUpdate,
+      updatedUser: dbUser
+    };
   }
 }
