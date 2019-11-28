@@ -22,7 +22,7 @@ const Router: FC = () => {
 
   return (
     <Switch>
-      <Route path="/" component={pages.HomePage} exact layout={AdminLayout} />
+      <Route path="/" component={pages.HomePage} exact layout={DefaultLayout} />
       <Route path="/login" component={pages.LoginPage} exact layout={EmptyLayout} />
       <Route path="/signup" component={pages.SignupPage} exact layout={EmptyLayout} />
       <PrivateRoute path="/dashboard" component={pages.DashboardPage} exact layout={AdminLayout} />

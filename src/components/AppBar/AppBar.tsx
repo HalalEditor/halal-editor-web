@@ -14,21 +14,36 @@ import { useHistory } from "react-router-dom";
 import { useStyles } from "./styles";
 import AccountMenu from "./AccountMenu";
 
-const AppBar: FC = () => {
+interface Props {
+  onDrawerOpen?: (
+    event: React.KeyboardEvent<Element> | React.MouseEvent<Element, MouseEvent>
+  ) => void;
+  showMenuIcon?: boolean;
+}
+
+const AppBar = ({ onDrawerOpen, showMenuIcon }: Props) => {
   let history = useHistory();
   const classes = useStyles();
 
   const { store } = useReduxContextValue();
 
+  console.log(onDrawerOpen);
+
   return (
     <MaterialAppBar position="fixed">
       <Toolbar>
         <Hidden smUp>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={onDrawerOpen}
+          >
             <MenuIcon />
           </IconButton>
         </Hidden>
-        <Typography variant="h6" className={classes.title} onClick={() => history.push("/")}>
+        <Typography variant="h3" className={classes.title} onClick={() => history.push("/")}>
           Halal Editor
         </Typography>
         <div className={classes.search}>
@@ -44,7 +59,17 @@ const AppBar: FC = () => {
             inputProps={{ "aria-label": "search" }}
           />
         </div>
-        {store.userState.isAuth ? (
+
+        {showMenuIcon ? (
+          <IconButton
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={onDrawerOpen}
+          >
+            <MenuIcon />
+          </IconButton>
+        ) : store.userState.isAuth ? (
           <AccountMenu />
         ) : (
           <div>

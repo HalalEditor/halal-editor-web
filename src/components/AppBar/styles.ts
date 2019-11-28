@@ -1,14 +1,19 @@
 import { createStyles, fade, makeStyles, Theme } from "@material-ui/core/styles";
+import { colors } from "@material-ui/core";
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1
+    },
+    appBar: {
+      background: colors.indigo[700]
     },
     menuButton: {
       marginRight: theme.spacing(2)
     },
     title: {
       flexGrow: 1,
+      color: fade(theme.palette.common.white, 0.75),
       display: "none",
       cursor: "pointer",
       [theme.breakpoints.up("sm")]: {
@@ -23,7 +28,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: fade(theme.palette.common.white, 0.25)
       },
       marginLeft: 0,
-      marginRight: 10,
+      marginRight: 15,
       width: "100%",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
