@@ -8,7 +8,6 @@ import { AdminLayout as Admin, DefaultLayout as Default, EmptyLayout as Empty } 
 import * as p from "./pages";
 import * as firebase from "firebase/app";
 const browserHistory = createBrowserHistory();
-// import CustomSnackbar from "./components/CustomSnackbar/CustomSnackbar";
 
 const Router: FC = () => {
   const { services } = useReduxContextValue();
