@@ -1,4 +1,6 @@
 import React, { FC, useEffect } from "react";
+import { Router as BrowserRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import * as firebase from "firebase/app";
 
 import { FIREBASE_CONFIG } from "./.config";
@@ -7,7 +9,9 @@ import Router from "./Router";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "./theme";
+import theme from "./theme/index";
+
+const browserHistory = createBrowserHistory();
 
 const App: FC = () => {
   useEffect(() => {
@@ -18,9 +22,10 @@ const App: FC = () => {
   return (
     <ReduxContextProvider>
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Router />
+        <BrowserRouter history={browserHistory}>
+          <Router />
+        </BrowserRouter>
       </ThemeProvider>
     </ReduxContextProvider>
   );
