@@ -19,11 +19,27 @@ import MailInput from "../../components/UI/MailInput";
 const RecoverPassword: FC = () => {
   let history = useHistory();
   const classes = useStyles();
-  const { store } = useReduxContextValue();
+  const { store, services } = useReduxContextValue();
   const [email, setEmail] = useState({ value: "", isValid: false });
 
-  const onSubmitRecoverFormHandle = () => {
-    console.log("Recover button pressed");
+  const onSubmitRecoverFormHandle = async () => {
+    if (email.isValid) {
+      const result = await services.userService.sendPasswordResetEmail(email.value);
+      if (!!result) {
+        services.appService.showSnackbarMessage({
+          message: String(result),
+          show: true,
+          variant: "error"
+        });
+      } else {
+        services.appService.showSnackbarMessage({
+          message: "Recover mail have been send. Please check your mail-box.",
+          show: true,
+          variant: "info"
+        });
+        history.goBack();
+      }
+    }
   };
 
   return store.userState.isAuth ? (
