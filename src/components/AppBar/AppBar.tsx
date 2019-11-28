@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import {
   AppBar as MaterialAppBar,
   Hidden,
@@ -15,9 +15,7 @@ import { useStyles } from "./styles";
 import AccountMenu from "./AccountMenu";
 
 interface Props {
-  onDrawerOpen?: (
-    event: React.KeyboardEvent<Element> | React.MouseEvent<Element, MouseEvent>
-  ) => void;
+  onDrawerOpen?: () => void;
   showMenuIcon?: boolean;
 }
 

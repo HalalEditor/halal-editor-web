@@ -22,14 +22,7 @@ const AdminLayout = (props: Props) => {
     isMenuOpen: false
   });
 
-  const toggleDrawer = (isMenuOpen: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
+  const toggleDrawer = (isMenuOpen: boolean) => {
     setState({ ...state, isMenuOpen });
   };
 
@@ -43,11 +36,11 @@ const AdminLayout = (props: Props) => {
         [classes.shiftContent]: isDesktop
       })}
     >
-      <AppBar onDrawerOpen={toggleDrawer(true)} showMenuIcon={showMenuIcon} />
+      <AppBar onDrawerOpen={() => toggleDrawer(true)} showMenuIcon={showMenuIcon} />
       <Drawer
         anchor="left"
         classes={{ paper: classes.drawer }}
-        onClose={toggleDrawer(false)}
+        onClose={() => toggleDrawer(false)}
         open={shouldOpenSidebar}
         variant={chooseVariant}
       >
