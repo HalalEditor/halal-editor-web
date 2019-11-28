@@ -26,7 +26,7 @@ export const ProductReducer: Reducer<ProductStateType, ProductActionType> = (
   state = initialProductState,
   action
 ) => {
-  console.log(`[ProductReducer]: ${JSON.stringify(action)}`);
+  console.log("[ProductReducer]:", action);
 
   switch (action.type) {
     default:

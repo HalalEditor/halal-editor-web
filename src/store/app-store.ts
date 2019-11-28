@@ -24,7 +24,7 @@ export const AppReducer: Reducer<AppStateType, AppActionType> = (
   state = initialAppState,
   action
 ) => {
-  console.log(`[AppReducer]: ${JSON.stringify(action)}`);
+  console.log("[AppReducer]:", action);
 
   switch (action.type) {
     case "SetSnackbarMessage":

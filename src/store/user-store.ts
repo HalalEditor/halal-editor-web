@@ -23,6 +23,8 @@ export const UserReducer: Reducer<UserStateType, UserActionType> = (
   state = initialUserState,
   action
 ) => {
+  console.log("[UserReducer]:", action);
+
   switch (action.type) {
     case "SetCurrentUser":
       const user = action.payload.user;
