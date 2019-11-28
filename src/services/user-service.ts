@@ -57,6 +57,14 @@ export class UserService {
     firebase.auth().signOut();
   };
 
+  async sendPasswordResetEmail(email: string) {
+    try {
+      await firebase.auth().sendPasswordResetEmail(email);
+    } catch (error) {
+      return error.message;
+    }
+  }
+
   private async getUser(firebaseUser: firebase.User): Promise<User> {
     let defaultUser = {
       _id: firebaseUser.uid,
