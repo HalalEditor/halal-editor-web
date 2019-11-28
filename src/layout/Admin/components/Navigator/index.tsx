@@ -30,16 +30,16 @@ const Navigator: FC = () => {
   let history = useHistory();
   const classes = useStyles();
 
-  console.log(window.location.pathname);
-
   return (
-    <Drawer
-      className={classes.drawer}
-      variant="permanent"
-      classes={{
-        paper: classes.drawerPaper
-      }}
-    >
+    // <Drawer
+    //   className={classes.drawer}
+    //   variant="temporary"
+    //   open={true}
+    //   classes={{
+    //     paper: classes.drawerPaper
+    //   }}
+    // >
+    <div>
       <div className={classes.toolbar} />
       <List disablePadding>
         {DrawerItemsData.map((item, index) => (
@@ -76,7 +76,8 @@ const Navigator: FC = () => {
           </React.Fragment>
         ))}
       </List>
-    </Drawer>
+    </div>
+    // </Drawer>
   );
 };
 
