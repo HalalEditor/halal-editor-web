@@ -30,7 +30,6 @@ const LoginPage: FC = () => {
         email.value,
         password.value
       );
-      console.log("loginButtonHandle:", result);
       if (!!result) {
         services.appService.showSnackbarMessage({
           message: String(result),
@@ -38,6 +37,17 @@ const LoginPage: FC = () => {
           variant: "error"
         });
       }
+    }
+  };
+
+  const onLoginWithGoogle = async () => {
+    const result = await services.userService.signInWithGoogle();
+    if (!!result) {
+      services.appService.showSnackbarMessage({
+        message: String(result),
+        show: true,
+        variant: "error"
+      });
     }
   };
 
@@ -50,6 +60,16 @@ const LoginPage: FC = () => {
   ) : (
     <Grid container direction="row" justify="center" alignItems="center">
       <Grid className={classes.paper} item xs={10} sm={8} md={6} lg={4}>
+        <Button
+          type="button"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          onClick={onLoginWithGoogle}
+        >
+          Sign In With Google
+        </Button>
         <Avatar className={classes.avatar}>
           <LockOutlined />
         </Avatar>
