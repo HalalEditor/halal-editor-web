@@ -6,6 +6,7 @@ import Router from "./Router";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme/index";
+import CustomSnackbar from "./components/CustomSnackbar/CustomSnackbar";
 
 const App: FC = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const App: FC = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router />
+        <CustomSnackbar />
       </ThemeProvider>
     </ReduxContextProvider>
   );

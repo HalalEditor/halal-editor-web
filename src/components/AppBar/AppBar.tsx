@@ -27,8 +27,6 @@ const AppBar = ({ onDrawerOpen, showMenuIcon }: Props) => {
 
   const { store } = useReduxContextValue();
 
-  console.log(onDrawerOpen);
-
   return (
     <MaterialAppBar position="fixed">
       <Toolbar>
