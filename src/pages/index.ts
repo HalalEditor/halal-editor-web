@@ -1,10 +1,11 @@
-export { default as DashboardPage } from "./Dashboard/DashboardPage";
-export { default as Error404Page } from "./Error404/Error404Page";
+export { default as LoginPage } from "./Auth/LoginPage";
+export { default as SignupPage } from "./Auth/SignupPage";
+export { default as RecoverPassword } from "./Auth/RecoverPassword";
 export { default as HomePage } from "./Home/HomePage";
-export { default as LoginPage } from "./Login/LoginPage";
+export { default as ProfilePage } from "./Profile/ProfilePage";
+export { default as DashboardPage } from "./Dashboard/DashboardPage";
 export { default as ProductPage } from "./Product/ProductPage";
 export { default as ProductAddPage } from "./Product/ProductAddPage";
 export { default as ProductEditPage } from "./Product/ProductEditPage";
 export { default as ProductListPage } from "./Product/ProductListPage";
-export { default as ProfilePage } from "./Profile/ProfilePage";
-export { default as SignupPage } from "./Signup/SignupPage";
+export { default as Error404Page } from "./Error404/Error404Page";

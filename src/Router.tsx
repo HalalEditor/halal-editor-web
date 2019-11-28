@@ -25,6 +25,12 @@ const Router: FC = () => {
       <Route path="/" component={pages.HomePage} exact layout={DefaultLayout} />
       <Route path="/login" component={pages.LoginPage} exact layout={EmptyLayout} />
       <Route path="/signup" component={pages.SignupPage} exact layout={EmptyLayout} />
+      <Route
+        path="/recover-password"
+        component={pages.RecoverPassword}
+        exact
+        layout={EmptyLayout}
+      />
       <PrivateRoute path="/dashboard" component={pages.DashboardPage} exact layout={AdminLayout} />
       <PrivateRoute path="/profile" component={pages.ProfilePage} exact layout={AdminLayout} />
       <PrivateRoute path="/product" component={pages.ProductPage} exact layout={AdminLayout} />
