@@ -1,6 +1,4 @@
 import React, { FC, useEffect } from "react";
-import * as firebase from "firebase/app";
-import { FIREBASE_CONFIG } from "./.config";
 import ReduxContextProvider from "./contexts/redux-context";
 import Router from "./Router";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,11 +7,6 @@ import theme from "./theme/index";
 import CustomSnackbar from "./components/CustomSnackbar/CustomSnackbar";
 
 const App: FC = () => {
-  useEffect(() => {
-    console.log("[app.tsx]: useEffect");
-    firebase.initializeApp(FIREBASE_CONFIG);
-  }, []);
-
   return (
     <ReduxContextProvider>
       <ThemeProvider theme={theme}>

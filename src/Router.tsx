@@ -10,18 +10,6 @@ import * as firebase from "firebase/app";
 const browserHistory = createBrowserHistory();
 
 const Router: FC = () => {
-  const { services } = useReduxContextValue();
-
-  useEffect(() => {
-    let unsubscribe: firebase.Unsubscribe;
-    setTimeout(() => {
-      unsubscribe = services.userService.subscribeAuth();
-    }, 300);
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
