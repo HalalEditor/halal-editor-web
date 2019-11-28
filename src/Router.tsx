@@ -1,10 +1,13 @@
 import React, { FC, useEffect } from "react";
 import { Redirect, Switch } from "react-router";
+import { createBrowserHistory } from "history";
+import { Router as BrowserRouter } from "react-router-dom";
 import { Route, PrivateRoute } from "./components";
 import { useReduxContextValue } from "./contexts/redux-context";
-import { AdminLayout, DefaultLayout, EmptyLayout } from "./layout";
-import * as pages from "./pages";
+import { AdminLayout as Admin, DefaultLayout as Default, EmptyLayout as Empty } from "./layout";
+import * as p from "./pages";
 import * as firebase from "firebase/app";
+const browserHistory = createBrowserHistory();
 // import CustomSnackbar from "./components/CustomSnackbar/CustomSnackbar";
 
 const Router: FC = () => {
@@ -21,35 +24,22 @@ const Router: FC = () => {
   }, []);
 
   return (
-    <Switch>
-      <Route path="/" component={pages.HomePage} exact layout={DefaultLayout} />
-      <Route path="/login" component={pages.LoginPage} exact layout={EmptyLayout} />
-      <Route path="/signup" component={pages.SignupPage} exact layout={EmptyLayout} />
-      <Route
-        path="/recover-password"
-        component={pages.RecoverPassword}
-        exact
-        layout={EmptyLayout}
-      />
-      <PrivateRoute path="/dashboard" component={pages.DashboardPage} exact layout={AdminLayout} />
-      <PrivateRoute path="/profile" component={pages.ProfilePage} exact layout={AdminLayout} />
-      <PrivateRoute path="/product" component={pages.ProductPage} exact layout={AdminLayout} />
-      <PrivateRoute
-        path="/product/add"
-        component={pages.ProductAddPage}
-        exact
-        layout={AdminLayout}
-      />
-      <PrivateRoute
-        path="/product/edit"
-        component={pages.ProductEditPage}
-        exact
-        layout={AdminLayout}
-      />
-      <PrivateRoute path="/products" component={pages.ProductListPage} exact layout={AdminLayout} />
-      <Route path="/404" component={pages.Error404Page} exact layout={DefaultLayout} />
-      <Redirect to="/404" />
-    </Switch>
+    <BrowserRouter history={browserHistory}>
+      <Switch>
+        <Route path="/" component={p.HomePage} exact layout={Default} />
+        <Route path="/login" component={p.LoginPage} exact layout={Empty} />
+        <Route path="/signup" component={p.SignupPage} exact layout={Empty} />
+        <Route path="/recover-password" component={p.RecoverPassword} exact layout={Empty} />
+        <PrivateRoute path="/dashboard" component={p.DashboardPage} exact layout={Admin} />
+        <PrivateRoute path="/profile" component={p.ProfilePage} exact layout={Admin} />
+        <PrivateRoute path="/product" component={p.ProductPage} exact layout={Admin} />
+        <PrivateRoute path="/product/add" component={p.ProductAddPage} exact layout={Admin} />
+        <PrivateRoute path="/product/edit" component={p.ProductEditPage} exact layout={Admin} />
+        <PrivateRoute path="/products" component={p.ProductListPage} exact layout={Admin} />
+        <Route path="/404" component={p.Error404Page} exact layout={Default} />
+        <Redirect to="/404" />
+      </Switch>
+    </BrowserRouter>
   );
 };
 
