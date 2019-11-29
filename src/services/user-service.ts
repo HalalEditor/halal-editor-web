@@ -32,6 +32,7 @@ export class UserService {
       var provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope("profile");
       provider.addScope("email");
+
       const result = await firebase.auth().signInWithPopup(provider);
       console.log("signInWithGoogle:", result);
     } catch (error) {
@@ -42,19 +43,33 @@ export class UserService {
   subscribeAuth = () => {
     const unSubscribe = firebase.auth().onAuthStateChanged(async res => {
       console.log("subscribeAuth:", res);
-
-      const currentUser = !res ? undefined : await this.getUser(res);
-
-      this.dispatch({
-        type: "SetCurrentUser",
-        payload: { user: currentUser }
-      });
+      if (!!res) {
+        const currentUser = await this.getUser(res);
+        this.setLocalUser(currentUser);
+        this.dispatch({
+          type: "SetCurrentUser",
+          payload: { user: currentUser }
+        });
+      } else {
+        this.setLocalUser(undefined);
+        this.dispatch({
+          type: "SetCurrentUser",
+          payload: { user: undefined }
+        });
+      }
     });
     return unSubscribe;
   };
 
   logout = () => {
     firebase.auth().signOut();
+  };
+
+  initCurrentUser = () => {
+    this.dispatch({
+      type: "SetCurrentUser",
+      payload: { user: this.getLocalUser() }
+    });
   };
 
   async sendPasswordResetEmail(email: string) {
@@ -66,17 +81,7 @@ export class UserService {
   }
 
   private async getUser(firebaseUser: firebase.User): Promise<User> {
-    let defaultUser = {
-      _id: firebaseUser.uid,
-      username: !!firebaseUser.displayName
-        ? firebaseUser.displayName
-        : (firebaseUser.email as string).split("@")[0],
-      email: firebaseUser.email,
-      emailVerified: firebaseUser.emailVerified,
-      photoURL: firebaseUser.photoURL,
-      userCategory: "normal"
-    } as User;
-
+    let defaultUser = this.getDefaultUser(firebaseUser);
     try {
       let result = await firebase
         .firestore()
@@ -105,6 +110,36 @@ export class UserService {
       return defaultUser;
     }
   }
+
+  private getDefaultUser = (firebaseUser: firebase.User) => {
+    return {
+      _id: firebaseUser.uid,
+      username: !!firebaseUser.displayName
+        ? firebaseUser.displayName
+        : (firebaseUser.email as string).split("@")[0],
+      email: firebaseUser.email,
+      emailVerified: firebaseUser.emailVerified,
+      photoURL: firebaseUser.photoURL,
+      userCategory: "normal"
+    } as User;
+  };
+
+  private setLocalUser = (user?: User) => {
+    const lastUser = !!user
+      ? JSON.stringify({
+          _id: user._id,
+          email: user.email,
+          username: user.username,
+          photoURL: user.photoURL
+        })
+      : "";
+    localStorage.setItem("lastUser", lastUser);
+  };
+
+  getLocalUser = (): User | undefined => {
+    const lastUser = localStorage.getItem("lastUser");
+    return !!lastUser ? (JSON.parse(lastUser) as User) : undefined;
+  };
 
   private checkUserMissingInfo(
     dbUser: User,
