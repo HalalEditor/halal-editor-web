@@ -39,7 +39,7 @@ const ReduxContextProvider = (props: Props) => {
       };
     },
     /*
-     * TODO: Remove above line before production
+     * TODO: Remove following commented line before production
      * https://github.com/facebook/create-react-app/issues/6880
      */
     // eslint-disable-next-line react-hooks/exhaustive-deps
