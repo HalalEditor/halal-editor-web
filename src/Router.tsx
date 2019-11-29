@@ -1,12 +1,10 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { Redirect, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 import { Router as BrowserRouter } from "react-router-dom";
 import { Route, PrivateRoute } from "./components";
-import { useReduxContextValue } from "./contexts/redux-context";
 import { AdminLayout as Admin, DefaultLayout as Default, EmptyLayout as Empty } from "./layout";
 import * as p from "./pages";
-import * as firebase from "firebase/app";
 const browserHistory = createBrowserHistory();
 
 const Router: FC = () => {
