@@ -147,7 +147,7 @@ export class UserService {
   ): { isUserUpdate: boolean; updatedUser: User } {
     let isUserUpdate = false;
 
-    if (dbUser.emailVerified != firebaseUser.emailVerified) {
+    if (dbUser.emailVerified !== firebaseUser.emailVerified) {
       dbUser.emailVerified = firebaseUser.emailVerified;
       isUserUpdate = true;
     }
