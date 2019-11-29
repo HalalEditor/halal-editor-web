@@ -10,8 +10,11 @@ interface Props {
 }
 
 const PrivateRoute = ({ component, layout, path, exact }: Props) => {
-  const { store } = useReduxContextValue();
-  const { isAuth } = store.userState;
+  const { store, services } = useReduxContextValue();
+  const { currentUser } = store.userState;
+
+  const localUser = services.userService.getLocalUser();
+  const isAuth = !!currentUser || !!localUser;
 
   const Layout = layout;
   const Component = component;
