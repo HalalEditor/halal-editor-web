@@ -1,4 +1,3 @@
-import * as firebase from "firebase/app";
 import "firebase/firebase-firestore";
 import { Dispatch } from "react";
 import { ProductActionType } from "../store/product-store";
