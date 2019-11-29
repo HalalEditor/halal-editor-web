@@ -28,15 +28,23 @@ const ReduxContextProvider = (props: Props) => {
   const appService = new AppService(appDispatch);
   const productService = new ProductService(productDispatch);
 
-  useEffect(() => {
-    userService.initCurrentUser();
-    console.log("ReduxContextProvider useEffect");
-    firebase.initializeApp(FIREBASE_CONFIG);
-    const unsubscribe = userService.subscribeAuth();
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  useEffect(
+    () => {
+      userService.initCurrentUser();
+      console.log("ReduxContextProvider useEffect");
+      firebase.initializeApp(FIREBASE_CONFIG);
+      const unsubscribe = userService.subscribeAuth();
+      return () => {
+        unsubscribe();
+      };
+    },
+    /*
+     * TODO: Remove above line before production
+     * https://github.com/facebook/create-react-app/issues/6880
+     */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   const appReduxValue: ReduxValueType = {
     store: { userState, appState, productState },
