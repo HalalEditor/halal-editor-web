@@ -29,6 +29,7 @@ const ReduxContextProvider = (props: Props) => {
   const productService = new ProductService(productDispatch);
 
   useEffect(() => {
+    userService.initCurrentUser();
     console.log("ReduxContextProvider useEffect");
     firebase.initializeApp(FIREBASE_CONFIG);
     const unsubscribe = userService.subscribeAuth();
