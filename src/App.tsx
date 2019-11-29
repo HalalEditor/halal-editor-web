@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import ReduxContextProvider from "./contexts/redux-context";
 import Router from "./Router";
 import CssBaseline from "@material-ui/core/CssBaseline";
