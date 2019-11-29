@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { useHistory } from "react-router-dom";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
+import { List, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
 
 import clsx from "clsx";
 import HomeIcon from "@material-ui/icons/Home";
