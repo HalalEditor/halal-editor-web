@@ -1,16 +1,7 @@
 import React, { FC, useState } from "react";
 import { useReduxContextValue } from "../../contexts/redux-context";
 import { Redirect, useHistory } from "react-router";
-import {
-  Avatar,
-  Button,
-  FormControlLabel,
-  Checkbox,
-  Link,
-  Box,
-  Grid,
-  Typography
-} from "@material-ui/core";
+import { Avatar, Button, Link, Box, Grid, Typography } from "@material-ui/core";
 import { LockOutlined } from "@material-ui/icons";
 import { Copyright } from "../../components";
 import { useStyles } from "./styles";
