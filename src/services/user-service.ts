@@ -20,7 +20,12 @@ export class UserService {
 
   async createUserWithEmailAndPassword(email: string, password: string) {
     try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const result: firebase.auth.UserCredential = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+      if (!!result.user) {
+        await result.user.sendEmailVerification();
+      }
       return null;
     } catch (error) {
       return error;
