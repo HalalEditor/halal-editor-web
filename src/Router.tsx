@@ -17,7 +17,7 @@ const Router: FC = () => {
         <Route path="/recover-password" component={p.RecoverPassword} exact layout={Empty} />
         <PrivateRoute path="/dashboard" component={p.DashboardPage} exact layout={Admin} />
         <PrivateRoute path="/profile" component={p.ProfilePage} exact layout={Admin} />
-        <PrivateRoute path="/product" component={p.ProductPage} exact layout={Admin} />
+        <PrivateRoute path="/users" component={p.UserList} exact layout={Admin} />
         <PrivateRoute path="/product/add" component={p.ProductAddPage} exact layout={Admin} />
         <PrivateRoute path="/product/edit" component={p.ProductEditPage} exact layout={Admin} />
         <PrivateRoute path="/products" component={p.ProductListPage} exact layout={Admin} />

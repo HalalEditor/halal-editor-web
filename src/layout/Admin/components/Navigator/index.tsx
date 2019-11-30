@@ -14,7 +14,8 @@ const DrawerItemsData = [
     id: "Halal Editor",
     children: [
       { id: "Dashboard", path: "/dashboard", icon: <HomeIcon />, active: true },
-      { id: "My Profile", path: "/profile", icon: <PeopleIcon /> }
+      { id: "My Profile", path: "/profile", icon: <PeopleIcon /> },
+      { id: "User List", path: "/users", icon: <PeopleIcon /> }
     ]
   },
   {
