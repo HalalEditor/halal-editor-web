@@ -7,9 +7,6 @@ import { AppService } from "../services/app-service";
 import { ProductReducer, initialProductState } from "../store/product-store";
 import { ProductService } from "../services/product-service";
 
-import * as firebase from "firebase/app";
-import { FIREBASE_CONFIG } from "../.config";
-
 export const ReduxContext = createContext<ReduxValueType>({} as ReduxValueType);
 export const useReduxContextValue = () => useContext(ReduxContext);
 
@@ -32,7 +29,6 @@ const ReduxContextProvider = (props: Props) => {
     () => {
       userService.initCurrentUser();
       console.log("ReduxContextProvider useEffect");
-      firebase.initializeApp(FIREBASE_CONFIG);
       const unsubscribe = userService.subscribeAuth();
       return () => {
         unsubscribe();
