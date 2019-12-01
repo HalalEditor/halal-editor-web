@@ -28,7 +28,7 @@ interface Props {
   onClick: () => void;
 }
 
-const UserCard = ({ user, onClick }: Props) => {
+const UserItem = ({ user, onClick }: Props) => {
   const classes = useStyles();
 
   return (
@@ -44,4 +44,4 @@ const UserCard = ({ user, onClick }: Props) => {
   );
 };
 
-export default UserCard;
+export default UserItem;

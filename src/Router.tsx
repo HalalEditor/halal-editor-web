@@ -19,8 +19,6 @@ const Router = () => {
         <PrivateRoute path="/profile" component={p.Profile} exact layout={Admin} />
         <PrivateRoute path="/user/:id" component={p.User} exact layout={Admin} />
         <PrivateRoute path="/users" component={p.UserList} exact layout={Admin} />
-        <PrivateRoute path="/product/add" component={p.ProductAdd} exact layout={Admin} />
-        <PrivateRoute path="/product/edit" component={p.ProductEdit} exact layout={Admin} />
         <PrivateRoute path="/products" component={p.ProductList} exact layout={Admin} />
         <Route path="/404" component={p.Error404} exact layout={Default} />
         <Redirect to="/404" />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
-import { validatePassword } from "../../services/helper";
+import { validatePassword } from "../../../services/helper";
 
 type PropType = {
   isMatchInput: boolean;

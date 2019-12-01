@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Button, Grid, Typography } from "@material-ui/core";
-import { SearchInput } from "../../components";
-import UserCard from "./components/UserCard";
-import { useReduxContextValue } from "../../contexts/redux-context";
+import { SearchInput } from "../../../components";
+import UserItem from "../components/UserItem";
+import { useReduxContextValue } from "../../../contexts/redux-context";
 
-const LOAD_LIMIT = 2;
+const LOAD_LIMIT = 10;
 
 const UserListPage = () => {
   const classes = useStyles();
@@ -34,7 +34,7 @@ const UserListPage = () => {
   let users = userState.userList.map(user => {
     //TODO add property (user-category, email-verified) to user card
     //TODO connect user image
-    return <UserCard key={user._id} user={user} onClick={() => console.log(user._id)} />;
+    return <UserItem key={user._id} user={user} onClick={() => console.log(user._id)} />;
   });
   for (let i = 0; i < 10; i++) {
     users.push();

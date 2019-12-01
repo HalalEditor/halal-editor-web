@@ -20,10 +20,7 @@ const DrawerItemsData = [
   },
   {
     id: "Products",
-    children: [
-      { id: "Products List", path: "/products", icon: <DnsRoundedIcon /> },
-      { id: "Add Product", path: "/product/add", icon: <DnsRoundedIcon /> }
-    ]
+    children: [{ id: "Products List", path: "/products", icon: <DnsRoundedIcon /> }]
   }
 ];
 

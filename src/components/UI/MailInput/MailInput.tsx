@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
-import { validateEmail } from "../../services/helper";
+import { validateEmail } from "../../../services/helper";
 
 type PropType = {
   defaultValue?: string;

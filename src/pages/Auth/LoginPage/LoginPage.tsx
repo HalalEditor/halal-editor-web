@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { useReduxContextValue } from "../../contexts/redux-context";
+import { useReduxContextValue } from "../../../contexts/redux-context";
 import { Redirect, useHistory } from "react-router";
 import {
   Avatar,
@@ -12,10 +12,9 @@ import {
   Typography
 } from "@material-ui/core";
 import { LockOutlined } from "@material-ui/icons";
-import { Copyright } from "../../components";
-import { useStyles } from "./styles";
-import MailInput from "../../components/UI/MailInput";
-import PasswordInput from "../../components/UI/PasswordInput";
+import { Copyright } from "../../../components";
+import { MailInput, PasswordInput } from "../../../components/UI";
+import { useStyles } from "../styles";
 
 const LoginPage: FC = () => {
   let history = useHistory();
