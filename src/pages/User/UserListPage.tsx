@@ -1,28 +1,43 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { SearchInput } from "../../components";
 import UserCard from "./components/UserCard";
-import TablePagination from "@material-ui/core/TablePagination";
+import { useReduxContextValue } from "../../contexts/redux-context";
 
-const onChange = () => {
-  console.log("UserListPage.tsx: onChange");
-};
+const LOAD_LIMIT = 2;
 
 const UserListPage = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const { store, services } = useReduxContextValue();
+  const { userList } = store.userState;
 
-  const handleUserClick = (id: number) => {
-    history.push("/user/" + id);
+  const [loadPage, setLoadPage] = useState({ limit: LOAD_LIMIT, searchKey: "" });
+
+  const { userService } = services;
+  const { userState } = store;
+
+  useEffect(() => {
+    const lastLoadUserId = userList.length > 0 ? userList[userList.length - 1]._id : undefined;
+    userService.loadUserList(loadPage.limit, lastLoadUserId, loadPage.searchKey);
+  }, [loadPage]);
+
+  const loadMoreUser = () => {
+    setLoadPage({ ...loadPage });
   };
 
-  let users = [];
+  const handleSearchEvent = (searchKey: string) => {
+    //TODO: add debounce time
+    setLoadPage({ searchKey: searchKey, limit: LOAD_LIMIT });
+  };
+
+  let users = userState.userList.map(user => {
+    //TODO add property (user-category, email-verified) to user card
+    //TODO connect user image
+    return <UserCard key={user._id} user={user} onClick={() => console.log(user._id)} />;
+  });
   for (let i = 0; i < 10; i++) {
-    users.push(
-      <UserCard name="John Doe" email="john.doe@gmail.com" onClick={() => handleUserClick(i + 1)} />
-    );
+    users.push();
   }
 
   return (
@@ -31,13 +46,15 @@ const UserListPage = () => {
         <Typography variant="h3">User List</Typography>
         <span className={classes.spacer} />
         <SearchInput
-          onChange={() => onChange}
+          onChange={event => {
+            handleSearchEvent(event.target.value);
+          }}
           className={classes.searchInput}
           placeholder="Search user"
         />
 
-        <Button color="primary" variant="contained">
-          Add user
+        <Button color="primary" variant="contained" onClick={loadMoreUser}>
+          load more user
         </Button>
       </div>
       <div className={classes.row}>
@@ -47,18 +64,7 @@ const UserListPage = () => {
           </Grid>
         </div>
       </div>
-      <div className={classes.row}>
-        <span className={classes.spacer} />
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 100]}
-          component="div"
-          count={20}
-          rowsPerPage={5}
-          page={0}
-          onChangePage={() => console.log("onChangePage")}
-          onChangeRowsPerPage={() => console.log("onChangeRowsPerPage")}
-        />
-      </div>
+      //TODO add infinity scroll
     </div>
   );
 };
