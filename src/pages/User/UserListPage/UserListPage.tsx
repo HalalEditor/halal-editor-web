@@ -17,10 +17,18 @@ const UserListPage = () => {
   const { userService } = services;
   const { userState } = store;
 
-  useEffect(() => {
-    const lastLoadUserId = userList.length > 0 ? userList[userList.length - 1]._id : undefined;
-    userService.loadUserList(loadPage.limit, lastLoadUserId, loadPage.searchKey);
-  }, [loadPage]);
+  useEffect(
+    () => {
+      const lastLoadUserId = userList.length > 0 ? userList[userList.length - 1]._id : undefined;
+      userService.loadUserList(loadPage.limit, lastLoadUserId, loadPage.searchKey);
+    },
+    /*
+     * TODO: Remove following commented line before production
+     * https://github.com/facebook/create-react-app/issues/6880
+     */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [loadPage]
+  );
 
   const loadMoreUser = () => {
     setLoadPage({ ...loadPage });
