@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 interface Props {
   className: string;
-  onChange: () => void;
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   placeholder: string;
 }
 
