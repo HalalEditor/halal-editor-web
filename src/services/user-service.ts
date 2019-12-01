@@ -77,6 +77,45 @@ export class UserService {
     });
   };
 
+  loadUserList = (limit: number, lastUserId?: string, searchingMail?: string) => {
+    if (!lastUserId || !!searchingMail) {
+      this.dispatch({ type: "ClearUserList", payload: {} });
+    }
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const query = !!searchingMail
+          ? await firebase
+              .firestore()
+              .collection("users")
+              .where("email", "==", searchingMail)
+              .get()
+          : await firebase
+              .firestore()
+              .collection("users")
+              .orderBy("_id")
+              .startAfter(!lastUserId ? 0 : lastUserId)
+              .limit(limit)
+              .get();
+
+        const loadUser = query.docs.map(async user => {
+          const data = await user.data();
+          if (!!data) {
+            return { ...data } as User;
+          }
+        });
+        Promise.all(loadUser)
+          .then(userList => {
+            const undefinedValuesClear = userList.filter(user => !!user) as User[];
+            this.dispatch({ type: "AddUserList", payload: { userList: undefinedValuesClear } });
+          })
+          .then(_ => resolve());
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
   async sendPasswordResetEmail(email: string) {
     try {
       await firebase.auth().sendPasswordResetEmail(email);
@@ -172,4 +211,17 @@ export class UserService {
       updatedUser: dbUser
     };
   }
+
+  createTestUsers = () => {
+    for (let index = 0; index < 50; index++) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(`test${index + 1}@test.com`, "123456")
+        .then(res => {
+          if (!!res.user) {
+            this.getUser(res.user);
+          }
+        });
+    }
+  };
 }
