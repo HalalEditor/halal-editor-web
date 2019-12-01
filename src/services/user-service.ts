@@ -116,6 +116,16 @@ export class UserService {
     });
   };
 
+  getUserCount = async (): Promise<number> => {
+    const query = await firebase
+      .firestore()
+      .collection("users")
+      .get();
+    const userCount = query.size;
+    console.log(userCount);
+
+    return userCount;
+  };
   async sendPasswordResetEmail(email: string) {
     try {
       await firebase.auth().sendPasswordResetEmail(email);
