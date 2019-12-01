@@ -4,6 +4,7 @@ import { Card, Grid, Typography } from "@material-ui/core";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import { indigo, yellow } from "@material-ui/core/colors";
+import { User } from "../../../models/user";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,12 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  name: string;
-  email: string;
+  user: User;
   onClick: () => void;
 }
 
-const UserCard = ({ name, email, onClick }: Props) => {
+const UserCard = ({ user, onClick }: Props) => {
   const classes = useStyles();
 
   return (
@@ -36,8 +36,8 @@ const UserCard = ({ name, email, onClick }: Props) => {
       <Card className={classes.card} onClick={() => onClick()}>
         <CardHeader
           avatar={<Avatar className={classes.avatar}>A</Avatar>}
-          title={<Typography className={classes.title}>{name}</Typography>}
-          subheader={email}
+          title={<Typography className={classes.title}>{user.username}</Typography>}
+          subheader={user.email}
         />
       </Card>
     </Grid>
