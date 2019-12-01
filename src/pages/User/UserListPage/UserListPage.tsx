@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { SearchInput } from "../../../components";
 import UserItem from "../components/UserItem";
 import { useReduxContextValue } from "../../../contexts/redux-context";
+import { useStyles } from "./styles";
 
 const LOAD_LIMIT = 10;
 
@@ -78,27 +78,3 @@ const UserListPage = () => {
 };
 
 export default UserListPage;
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1
-    },
-    content: {
-      display: "flex",
-      alignItems: "center",
-      marginTop: theme.spacing(2)
-    },
-    spacer: {
-      flexGrow: 1
-    },
-    row: {
-      display: "flex",
-      alignItems: "center"
-      // marginTop: theme.spacing(1)
-    },
-    searchInput: {
-      marginRight: theme.spacing(1)
-    }
-  })
-);

@@ -1,27 +1,7 @@
 import React from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { Card, Grid, Typography } from "@material-ui/core";
-import CardHeader from "@material-ui/core/CardHeader";
-import Avatar from "@material-ui/core/Avatar";
-import { indigo, yellow } from "@material-ui/core/colors";
+import { Avatar, Card, CardHeader, Grid, Typography } from "@material-ui/core";
 import { User } from "../../../models/user";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    card: {
-      "&:hover": {
-        backgroundColor: yellow[50],
-        cursor: "pointer"
-      }
-    },
-    avatar: {
-      backgroundColor: indigo[300]
-    },
-    title: {
-      fontWeight: 500
-    }
-  })
-);
+import { useStyles } from "./styles";
 
 interface Props {
   user: User;
