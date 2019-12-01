@@ -5,6 +5,7 @@ import { Reducer } from "react";
 export type UserStateType = {
   currentUser?: User;
   isAuth: boolean;
+  userList: User[];
 };
 
 export type UserActionType = {
@@ -12,11 +13,12 @@ export type UserActionType = {
   payload: UserPayloadType;
 };
 
-type UserPayloadType = { user?: User };
+type UserPayloadType = { user?: User; userList?: User[] };
 
 export const initialUserState: UserStateType = {
   currentUser: undefined,
-  isAuth: false
+  isAuth: false,
+  userList: []
 };
 
 export const UserReducer: Reducer<UserStateType, UserActionType> = (
@@ -29,6 +31,12 @@ export const UserReducer: Reducer<UserStateType, UserActionType> = (
     case "SetCurrentUser":
       const user = action.payload.user;
       return { ...state, currentUser: user, isAuth: !!user };
+    case "AddUserList":
+      return action.payload.userList
+        ? { ...state, userList: [...state.userList, ...action.payload.userList] }
+        : { ...state };
+    case "ClearUserList":
+      return { ...state, userList: [] };
 
     default:
       return { ...state };
