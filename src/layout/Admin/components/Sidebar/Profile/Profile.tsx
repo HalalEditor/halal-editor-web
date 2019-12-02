@@ -3,17 +3,12 @@ import { Link as RouterLink } from "react-router-dom";
 import { Avatar, Typography } from "@material-ui/core";
 import { useStyles } from "./styles";
 import { useReduxContextValue } from "../../../../../contexts/redux-context";
+import { User } from "../../../../../models/user";
 
 const Profile = () => {
   const classes = useStyles();
   const { store } = useReduxContextValue();
-
-  const currentUser = store.userState.currentUser;
-  const user = {
-    name: !!currentUser ? currentUser.username : "",
-    avatar: !!currentUser ? currentUser.photoURL : "",
-    email: !!currentUser ? currentUser.email : ""
-  };
+  const currentUser = store.userState.currentUser as User;
 
   return (
     <React.Fragment>
@@ -22,13 +17,13 @@ const Profile = () => {
           alt="Person"
           className={classes.avatar}
           component={RouterLink}
-          src={user.avatar}
+          src={currentUser.photoURL}
           to="/profile"
         />
         <Typography className={classes.name} variant="h4">
-          {user.name}
+          {currentUser.username}
         </Typography>
-        <Typography variant="body2">{user.email}</Typography>
+        <Typography variant="body2">{currentUser.email}</Typography>
       </div>
     </React.Fragment>
   );
