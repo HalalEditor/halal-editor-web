@@ -1,7 +1,8 @@
 import React from "react";
 import clsx from "clsx";
 import { AppBar } from "../../components";
-import Navigator from "./components/Navigator";
+import Navigator from "./components/Sidebar/Navigator/Navigator";
+import Profile from "./components/Sidebar/Profile/Profile";
 import { useStyles } from "./styles";
 import { useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -44,12 +45,9 @@ const AdminLayout = (props: Props) => {
         open={shouldOpenSidebar}
         variant={chooseVariant}
       >
+        <div className={classes.toolbar} />
+        <Profile />
         <Navigator />
-        {/* <div {...rest} className={clsx(classes.root, className)}>
-          {/* <Profile />
-          <Divider className={classes.divider} />
-          <SidebarNav className={classes.nav} pages={pages} />
-        </div> */}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
