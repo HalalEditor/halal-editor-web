@@ -19,9 +19,18 @@ const DrawerItemsData = [
   }
 ];
 
-const Navigator = () => {
+interface Props {
+  onMenuItemClick: () => void;
+}
+
+const Navigator = ({ onMenuItemClick }: Props) => {
   let history = useHistory();
   const classes = useStyles();
+
+  const handleMenuItemClick = (path: string) => {
+    onMenuItemClick();
+    history.push(path);
+  };
 
   return (
     <React.Fragment>
@@ -44,7 +53,7 @@ const Navigator = () => {
                     classes.button,
                     window.location.pathname === item.path && classes.active
                   )}
-                  onClick={() => history.push(item.path)}
+                  onClick={() => handleMenuItemClick(item.path)}
                 >
                   <ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
                   {item.id}
