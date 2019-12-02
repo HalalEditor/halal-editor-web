@@ -3,15 +3,23 @@ import { useState, useEffect } from "react";
 const useInfiniteScroll = (fetchCallback: any) => {
   const [isFetching, setIsFetching] = useState(false);
 
-  useEffect(() => {
-    if (!isFetching) return;
-    fetchCallback();
-  }, [isFetching]);
+  useEffect(
+    () => {
+      if (!isFetching) return;
+      fetchCallback();
+    },
+    // eslint-disable-next-line
+    [isFetching]
+  );
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  useEffect(
+    () => {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   function handleScroll() {
     const offsetHeight = document.documentElement.offsetHeight;

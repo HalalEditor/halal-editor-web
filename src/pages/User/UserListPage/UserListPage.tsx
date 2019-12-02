@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid, Typography, CircularProgress } from "@material-ui/core";
+import { Grid, Typography, CircularProgress } from "@material-ui/core";
 import { SearchInput } from "../../../components";
 import UserItem from "../components/UserItem";
 import { useReduxContextValue } from "../../../contexts/redux-context";
 import { useStyles } from "./styles";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
 
-const LOAD_LIMIT = 2;
+const LOAD_LIMIT = 10;
 
 const UserListPage = () => {
   const classes = useStyles();
@@ -20,11 +20,15 @@ const UserListPage = () => {
   const { userService } = services;
   const { userState } = store;
 
-  useEffect(() => {
-    userService.getUserCount().then(count => {
-      setUserCount(count);
-    });
-  }, []);
+  useEffect(
+    () => {
+      userService.getUserCount().then(count => {
+        setUserCount(count);
+      });
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   useEffect(
     () => {
@@ -34,11 +38,7 @@ const UserListPage = () => {
         setIsFetching(false);
       });
     },
-    /*
-     * TODO: Remove following commented line before production
-     * https://github.com/facebook/create-react-app/issues/6880
-     */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     [loadPage]
   );
 
