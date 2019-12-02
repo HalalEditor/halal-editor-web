@@ -6,7 +6,7 @@ import { useReduxContextValue } from "../../../contexts/redux-context";
 import { useStyles } from "./styles";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
 
-const LOAD_LIMIT = 10;
+const LOAD_LIMIT = 2;
 
 const UserListPage = () => {
   const classes = useStyles();
