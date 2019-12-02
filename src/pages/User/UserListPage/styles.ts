@@ -4,10 +4,9 @@ export const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1
     },
-    content: {
-      display: "flex",
-      alignItems: "center",
-      marginTop: theme.spacing(2)
+    itemContainer: {
+      marginTop: 20,
+      marginBottom: 20
     },
     spacer: {
       flexGrow: 1

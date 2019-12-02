@@ -76,23 +76,16 @@ const UserListPage = () => {
           className={classes.searchInput}
           placeholder="Search user"
         />
-
-        <Button color="primary" variant="contained" onClick={loadMoreUser}>
-          load more user
-        </Button>
       </div>
       <div>has More: {userCount > userState.userList.length ? "true" : "false"}</div>
       <div>user count: {userCount}</div>
       <div>list count: {userState.userList.length}</div>
       <div>is fetching: {isFetching ? "true" : "false"}</div>
 
-      <div className={classes.row}>
-        <div className={classes.content}>
-          <Grid container spacing={2}>
-            {users}
-          </Grid>
-        </div>
-      </div>
+      <Grid className={classes.itemContainer} container spacing={2}>
+        {users}
+      </Grid>
+
       <div>{isFetching && <CircularProgress color="secondary" />}</div>
     </div>
   );
