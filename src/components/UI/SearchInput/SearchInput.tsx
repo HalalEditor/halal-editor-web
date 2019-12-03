@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Input } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import { debounce, Cancelable } from "lodash";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,12 +27,33 @@ const useStyles = makeStyles(theme => ({
 
 interface Props {
   className: string;
-  onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  onChange: (value: string) => void;
   placeholder: string;
+  debounceTime?: number;
 }
 
-const SearchInput = ({ className, onChange, placeholder }: Props) => {
+const SearchInput = ({ className, onChange, placeholder, debounceTime }: Props) => {
   const classes = useStyles();
+  let fireOnChange: ((() => void) & Cancelable) | undefined;
+
+  const onInputChangeHandler = (event: any) => {
+    if (!!event) {
+      const value = event.target.value;
+
+      if (!!fireOnChange) {
+        fireOnChange.cancel();
+      }
+      fireOnChange = debounce(
+        () => {
+          onChange(value);
+          fireOnChange = undefined;
+        },
+        !!debounceTime ? debounceTime : 500
+      );
+
+      fireOnChange();
+    }
+  };
 
   return (
     <Paper className={clsx(classes.root, className)}>
@@ -39,7 +61,7 @@ const SearchInput = ({ className, onChange, placeholder }: Props) => {
       <Input
         className={classes.input}
         disableUnderline
-        onChange={onChange}
+        onChange={onInputChangeHandler}
         placeholder={placeholder}
       />
     </Paper>
