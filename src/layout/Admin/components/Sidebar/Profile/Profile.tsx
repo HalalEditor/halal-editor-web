@@ -10,7 +10,7 @@ const Profile = () => {
   const { store } = useReduxContextValue();
   const currentUser = store.userState.currentUser as User;
 
-  return (
+  return !currentUser ? null : (
     <React.Fragment>
       <div className={classes.root}>
         <Avatar
