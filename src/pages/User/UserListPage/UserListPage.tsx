@@ -86,7 +86,7 @@ const UserListPage = () => {
         {users}
       </Grid>
 
-      <div>{isFetching && <CircularProgress color="secondary" />}</div>
+      {isFetching && <CircularProgress color="secondary" />}
     </div>
   );
 };
