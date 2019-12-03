@@ -2,13 +2,13 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Avatar, Typography } from "@material-ui/core";
 import { useStyles } from "./styles";
-import { useReduxContextValue } from "../../../../../contexts/redux-context";
-import { User } from "../../../../../models/user";
 
-const Profile = () => {
+interface Props {
+  currentUser?: any;
+}
+
+const Profile = ({ currentUser }: Props) => {
   const classes = useStyles();
-  const { store } = useReduxContextValue();
-  const currentUser = store.userState.currentUser as User;
 
   return !currentUser ? null : (
     <React.Fragment>
