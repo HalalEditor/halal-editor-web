@@ -51,7 +51,6 @@ const UserListPage = () => {
   }
 
   const handleSearchEvent = (searchKey: string) => {
-    //TODO: add debounce time
     setLoadPage({ searchKey: searchKey, limit: LOAD_LIMIT });
   };
 
@@ -70,8 +69,8 @@ const UserListPage = () => {
         <Typography variant="h3">User List</Typography>
         <span className={classes.spacer} />
         <SearchInput
-          onChange={event => {
-            handleSearchEvent(event.target.value);
+          onChange={value => {
+            handleSearchEvent(value);
           }}
           className={classes.searchInput}
           placeholder="Search user"
