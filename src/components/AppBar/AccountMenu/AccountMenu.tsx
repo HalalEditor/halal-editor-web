@@ -30,7 +30,7 @@ const AccountMenu = ({ currentUser }: Props) => {
   };
 
   return !currentUser ? null : (
-    <div>
+    <React.Fragment>
       <IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
@@ -59,7 +59,7 @@ const AccountMenu = ({ currentUser }: Props) => {
         <MenuItem onClick={() => handleMenuItemClick("/dashboard")}>Dashboard</MenuItem>
         <MenuItem onClick={() => services.userService.logout()}>Logout</MenuItem>
       </Menu>
-    </div>
+    </React.Fragment>
   );
 };
 
