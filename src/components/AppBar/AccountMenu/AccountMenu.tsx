@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { IconButton, Menu, MenuItem } from "@material-ui/core";
+import { Avatar, IconButton, Menu, MenuItem } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
-import { useReduxContextValue } from "../../contexts/redux-context";
+import { useReduxContextValue } from "../../../contexts/redux-context";
 import { useHistory } from "react-router";
+import { useStyles } from "./styles";
 
-const AccountMenu = () => {
+interface Props {
+  currentUser?: any;
+}
+
+const AccountMenu = ({ currentUser }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const history = useHistory();
+  const classes = useStyles();
   const isMenuOpen = Boolean(anchorEl);
   const { services } = useReduxContextValue();
 
@@ -18,7 +24,7 @@ const AccountMenu = () => {
     setAnchorEl(null);
   };
 
-  return (
+  return !currentUser ? null : (
     <div>
       <IconButton
         aria-label="account of current user"
@@ -27,7 +33,15 @@ const AccountMenu = () => {
         onClick={handleMenu}
         color="inherit"
       >
-        <AccountCircle />
+        {currentUser.photoURL ? (
+          <Avatar
+            className={classes.avatar}
+            alt={currentUser.username}
+            src={currentUser.photoURL}
+          />
+        ) : (
+          <AccountCircle />
+        )}
       </IconButton>
       <Menu
         id="menu-appbar"

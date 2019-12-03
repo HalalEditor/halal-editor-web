@@ -1,12 +1,15 @@
 import React from "react";
 import clsx from "clsx";
+import { Drawer } from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
+import { useStyles } from "./styles";
 import { AppBar } from "../../components";
 import Navigator from "./components/Sidebar/Navigator/Navigator";
 import Profile from "./components/Sidebar/Profile/Profile";
-import { useStyles } from "./styles";
-import { useTheme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+
+import { useReduxContextValue } from "../../contexts/redux-context";
+import { User } from "../../models/user";
 
 type Props = {
   children: React.ReactNode;
@@ -15,6 +18,9 @@ type Props = {
 const AdminLayout = (props: Props) => {
   const classes = useStyles();
   const theme = useTheme();
+  const { store } = useReduxContextValue();
+  const currentUser = store.userState.currentUser as User;
+
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"), {
     defaultMatches: true
   });
@@ -37,7 +43,11 @@ const AdminLayout = (props: Props) => {
         [classes.shiftContent]: isDesktop
       })}
     >
-      <AppBar onDrawerOpen={() => toggleDrawer(true)} showMenuIcon={showMenuIcon} />
+      <AppBar
+        currentUser={currentUser}
+        onDrawerOpen={() => toggleDrawer(true)}
+        showMenuIcon={showMenuIcon}
+      />
       <Drawer
         anchor="left"
         classes={{ paper: classes.drawer }}

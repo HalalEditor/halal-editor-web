@@ -11,14 +11,15 @@ import { Menu as MenuIcon, Search as SearchIcon } from "@material-ui/icons";
 import { useReduxContextValue } from "../../contexts/redux-context";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./styles";
-import AccountMenu from "./AccountMenu";
+import AccountMenu from "./AccountMenu/AccountMenu";
 
 interface Props {
   onDrawerOpen?: () => void;
   showMenuIcon?: boolean;
+  currentUser?: any;
 }
 
-const AppBar = ({ onDrawerOpen, showMenuIcon }: Props) => {
+const AppBar = ({ onDrawerOpen, showMenuIcon, currentUser }: Props) => {
   let history = useHistory();
   const classes = useStyles();
 
@@ -56,7 +57,7 @@ const AppBar = ({ onDrawerOpen, showMenuIcon }: Props) => {
         </div>
 
         {store.userState.isAuth ? (
-          <AccountMenu />
+          <AccountMenu currentUser={currentUser} />
         ) : (
           <div>
             <MenuItem onClick={() => history.push("/login")}>Login</MenuItem>
