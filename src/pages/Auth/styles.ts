@@ -30,5 +30,20 @@ export const useStyles = makeStyles(theme => ({
   },
   textField: {
     width: 200
+  },
+  googleButton: {
+    backgroundColor: theme.palette.grey[50],
+    color: theme.palette.grey[600],
+    textTransform: "none",
+    // justifyContent: "left",
+    "&:hover": {
+      backgroundColor: theme.palette.grey[300],
+      color: theme.palette.grey[700]
+    }
+  },
+  googleButtonIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 16
   }
 }));

@@ -13,8 +13,9 @@ import {
 } from "@material-ui/core";
 import { LockOutlined } from "@material-ui/icons";
 import { Copyright } from "../../../components";
-import { MailInput, PasswordInput } from "../../../components/UI";
+import { MailInput, PasswordInput, OrDivider } from "../../../components/UI";
 import { useStyles } from "../styles";
+import GoogleIcon from "../../../assets/google.svg";
 
 const LoginPage: FC = () => {
   let history = useHistory();
@@ -59,22 +60,24 @@ const LoginPage: FC = () => {
   ) : (
     <Grid container direction="row" justify="center" alignItems="center">
       <Grid className={classes.paper} item xs={10} sm={8} md={6} lg={4}>
-        <Button
-          type="button"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={onLoginWithGoogle}
-        >
-          Sign In With Google
-        </Button>
         <Avatar className={classes.avatar}>
           <LockOutlined />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        <Button
+          type="button"
+          variant="contained"
+          color="primary"
+          className={`${classes.submit} ${classes.googleButton}`}
+          onClick={onLoginWithGoogle}
+        >
+          <Avatar className={classes.googleButtonIcon} src={GoogleIcon} />
+          Sign In With Google
+        </Button>
+
+        <OrDivider />
 
         <div className={classes.form}>
           <MailInput
