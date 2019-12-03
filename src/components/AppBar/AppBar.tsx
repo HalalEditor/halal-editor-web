@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AppBar as MaterialAppBar,
-  Hidden,
   Toolbar,
   Typography,
   IconButton,
@@ -28,7 +27,7 @@ const AppBar = ({ onDrawerOpen, showMenuIcon }: Props) => {
   return (
     <MaterialAppBar position="fixed">
       <Toolbar>
-        <Hidden smUp>
+        {showMenuIcon && (
           <IconButton
             edge="start"
             className={classes.menuButton}
@@ -38,7 +37,7 @@ const AppBar = ({ onDrawerOpen, showMenuIcon }: Props) => {
           >
             <MenuIcon />
           </IconButton>
-        </Hidden>
+        )}
         <Typography variant="h3" className={classes.title} onClick={() => history.push("/")}>
           Halal Editor
         </Typography>
@@ -56,16 +55,7 @@ const AppBar = ({ onDrawerOpen, showMenuIcon }: Props) => {
           />
         </div>
 
-        {showMenuIcon ? (
-          <IconButton
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-            onClick={onDrawerOpen}
-          >
-            <MenuIcon />
-          </IconButton>
-        ) : store.userState.isAuth ? (
+        {store.userState.isAuth ? (
           <AccountMenu />
         ) : (
           <div>
