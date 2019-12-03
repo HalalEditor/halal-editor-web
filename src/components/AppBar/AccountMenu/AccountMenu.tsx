@@ -24,6 +24,11 @@ const AccountMenu = ({ currentUser }: Props) => {
     setAnchorEl(null);
   };
 
+  const handleMenuItemClick = (path: string) => {
+    handleClose();
+    history.push(path);
+  };
+
   return !currentUser ? null : (
     <div>
       <IconButton
@@ -50,8 +55,8 @@ const AccountMenu = ({ currentUser }: Props) => {
         getContentAnchorEl={null}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => history.push("/profile")}>Profile</MenuItem>
-        <MenuItem onClick={() => history.push("/dashboard")}>Dashboard</MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick("/profile")}>Profile</MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick("/dashboard")}>Dashboard</MenuItem>
         <MenuItem onClick={() => services.userService.logout()}>Logout</MenuItem>
       </Menu>
     </div>
