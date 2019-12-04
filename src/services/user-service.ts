@@ -202,7 +202,8 @@ export class UserService {
           _id: user._id,
           email: user.email,
           username: user.username,
-          photoURL: user.photoURL
+          photoURL: user.photoURL,
+          userCategory: user.userCategory
         })
       : "";
     localStorage.setItem("lastUser", lastUser);
