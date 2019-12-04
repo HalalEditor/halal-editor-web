@@ -76,10 +76,6 @@ const UserListPage = () => {
           placeholder="Search user"
         />
       </div>
-      <div>has More: {userCount > userState.userList.length ? "true" : "false"}</div>
-      <div>user count: {userCount}</div>
-      <div>list count: {userState.userList.length}</div>
-      <div>is fetching: {isFetching ? "true" : "false"}</div>
 
       <Grid className={classes.itemContainer} container spacing={2}>
         {users}
