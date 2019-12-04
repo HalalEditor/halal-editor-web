@@ -4,6 +4,7 @@ import { Reducer } from "react";
 
 export type UserStateType = {
   currentUser?: User;
+  editUser?: User;
   isAuth: boolean;
   userList: User[];
 };
@@ -13,7 +14,7 @@ export type UserActionType = {
   payload: UserPayloadType;
 };
 
-type UserPayloadType = { user?: User; userList?: User[] };
+type UserPayloadType = { user?: User; userList?: User[]; editUser?: User };
 
 export const initialUserState: UserStateType = {
   currentUser: undefined,
@@ -37,6 +38,17 @@ export const UserReducer: Reducer<UserStateType, UserActionType> = (
         : { ...state };
     case "ClearUserList":
       return { ...state, userList: [] };
+    case "EditUser":
+      let userList = state.userList;
+      const editUser = action.payload.editUser;
+      if (!!editUser) {
+        const index = userList.findIndex(u => u._id === editUser._id);
+        if (index !== -1) {
+          userList[index] = { ...editUser };
+        }
+      }
+
+      return { ...state, userList: userList };
 
     default:
       return { ...state };
