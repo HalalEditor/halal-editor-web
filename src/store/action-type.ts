@@ -1,1 +1,6 @@
-export type ActionType = "SetCurrentUser" | "SetSnackbarMessage" | "AddUserList" | "ClearUserList";
+export type ActionType =
+  | "SetCurrentUser"
+  | "SetSnackbarMessage"
+  | "AddUserList"
+  | "ClearUserList"
+  | "EditUser";
