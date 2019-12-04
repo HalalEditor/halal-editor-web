@@ -42,6 +42,10 @@ const UserListPage = () => {
       ]).then(res => {
         setUserCount({ all: res[0], admin: res[1], editor: res[2] });
       });
+
+      return () => {
+        userService.clearUserList();
+      };
     },
     // eslint-disable-next-line
     []
