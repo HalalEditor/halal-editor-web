@@ -7,19 +7,23 @@ interface Props {
   layout: any;
   path: string;
   exact?: boolean;
+  group?: string[];
 }
 
-const PrivateRoute = ({ component, layout, path, exact }: Props) => {
+const PrivateRoute = ({ component, layout, path, exact, group }: Props) => {
   const { store, services } = useReduxContextValue();
   const { currentUser } = store.userState;
 
   const localUser = services.userService.getLocalUser();
   const isAuth = !!currentUser || !!localUser;
+  const hasPower = !!currentUser && !!group && group.indexOf(currentUser.userCategory) > -1;
 
   const Layout = layout;
   const Component = component;
   return !isAuth ? (
     <Redirect to="/login" />
+  ) : !!group && !hasPower ? (
+    <Redirect to="/admin404" />
   ) : (
     <ReactRoute
       path={path}
