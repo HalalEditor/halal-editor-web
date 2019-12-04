@@ -1,4 +1,4 @@
-import { User } from "./../models/user";
+import { User, UserCategory } from "./../models/user";
 import { UserActionType } from "./../store/user-store";
 import { Dispatch } from "react";
 
@@ -77,25 +77,38 @@ export class UserService {
     });
   };
 
-  loadUserList = (limit: number, lastUserId?: string, searchingMail?: string) => {
-    if (!lastUserId || !!searchingMail) {
-      this.dispatch({ type: "ClearUserList", payload: {} });
-    }
-
+  clearUserList = () => {
+    this.dispatch({ type: "ClearUserList", payload: {} });
+  };
+  loadUserList = (data: {
+    limit: number;
+    lastUserId?: string;
+    searchingMail?: string;
+    selectedUserCategory?: UserCategory;
+  }) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const query = !!searchingMail
+        const query = !!data.searchingMail
           ? await firebase
               .firestore()
               .collection("users")
-              .where("email", "==", searchingMail)
+              .where("email", "==", data.searchingMail)
+              .get()
+          : !!data.selectedUserCategory
+          ? await firebase
+              .firestore()
+              .collection("users")
+              .where("userCategory", "==", data.selectedUserCategory)
+              .orderBy("_id")
+              .startAfter(!data.lastUserId ? 0 : data.lastUserId)
+              .limit(data.limit)
               .get()
           : await firebase
               .firestore()
               .collection("users")
               .orderBy("_id")
-              .startAfter(!lastUserId ? 0 : lastUserId)
-              .limit(limit)
+              .startAfter(!data.lastUserId ? 0 : data.lastUserId)
+              .limit(data.limit)
               .get();
 
         const loadUser = query.docs.map(async user => {
@@ -116,13 +129,18 @@ export class UserService {
     });
   };
 
-  getUserCount = async (): Promise<number> => {
-    const query = await firebase
-      .firestore()
-      .collection("users")
-      .get();
+  getUserCount = async (userCategory?: UserCategory): Promise<number> => {
+    const query = !userCategory
+      ? await firebase
+          .firestore()
+          .collection("users")
+          .get()
+      : await firebase
+          .firestore()
+          .collection("users")
+          .where("userCategory", "==", userCategory)
+          .get();
     const userCount = query.size;
-    console.log(userCount);
 
     return userCount;
   };
