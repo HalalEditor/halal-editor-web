@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Grid, Typography, CircularProgress } from "@material-ui/core";
 import { SearchInput } from "../../../components";
 import UserItem from "../components/UserItem";
@@ -9,11 +9,13 @@ import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import { UserCategory } from "../../../models/user";
+import UserEdit, { UserEditRefType } from "../components/UserEdit";
 
 const LOAD_LIMIT = 20;
 
 const UserListPage = () => {
   type SelectedUserCategoryType = UserCategory | "all";
+  const userEditRef = useRef<UserEditRefType | null>(null);
   const classes = useStyles();
   const { store, services } = useReduxContextValue();
   const { userList } = store.userState;
@@ -93,7 +95,17 @@ const UserListPage = () => {
 
   let users = userState.userList.map(user => {
     // TODO: add property (user-category, email-verified) to user card
-    return <UserItem key={user._id} user={user} onClick={() => console.log(user._id)} />;
+    return (
+      <UserItem
+        key={user._id}
+        user={user}
+        onClick={() => {
+          if (userEditRef.current) {
+            userEditRef.current.showDialog(user);
+          }
+        }}
+      />
+    );
   });
   for (let i = 0; i < 10; i++) {
     users.push();
@@ -103,49 +115,52 @@ const UserListPage = () => {
     event: React.MouseEvent<HTMLElement>,
     selectedUserCategory: SelectedUserCategoryType
   ) => {
-    console.log(selectedUserCategory);
     userService.clearUserList();
     setLoadPage({ ...loadPage, selectedUserCategory: selectedUserCategory });
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.row}>
-        <Typography variant="h3">User List</Typography>
-        <span className={classes.spacer} />
-        <div className={classes.toggleContainer}>
-          <ToggleButtonGroup
-            size="small"
-            value={loadPage.selectedUserCategory}
-            exclusive
-            onChange={handleSelectedUserCategory}
-          >
-            <ToggleButton value="all" aria-label="All Users">
-              <span className={classes.toggleButtonText}>All ({userCount.all})</span>
-            </ToggleButton>
-            <ToggleButton value="admin" aria-label="Admins">
-              <span className={classes.toggleButtonText}>Admins ({userCount.admin})</span>
-            </ToggleButton>
-            <ToggleButton value="editor" aria-label="Editors">
-              <span className={classes.toggleButtonText}>Editors ({userCount.editor})</span>
-            </ToggleButton>
-          </ToggleButtonGroup>
+    <React.Fragment>
+      <div className={classes.root}>
+        <div className={classes.row}>
+          <Typography variant="h3">User List</Typography>
+          <span className={classes.spacer} />
+          <div className={classes.toggleContainer}>
+            <ToggleButtonGroup
+              size="small"
+              value={loadPage.selectedUserCategory}
+              exclusive
+              onChange={handleSelectedUserCategory}
+            >
+              <ToggleButton value="all" aria-label="All Users">
+                <span className={classes.toggleButtonText}>All ({userCount.all})</span>
+              </ToggleButton>
+              <ToggleButton value="admin" aria-label="Admins">
+                <span className={classes.toggleButtonText}>Admins ({userCount.admin})</span>
+              </ToggleButton>
+              <ToggleButton value="editor" aria-label="Editors">
+                <span className={classes.toggleButtonText}>Editors ({userCount.editor})</span>
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+          <SearchInput
+            onChange={value => {
+              handleSearchEvent(value);
+            }}
+            className={classes.searchInput}
+            placeholder="Search user"
+          />
         </div>
-        <SearchInput
-          onChange={value => {
-            handleSearchEvent(value);
-          }}
-          className={classes.searchInput}
-          placeholder="Search user"
-        />
+
+        <Grid className={classes.itemContainer} container spacing={2}>
+          {users}
+        </Grid>
+
+        {isFetching && <CircularProgress color="secondary" />}
       </div>
 
-      <Grid className={classes.itemContainer} container spacing={2}>
-        {users}
-      </Grid>
-
-      {isFetching && <CircularProgress color="secondary" />}
-    </div>
+      <UserEdit ref={userEditRef}></UserEdit>
+    </React.Fragment>
   );
 };
 
