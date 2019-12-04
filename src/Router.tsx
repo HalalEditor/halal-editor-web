@@ -23,7 +23,7 @@ const Router = () => {
           component={p.UserList}
           exact
           layout={Admin}
-          group={["root", "admin", "editor"]}
+          accessibleUserCategories={["root", "admin", "editor"]}
         />
         <PrivateRoute path="/products" component={p.ProductList} exact layout={Admin} />
         <Route path="/404" component={p.Error404} exact layout={Default} />
