@@ -57,7 +57,7 @@ const AdminLayout = (props: Props) => {
       >
         <div className={classes.toolbar} />
         {currentUser && <Profile currentUser={currentUser} />}
-        <Navigator onMenuItemClick={() => toggleDrawer(false)} />
+        <Navigator onMenuItemClick={() => toggleDrawer(false)} currentUser={currentUser} />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
