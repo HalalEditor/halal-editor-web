@@ -144,6 +144,24 @@ export class UserService {
 
     return userCount;
   };
+
+  changeUserCategory = async (user: User, newCategory: UserCategory) => {
+    try {
+      await firebase
+        .firestore()
+        .doc(`users/${user._id}`)
+        .update({ userCategory: newCategory });
+
+      this.dispatch({
+        type: "EditUser",
+        payload: { editUser: { ...user, userCategory: newCategory } }
+      });
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  };
+
   async sendPasswordResetEmail(email: string) {
     try {
       await firebase.auth().sendPasswordResetEmail(email);
