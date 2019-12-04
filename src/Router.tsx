@@ -15,17 +15,41 @@ const Router = () => {
         <Route path="/login" component={p.Login} exact layout={Empty} />
         <Route path="/signup" component={p.Signup} exact layout={Empty} />
         <Route path="/recover-password" component={p.RecoverPassword} exact layout={Empty} />
-        <PrivateRoute path="/dashboard" component={p.Dashboard} exact layout={Admin} />
-        <PrivateRoute path="/profile" component={p.Profile} exact layout={Admin} />
-        <PrivateRoute path="/user/:id" component={p.User} exact layout={Admin} />
+        <PrivateRoute
+          path="/dashboard"
+          component={p.Dashboard}
+          exact
+          layout={Admin}
+          accessibleUserCategories={["root", "admin", "editor", "normal"]}
+        />
+        <PrivateRoute
+          path="/profile"
+          component={p.Profile}
+          exact
+          layout={Admin}
+          accessibleUserCategories={["root", "admin", "editor", "normal"]}
+        />
+        <PrivateRoute
+          path="/user/:id"
+          component={p.User}
+          exact
+          layout={Admin}
+          accessibleUserCategories={["root", "admin"]}
+        />
         <PrivateRoute
           path="/users"
           component={p.UserList}
           exact
           layout={Admin}
-          accessibleUserCategories={["root", "admin", "editor"]}
+          accessibleUserCategories={["root", "admin"]}
         />
-        <PrivateRoute path="/products" component={p.ProductList} exact layout={Admin} />
+        <PrivateRoute
+          path="/products"
+          component={p.ProductList}
+          exact
+          layout={Admin}
+          accessibleUserCategories={["root", "admin", "editor", "normal"]}
+        />
         <Route path="/404" component={p.Error404} exact layout={Default} />
         <PrivateRoute path="/admin404" component={p.Error404} exact layout={Admin} />
         <Redirect to="/404" />
