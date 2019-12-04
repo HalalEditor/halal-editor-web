@@ -23,17 +23,10 @@ const SignupPage: FC = () => {
     console.log(result);
 
     if (!!result) {
-      services.appService.showSnackbarMessage({
-        message: String(result),
-        show: true,
-        variant: "error"
-      });
+      services.appService.showSnackbarMessage(String(result), "error");
     } else {
-      services.appService.showSnackbarMessage({
-        message: "Account has been created",
-        show: true,
-        variant: "success"
-      });
+      const message = "Account has been created";
+      services.appService.showSnackbarMessage(message, "success");
     }
   };
 

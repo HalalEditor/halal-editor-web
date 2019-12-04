@@ -31,11 +31,7 @@ const LoginPage: FC = () => {
         password.value
       );
       if (!!result) {
-        services.appService.showSnackbarMessage({
-          message: String(result),
-          show: true,
-          variant: "error"
-        });
+        services.appService.showSnackbarMessage(String(result), "error");
       }
     }
   };
@@ -43,11 +39,7 @@ const LoginPage: FC = () => {
   const onLoginWithGoogle = async () => {
     const result = await services.userService.signInWithGoogle();
     if (!!result) {
-      services.appService.showSnackbarMessage({
-        message: String(result),
-        show: true,
-        variant: "error"
-      });
+      services.appService.showSnackbarMessage(String(result), "error");
     }
   };
 

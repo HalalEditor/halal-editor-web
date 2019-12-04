@@ -17,17 +17,10 @@ const RecoverPassword: FC = () => {
     if (email.isValid) {
       const result = await services.userService.sendPasswordResetEmail(email.value);
       if (!!result) {
-        services.appService.showSnackbarMessage({
-          message: String(result),
-          show: true,
-          variant: "error"
-        });
+        services.appService.showSnackbarMessage(String(result), "error");
       } else {
-        services.appService.showSnackbarMessage({
-          message: "Recover mail have been send. Please check your mail-box.",
-          show: true,
-          variant: "info"
-        });
+        const message = "Recover mail have been send. Please check your mail-box.";
+        services.appService.showSnackbarMessage(message, "info");
         history.goBack();
       }
     }

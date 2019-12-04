@@ -1,12 +1,21 @@
-import { SnackbarInfo } from "./../models/snackbar";
+import { SnackbarInfo, SnackbarMessageVariantIcon } from "./../models/snackbar";
 import { AppActionType } from "./../store/app-store";
 import { Dispatch } from "react";
 
 export class AppService {
   constructor(private dispatch: Dispatch<AppActionType>) {}
 
-  showSnackbarMessage(snackbarInfo: SnackbarInfo) {
-    this.dispatch({ type: "SetSnackbarMessage", payload: { snackbarInfo: snackbarInfo } });
+  showSnackbarMessage(message: string, messageType: keyof typeof SnackbarMessageVariantIcon) {
+    this.dispatch({
+      type: "SetSnackbarMessage",
+      payload: {
+        snackbarInfo: {
+          message,
+          variant: messageType,
+          show: true
+        }
+      }
+    });
   }
 
   closeSnackbarMessage() {
