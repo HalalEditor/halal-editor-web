@@ -1,5 +1,15 @@
 import React from "react";
-import { Avatar, Card, CardHeader, Grid, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Card,
+  Chip,
+  IconButton,
+  CardHeader,
+  Grid,
+  Typography,
+  CardContent
+} from "@material-ui/core";
+import { Group as GroupIcon, MoreVert as MoreVertIcon } from "@material-ui/icons";
 import { User } from "../../../models/user";
 import { useStyles } from "./styles";
 
