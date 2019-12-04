@@ -6,6 +6,9 @@ import { useReduxContextValue } from "../../../contexts/redux-context";
 import { useStyles } from "./styles";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
 
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+
 const LOAD_LIMIT = 10;
 
 const UserListPage = () => {
@@ -55,19 +58,43 @@ const UserListPage = () => {
   };
 
   let users = userState.userList.map(user => {
-    //TODO: add property (user-category, email-verified) to user card
-    //TODO: connect user image
+    // TODO: add property (user-category, email-verified) to user card
+    // TODO: connect user image
+    // TODO: users will be filtered with userCategory state
     return <UserItem key={user._id} user={user} onClick={() => console.log(user._id)} />;
   });
   for (let i = 0; i < 10; i++) {
     users.push();
   }
 
+  const [userCategory, setUserCategory] = React.useState("all");
+  const handleUserCategory = (event: React.MouseEvent<HTMLElement>, newUserCategory: string) => {
+    setUserCategory(newUserCategory);
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.row}>
         <Typography variant="h3">User List</Typography>
         <span className={classes.spacer} />
+        <div className={classes.toggleContainer}>
+          <ToggleButtonGroup
+            size="small"
+            value={userCategory}
+            exclusive
+            onChange={handleUserCategory}
+          >
+            <ToggleButton value="all" aria-label="All Users">
+              <span className={classes.toggleButtonText}>All (99)</span>
+            </ToggleButton>
+            <ToggleButton value="admin" aria-label="Admins">
+              <span className={classes.toggleButtonText}>Admins (3)</span>
+            </ToggleButton>
+            <ToggleButton value="editor" aria-label="Editors">
+              <span className={classes.toggleButtonText}>Editors (5)</span>
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
         <SearchInput
           onChange={value => {
             handleSearchEvent(value);

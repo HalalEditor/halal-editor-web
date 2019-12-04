@@ -17,7 +17,14 @@ export const useStyles = makeStyles((theme: Theme) =>
       // marginTop: theme.spacing(1)
     },
     searchInput: {
-      marginRight: theme.spacing(1)
+      // marginRight: theme.spacing(1)
+    },
+    toggleContainer: {
+      margin: theme.spacing(0, 2),
+      padding: theme.spacing(0)
+    },
+    toggleButtonText: {
+      textTransform: "none"
     }
   })
 );
