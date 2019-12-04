@@ -15,8 +15,6 @@ type Props = {
 };
 
 const ReduxContextProvider = (props: Props) => {
-  console.log("ReduxContextProvider initializing...");
-
   const [userState, userDispatch] = useReducer(UserReducer, initialUserState);
   const [appState, appDispatch] = useReducer(AppReducer, initialAppState);
   const [productState, productDispatch] = useReducer(ProductReducer, initialProductState);
