@@ -1,4 +1,4 @@
-import { SnackbarInfo, SnackbarMessageVariantIcon } from "./../models/snackbar";
+import { SnackbarMessageVariantIcon } from "./../models/snackbar";
 import { AppActionType } from "./../store/app-store";
 import { Dispatch } from "react";
 
