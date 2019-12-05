@@ -5,12 +5,14 @@ import { AppService } from "./../services/app-service";
 import { UserService } from "../services/user-service";
 import { UserStateType } from "../store/user-store";
 
+export type ReduxStoreValueType = {
+  userState: UserStateType;
+  appState: AppStateType;
+  productState: ProductStateType;
+};
+
 export type ReduxValueType = {
-  store: {
-    userState: UserStateType;
-    appState: AppStateType;
-    productState: ProductStateType;
-  };
+  store: ReduxStoreValueType;
   services: {
     userService: UserService;
     appService: AppService;

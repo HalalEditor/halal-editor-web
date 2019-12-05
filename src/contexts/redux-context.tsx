@@ -1,5 +1,5 @@
 import React, { createContext, useContext, ReactChild, useReducer, useEffect } from "react";
-import { ReduxValueType } from "./redux-value";
+import { ReduxValueType, ReduxStoreValueType } from "./redux-value";
 import { UserService } from "../services/user-service";
 import { UserReducer, initialUserState } from "../store/user-store";
 import { AppReducer, initialAppState } from "../store/app-store";
@@ -19,9 +19,10 @@ const ReduxContextProvider = (props: Props) => {
   const [appState, appDispatch] = useReducer(AppReducer, initialAppState);
   const [productState, productDispatch] = useReducer(ProductReducer, initialProductState);
 
-  const userService = new UserService(userDispatch);
-  const appService = new AppService(appDispatch);
-  const productService = new ProductService(productDispatch);
+  const store: ReduxStoreValueType = { userState, appState, productState };
+  const userService = new UserService(userDispatch, store);
+  const appService = new AppService(appDispatch, store);
+  const productService = new ProductService(productDispatch, store);
 
   useEffect(
     () => {
@@ -41,7 +42,7 @@ const ReduxContextProvider = (props: Props) => {
   );
 
   const appReduxValue: ReduxValueType = {
-    store: { userState, appState, productState },
+    store: store,
     services: { userService, appService, productService }
   };
 

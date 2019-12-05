@@ -1,3 +1,4 @@
+import { ReduxStoreValueType } from "./../contexts/redux-value";
 import { User, UserCategory } from "./../models/user";
 import { UserActionType } from "./../store/user-store";
 import { Dispatch } from "react";
@@ -7,7 +8,7 @@ import "firebase/auth";
 import "firebase/firebase-firestore";
 
 export class UserService {
-  constructor(private dispatch: Dispatch<UserActionType>) {}
+  constructor(private dispatch: Dispatch<UserActionType>, private store: ReduxStoreValueType) {}
 
   async signInWithEmailAndPassword(email: string, password: string) {
     try {
@@ -79,6 +80,7 @@ export class UserService {
 
   clearUserList = () => {
     this.dispatch({ type: "ClearUserList", payload: {} });
+    console.log(this.store);
   };
   loadUserList = (data: {
     limit: number;
