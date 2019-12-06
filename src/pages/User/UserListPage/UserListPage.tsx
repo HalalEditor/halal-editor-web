@@ -152,7 +152,7 @@ const UserListPage = () => {
           />
         </div>
 
-        <Grid className={classes.itemContainer} container spacing={2}>
+        <Grid className={classes.itemContainer} container spacing={3}>
           {users}
         </Grid>
 
