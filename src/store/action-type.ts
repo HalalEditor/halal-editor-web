@@ -3,4 +3,6 @@ export type ActionType =
   | "SetSnackbarMessage"
   | "AddUserList"
   | "ClearUserList"
-  | "EditUser";
+  | "EditUser"
+  | "AddProductList"
+  | "ClearProductList";
