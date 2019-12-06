@@ -10,6 +10,60 @@ import { isArray } from "util";
 export class ProductService {
   constructor(private dispatch: Dispatch<ProductActionType>, private store: ReduxStoreValueType) {}
 
+  clearProductList() {
+    this.dispatch({
+      type: "ClearProductList",
+      payload: {}
+    });
+  }
+
+  async loadProductList(data: { limit: number }) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        console.log(this.store.productState);
+
+        const { productList } = this.store.productState;
+        const lastProduct =
+          productList.length > 0 ? productList[productList.length - 1] : undefined;
+        console.log("lastProduct:", lastProduct);
+
+        const query = await firebase
+          .firestore()
+          .collection("products")
+          .orderBy("createdAt", "desc")
+          .startAfter(!!lastProduct ? lastProduct.createdAt : "")
+          .limit(data.limit)
+          .get();
+
+        console.log(query.size);
+
+        const queryResult = query.docs
+          .filter(p => p.exists)
+          .map(product => {
+            const data = product.data();
+            return { ...data, _id: product.id } as Product;
+          });
+
+        this.dispatch({
+          type: "AddProductList",
+          payload: { productList: queryResult }
+        });
+
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async getProductListCount() {
+    const query = await firebase
+      .firestore()
+      .collection("products")
+      .get();
+    return query.size;
+  }
+
   async createDummyDataFromOpenFood() {
     try {
       const url =
