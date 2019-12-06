@@ -52,7 +52,7 @@ const ProductListPage = () => {
   return (
     <div className={classes.root}>
       <div className={classes.row}>
-        <Grid className={classes.itemContainer} container spacing={2}>
+        <Grid className={classes.itemContainer} container spacing={3}>
           {products}
         </Grid>
       </div>

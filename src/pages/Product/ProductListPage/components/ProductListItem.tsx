@@ -6,6 +6,7 @@ import {
   IconButton,
   CardMedia,
   CardActions,
+  Grid,
   makeStyles,
   Theme,
   createStyles
@@ -22,29 +23,30 @@ type Props = {
 const ProductListItem = ({ product }: Props) => {
   const classes = useStyles();
   return (
-    <Card className={classes.card}>
-      <CardHeader title={product.name} />
-      <CardMedia className={classes.media} image={product.imagePath} title={product.name} />
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+    <Grid item xs={12} sm={6} md={6} lg={4}>
+      <Card className={classes.card}>
+        <CardHeader title={product.name} />
+        <CardMedia className={classes.media} image={product.imagePath} title={product.name} />
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    card: {
-      maxWidth: 345
-    },
+    card: {},
     media: {
       height: 0,
-      paddingTop: "56.25%" // 16:9
+      paddingTop: "56.25%", // 16:9
+      backgroundSize: "auto"
     },
     expand: {
       transform: "rotate(0deg)",
