@@ -80,7 +80,6 @@ export class UserService {
 
   clearUserList = () => {
     this.dispatch({ type: "ClearUserList", payload: {} });
-    console.log(this.store);
   };
   loadUserList = (data: {
     limit: number;
@@ -113,18 +112,14 @@ export class UserService {
               .limit(data.limit)
               .get();
 
-        const loadUser = query.docs.map(async user => {
-          const data = await user.data();
-          if (!!data) {
+        const queryResult = query.docs
+          .filter(u => u.exists)
+          .map(user => {
+            const data = user.data();
             return { ...data } as User;
-          }
-        });
-        Promise.all(loadUser)
-          .then(userList => {
-            const undefinedValuesClear = userList.filter(user => !!user) as User[];
-            this.dispatch({ type: "AddUserList", payload: { userList: undefinedValuesClear } });
-          })
-          .then(_ => resolve());
+          });
+        this.dispatch({ type: "AddUserList", payload: { userList: queryResult } });
+        resolve();
       } catch (error) {
         reject(error);
       }
