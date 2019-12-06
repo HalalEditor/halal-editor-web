@@ -20,7 +20,11 @@ export const initialProductState: ProductStateType = {
   favoriteProductList: [],
   myProductList: []
 };
-type ActionPayloadType = {};
+type ActionPayloadType = {
+  productList?: Product[];
+  favoriteProductList?: Product[];
+  myProductList?: Product[];
+};
 
 export const ProductReducer: Reducer<ProductStateType, ProductActionType> = (
   state = initialProductState,
@@ -29,6 +33,12 @@ export const ProductReducer: Reducer<ProductStateType, ProductActionType> = (
   console.log("[ProductReducer]:", action);
 
   switch (action.type) {
+    case "AddProductList":
+      if (!!action.payload.productList) {
+        return { ...state, productList: [...state.productList, ...action.payload.productList] };
+      } else return { ...state };
+    case "ClearProductList":
+      return { ...state, productList: [] };
     default:
       return { ...state };
   }
