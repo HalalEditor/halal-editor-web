@@ -7,6 +7,7 @@ import { ReduxStoreValueType } from "./../contexts/redux-value";
 import { Product } from "../models/product";
 import { isArray } from "util";
 import { delay } from "./helper";
+import { User } from "../models/user";
 
 export class ProductService {
   constructor(private dispatch: Dispatch<ProductActionType>, private store: ReduxStoreValueType) {}
@@ -30,7 +31,7 @@ export class ProductService {
           .firestore()
           .collection("products")
           .orderBy("createdTimeStamp", "desc")
-          .startAfter(!!lastProduct ? lastProduct.createdTimeStamp : "")
+          .startAfter(!!lastProduct ? lastProduct.mainInfo.createdTimeStamp : "")
           .limit(data.limit)
           .get();
 
@@ -40,7 +41,7 @@ export class ProductService {
           .filter(p => p.exists)
           .map(product => {
             const data = product.data();
-            return { ...data, _id: product.id } as Product;
+            return { ...data } as Product;
           });
 
         this.dispatch({
@@ -83,7 +84,7 @@ export class ProductService {
           .filter(p => p.exists)
           .map(product => {
             const data = product.data();
-            return { ...data, _id: product.id } as Product;
+            return { ...data } as Product;
           });
 
         this.dispatch({
@@ -110,6 +111,8 @@ export class ProductService {
     await this.createDummyData("chips");
     await this.createDummyData("ice cream");
   }
+
+  async toggleFavoriteStatus(product: Product) {}
 
   private async createDummyData(key: string) {
     try {
@@ -140,28 +143,31 @@ export class ProductService {
             : null;
 
           const newProduct: Product = {
-            _id: product.code,
-            barcode: product.code,
-            name: product.product_name,
+            mainInfo: {
+              _id: product.code,
+              barcode: product.code,
+              name: product.product_name,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              createdTimeStamp: new Date().getTime(),
+              imagePath: product.image_front_url
+            },
             commentCount: 0,
-            imagePath: product.image_front_url,
-            ingredientsImagePath: product.image_ingredients_url,
             ingredientInfo: {
+              ingredientsImagePath: product.image_ingredients_url,
               isAlcoholFree: null,
               isHaveFlavor: null,
               isVegan: isVegan,
               isVegetarian: isVegetarian
             },
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            createdTimeStamp: new Date().getTime(),
             last3comments: [],
             reviews: [],
-            isReviewed: false
+            isReviewed: false,
+            createdBy: (this.store.userState.currentUser as User)._id
           };
           await firebase
             .firestore()
-            .doc(`/products/${newProduct._id}`)
+            .doc(`/products/${newProduct.mainInfo._id}`)
             .set(newProduct);
 
           await delay(1);

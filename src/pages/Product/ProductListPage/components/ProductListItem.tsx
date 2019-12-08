@@ -24,9 +24,18 @@ const ProductListItem = ({ product }: Props) => {
   const classes = useStyles();
   return (
     <Grid item xs={12} sm={6} md={6} lg={4}>
-      <Card className={classes.card}>
-        <CardHeader title={product.name} />
-        <CardMedia className={classes.media} image={product.imagePath} title={product.name} />
+      <Card
+        className={classes.card}
+        onClick={() => {
+          console.log(product);
+        }}
+      >
+        <CardHeader title={product.mainInfo.name} />
+        <CardMedia
+          className={classes.media}
+          image={product.mainInfo.imagePath}
+          title={product.mainInfo.name}
+        />
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
