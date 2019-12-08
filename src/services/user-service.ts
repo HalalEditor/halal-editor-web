@@ -48,13 +48,12 @@ export class UserService {
 
   subscribeAuth = () => {
     const unSubscribe = firebase.auth().onAuthStateChanged(async res => {
-      console.log("subscribeAuth:", res);
       if (!!res) {
         const currentUser = await this.getUser(res);
         this.setLocalUser(currentUser);
         this.dispatch({
           type: "SetCurrentUser",
-          payload: { user: currentUser }
+          payload: { user: currentUser, isCurrentUserFromFirebase: true }
         });
       } else {
         this.setLocalUser(undefined);
@@ -74,7 +73,7 @@ export class UserService {
   initCurrentUser = () => {
     this.dispatch({
       type: "SetCurrentUser",
-      payload: { user: this.getLocalUser() }
+      payload: { user: this.getLocalUser(), isCurrentUserFromFirebase: false }
     });
   };
 
