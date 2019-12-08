@@ -11,11 +11,12 @@ export type ReduxStoreValueType = {
   productState: ProductStateType;
 };
 
+export type ReduxServiceValueType = {
+  userService: UserService;
+  appService: AppService;
+  productService: ProductService;
+};
 export type ReduxValueType = {
   store: ReduxStoreValueType;
-  services: {
-    userService: UserService;
-    appService: AppService;
-    productService: ProductService;
-  };
+  services: ReduxServiceValueType;
 };
