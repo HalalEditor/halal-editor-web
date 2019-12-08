@@ -32,7 +32,7 @@ export class ProductService {
         const query = await firebase
           .firestore()
           .collection("products")
-          .orderBy("createdTimeStamp", "desc")
+          .orderBy("mainInfo.createdTimeStamp", "desc")
           .startAfter(!!lastProduct ? lastProduct.mainInfo.createdTimeStamp : "")
           .limit(data.limit)
           .get();
