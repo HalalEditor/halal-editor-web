@@ -50,7 +50,7 @@ const ProductListPage = () => {
   }
 
   const products = productList.map(product => {
-    return <ProductListItem key={product._id} product={product}></ProductListItem>;
+    return <ProductListItem key={product.mainInfo._id} product={product}></ProductListItem>;
   });
 
   return (
