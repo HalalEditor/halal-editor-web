@@ -1,13 +1,13 @@
-import { Product } from "./../models/product";
 import { Reducer } from "react";
 import { ActionType } from "./action-type";
+import { ProductDTO } from "../dto/product-dto";
 
 export type ProductStateType = {
-  productList: Product[];
-  favoriteProductList: Product[];
-  myProductList: Product[];
-  scannedProduct?: Product;
-  selectedProduct?: Product;
+  productList: ProductDTO[];
+  favoriteProductList: ProductDTO[];
+  myProductList: ProductDTO[];
+  scannedProduct?: ProductDTO;
+  selectedProduct?: ProductDTO;
 };
 
 export type ProductActionType = {
@@ -21,9 +21,9 @@ export const initialProductState: ProductStateType = {
   myProductList: []
 };
 type ActionPayloadType = {
-  productList?: Product[];
-  favoriteProductList?: Product[];
-  myProductList?: Product[];
+  productList?: ProductDTO[];
+  favoriteProductList?: ProductDTO[];
+  myProductList?: ProductDTO[];
 };
 
 export const ProductReducer: Reducer<ProductStateType, ProductActionType> = (

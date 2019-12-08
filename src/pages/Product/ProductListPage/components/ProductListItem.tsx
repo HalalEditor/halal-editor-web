@@ -1,5 +1,4 @@
 import React from "react";
-import { Product } from "../../../../models/product";
 import {
   Card,
   CardHeader,
@@ -15,9 +14,10 @@ import {
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import { red } from "@material-ui/core/colors";
+import { ProductDTO } from "../../../../dto/product-dto";
 
 type Props = {
-  product: Product;
+  product: ProductDTO;
 };
 
 const ProductListItem = ({ product }: Props) => {

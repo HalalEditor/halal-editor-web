@@ -8,6 +8,7 @@ import { Product } from "../models/product";
 import { isArray } from "util";
 import { delay } from "./helper";
 import { User } from "../models/user";
+import { ProductDTO } from "../dto/product-dto";
 
 export class ProductService {
   constructor(private dispatch: Dispatch<ProductActionType>, private store: ReduxStoreValueType) {}
@@ -21,6 +22,7 @@ export class ProductService {
 
   async loadProductList(data: { limit: number }) {
     const { productList } = this.store.productState;
+    const { currentUser } = this.store.userState;
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -40,8 +42,10 @@ export class ProductService {
         const queryResult = query.docs
           .filter(p => p.exists)
           .map(product => {
-            const data = product.data();
-            return { ...data } as Product;
+            const data = product.data() as Product;
+            const isCurrentUserOwner = !!currentUser && data.mainInfo._id === currentUser._id;
+            const isFavProduct = this.isFavProduct(data.mainInfo._id);
+            return { ...data, isCurrentUserOwner, isFavProduct } as ProductDTO;
           });
 
         this.dispatch({
@@ -54,6 +58,10 @@ export class ProductService {
         reject(error);
       }
     });
+  }
+
+  private isFavProduct(productId: string): boolean {
+    return !!this.store.productState.favoriteProductList.find(fp => fp.mainInfo._id === productId);
   }
 
   async getProductListCount() {
@@ -83,8 +91,9 @@ export class ProductService {
         const queryResult = query.docs
           .filter(p => p.exists)
           .map(product => {
-            const data = product.data();
-            return { ...data } as Product;
+            const data = product.data() as Product;
+            const isCurrentUserOwner = !!currentUser && data.mainInfo._id === currentUser._id;
+            return { ...data, isFavProduct: true, isCurrentUserOwner } as ProductDTO;
           });
 
         this.dispatch({
@@ -112,7 +121,7 @@ export class ProductService {
     await this.createDummyData("ice cream");
   }
 
-  async toggleFavoriteStatus(product: Product) {}
+  async toggleFavoriteStatus(product: ProductDTO) {}
 
   private async createDummyData(key: string) {
     try {

@@ -7,7 +7,6 @@ export type Product = {
   last3comments: ProductComment[];
   commentCount: number;
   createdBy: string;
-  tempInfo?: UserProductInfo;
 };
 
 type ProductMainInfo = {
@@ -18,19 +17,6 @@ type ProductMainInfo = {
   createdAt: Date;
   createdTimeStamp: number;
   updatedAt: Date;
-};
-
-export type FavoriteProduct = ProductMainInfo &
-  ProductIngredientInfo &
-  UserProductInfo & { isFavProduct: true };
-
-export type UserProduct = ProductMainInfo &
-  ProductIngredientInfo &
-  UserProductInfo & { isCurrentUserOwner: true };
-
-type UserProductInfo = {
-  isFavProduct: boolean;
-  isCurrentUserOwner: boolean;
 };
 
 export type ProductIngredientInfo = {
