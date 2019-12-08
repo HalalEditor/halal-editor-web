@@ -16,6 +16,10 @@ export const delay = (millisecond: number) => {
   });
 };
 
+export const getIdFromBarcode = (barcode: string): string => {
+  return padLeft(barcode, "0", 13);
+};
+
 export const padLeft = (text: string, padChar: string, size: number): string => {
   return (String(padChar).repeat(size) + text).substr(size * -1, size);
 };
