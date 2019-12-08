@@ -1,4 +1,5 @@
 export type Product = {
+  _id: string;
   mainInfo: ProductMainInfo;
   ingredientInfo: ProductIngredientInfo;
 
@@ -9,8 +10,13 @@ export type Product = {
   createdBy: string;
 };
 
-type ProductMainInfo = {
+export type FavProduct = {
   _id: string;
+  mainInfo: ProductMainInfo;
+  ingredientInfo: ProductIngredientInfo;
+};
+
+type ProductMainInfo = {
   barcode: string;
   name?: string;
   imagePath: string;
