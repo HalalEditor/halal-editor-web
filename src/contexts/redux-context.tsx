@@ -41,6 +41,10 @@ const ReduxContextProvider = (props: Props) => {
     []
   );
 
+  useEffect(() => {
+    productService.loadAllFavoriteProduct();
+  }, [userState.currentUser]);
+
   const appReduxValue: ReduxValueType = {
     store: store,
     services: { userService, appService, productService }
