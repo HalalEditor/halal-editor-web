@@ -5,6 +5,7 @@ import { Reducer } from "react";
 export type UserStateType = {
   currentUser?: User;
   editUser?: User;
+  isCurrentUserFromFirebase: boolean;
   isAuth: boolean;
   userList: User[];
 };
@@ -14,11 +15,17 @@ export type UserActionType = {
   payload: UserPayloadType;
 };
 
-type UserPayloadType = { user?: User; userList?: User[]; editUser?: User };
+type UserPayloadType = {
+  user?: User;
+  userList?: User[];
+  editUser?: User;
+  isCurrentUserFromFirebase?: boolean;
+};
 
 export const initialUserState: UserStateType = {
   currentUser: undefined,
   isAuth: false,
+  isCurrentUserFromFirebase: false,
   userList: []
 };
 
@@ -31,7 +38,13 @@ export const UserReducer: Reducer<UserStateType, UserActionType> = (
   switch (action.type) {
     case "SetCurrentUser":
       const user = action.payload.user;
-      return { ...state, currentUser: user, isAuth: !!user };
+      const isCurrentUserFromFirebase = action.payload.isCurrentUserFromFirebase;
+      return {
+        ...state,
+        currentUser: user,
+        isAuth: !!user,
+        isCurrentUserFromFirebase: !!isCurrentUserFromFirebase
+      };
     case "AddUserList":
       return action.payload.userList
         ? { ...state, userList: [...state.userList, ...action.payload.userList] }
