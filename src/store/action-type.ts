@@ -4,5 +4,7 @@ export type ActionType =
   | "AddUserList"
   | "ClearUserList"
   | "EditUser"
+  | "SetFavoriteProductList"
+  | "ClearFavoriteProductList"
   | "AddProductList"
   | "ClearProductList";
