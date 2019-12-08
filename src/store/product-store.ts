@@ -54,6 +54,31 @@ export const ProductReducer: Reducer<ProductStateType, ProductActionType> = (
     case "ClearFavoriteProductList":
       return { ...state, favoriteProductList: {} };
 
+    case "ChangeFavoriteStatus":
+      if (!!action.payload.selectedProduct) {
+        let [productList, favoriteProductList] = [
+          { ...state.productList },
+          { ...state.favoriteProductList }
+        ];
+        const { selectedProduct: product } = action.payload;
+
+        if (product.isFavProduct) {
+          productList[product._id].isFavProduct = true;
+          favoriteProductList = { ...favoriteProductList, [product._id]: product };
+        } else {
+          productList[product._id].isFavProduct = false;
+          delete favoriteProductList[product._id];
+        }
+
+        return {
+          ...state,
+          productList: { ...productList },
+          favoriteProductList: { ...favoriteProductList }
+        };
+      } else {
+        return { ...state };
+      }
+
     default:
       return { ...state };
   }

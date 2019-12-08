@@ -1,4 +1,5 @@
 export type ActionType =
+  | "ChangeFavoriteStatus"
   | "SetCurrentUser"
   | "SetSnackbarMessage"
   | "AddUserList"
