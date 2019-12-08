@@ -47,6 +47,19 @@ export const ProductReducer: Reducer<ProductStateType, ProductActionType> = (
     case "SetFavoriteProductList":
       if (!!action.payload.favoriteProductList) {
         const favoriteProductList = arrayToDictionary(action.payload.favoriteProductList, "_id");
+        if (Object.keys(state.productList).length > 0) {
+          let productList = { ...state.productList } as ProductDictionary;
+          action.payload.favoriteProductList.forEach(favProduct => {
+            if (productList[favProduct._id]) {
+              productList[favProduct._id].isFavProduct = true;
+            }
+          });
+          return {
+            ...state,
+            favoriteProductList: { ...favoriteProductList },
+            productList: { ...state.productList, ...productList }
+          };
+        }
 
         return { ...state, favoriteProductList: { ...favoriteProductList } };
       } else return { ...state };
