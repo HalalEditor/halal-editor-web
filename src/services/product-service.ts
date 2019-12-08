@@ -19,9 +19,10 @@ export class ProductService {
   }
 
   async loadProductList(data: { limit: number }) {
+    const { productList } = this.store.productState;
+
     return new Promise(async (resolve, reject) => {
       try {
-        const { productList } = this.store.productState;
         const lastProduct =
           productList.length > 0 ? productList[productList.length - 1] : undefined;
 
@@ -60,6 +61,46 @@ export class ProductService {
       .collection("products")
       .get();
     return query.size;
+  }
+
+  async loadAllFavoriteProduct() {
+    const { userState } = this.store;
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (!userState.currentUser || !userState.isCurrentUserFromFirebase) {
+          return;
+        }
+        const { currentUser } = userState;
+
+        this.clearFavoriteProductList();
+
+        const query = await firebase
+          .firestore()
+          .collection(`/users/${currentUser._id}/fav-products`)
+          .get();
+
+        const queryResult = query.docs
+          .filter(p => p.exists)
+          .map(product => {
+            const data = product.data();
+            return { ...data, _id: product.id } as Product;
+          });
+
+        this.dispatch({
+          type: "SetFavoriteProductList",
+          payload: { favoriteProductList: queryResult }
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async clearFavoriteProductList() {
+    this.dispatch({
+      type: "ClearFavoriteProductList",
+      payload: {}
+    });
   }
 
   async createDummyDataFromOpenFood() {
