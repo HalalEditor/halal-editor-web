@@ -9,3 +9,9 @@ export const validatePassword = (password: string) => {
   const re = new RegExp("(?=.{6,})");
   return re.test(String(password).toLowerCase());
 };
+
+export const delay = (millisecond: number) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, millisecond);
+  });
+};
