@@ -22,8 +22,6 @@ export const getIdFromBarcode = (barcode: string): string => {
 
 export const arrayToDictionary = (list: any[], keyPath: string): {} => {
   return list.reduce((list, value) => {
-    console.log(value[keyPath], keyPath);
-
     list[value[keyPath]] = value;
     return list;
   }, {});
