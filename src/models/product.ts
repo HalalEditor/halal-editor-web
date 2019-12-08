@@ -10,6 +10,7 @@ export type Product = {
   last3comments: ProductComment[];
   commentCount: number;
   createdAt: Date;
+  createdTimeStamp: number;
   updatedAt: Date;
 };
 
