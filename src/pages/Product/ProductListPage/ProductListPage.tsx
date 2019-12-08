@@ -42,7 +42,11 @@ const ProductListPage = () => {
   );
 
   function loadMoreProduct() {
-    setLoadListConfig({ ...loadListConfig });
+    if (listCount > productList.length) {
+      setLoadListConfig({ ...loadListConfig });
+    } else {
+      setIsFetching(false);
+    }
   }
 
   const products = productList.map(product => {
