@@ -4,7 +4,7 @@ import "firebase/firebase-firestore";
 import { Dispatch } from "react";
 import { ProductActionType } from "../store/product-store";
 import { ReduxStoreValueType } from "./../contexts/redux-value";
-import { Product } from "../models/product";
+import { Product, FavProduct } from "./../models/product";
 import { isArray } from "util";
 import { delay, getIdFromBarcode } from "./helper";
 import { User } from "../models/user";
@@ -43,8 +43,8 @@ export class ProductService {
           .filter(p => p.exists)
           .map(product => {
             const data = product.data() as Product;
-            const isCurrentUserOwner = !!currentUser && data.mainInfo._id === currentUser._id;
-            const isFavProduct = this.isFavProduct(data.mainInfo._id);
+            const isCurrentUserOwner = !!currentUser && data._id === currentUser._id;
+            const isFavProduct = this.isFavProduct(data._id);
             return { ...data, isCurrentUserOwner, isFavProduct } as ProductDTO;
           });
 
@@ -94,7 +94,7 @@ export class ProductService {
           .filter(p => p.exists)
           .map(product => {
             const data = product.data() as Product;
-            const isCurrentUserOwner = !!currentUser && data.mainInfo._id === currentUser._id;
+            const isCurrentUserOwner = !!currentUser && data._id === currentUser._id;
             return { ...data, isFavProduct: true, isCurrentUserOwner } as ProductDTO;
           });
 
@@ -123,7 +123,39 @@ export class ProductService {
     await this.createDummyData("ice cream");
   }
 
-  async toggleFavoriteStatus(product: ProductDTO) {}
+  async toggleFavoriteStatus(product: ProductDTO) {
+    const currentUser = this.store.userState.currentUser as User;
+    const isFavProduct = product.isFavProduct;
+    this.dispatch({
+      type: "ChangeFavoriteStatus",
+      payload: { selectedProduct: { ...product, isFavProduct: !isFavProduct } }
+    });
+
+    try {
+      if (isFavProduct) {
+        await firebase
+          .firestore()
+          .doc(`/users/${currentUser._id}/fav-products/${product._id}`)
+          .delete();
+      } else {
+        const favProduct = {
+          _id: product._id,
+          mainInfo: product.mainInfo,
+          ingredientInfo: product.ingredientInfo
+        } as FavProduct;
+
+        await firebase
+          .firestore()
+          .doc(`/users/${currentUser._id}/fav-products/${product._id}`)
+          .set(favProduct);
+      }
+    } catch (error) {
+      this.dispatch({
+        type: "ChangeFavoriteStatus",
+        payload: { selectedProduct: { ...product, isFavProduct: isFavProduct } }
+      });
+    }
+  }
 
   private async createDummyData(key: string) {
     try {
@@ -135,8 +167,6 @@ export class ProductService {
         const foodProducts = response.products as OpenFoodProduct[];
 
         for (const product of foodProducts.filter(x => x.complete === 1)) {
-          console.log(product._id, product.product_name);
-
           const isVegan = !product.ingredients_analysis_tags
             ? null
             : product.ingredients_analysis_tags.findIndex(x => "en:non-vegan") !== -1
@@ -154,8 +184,8 @@ export class ProductService {
             : null;
 
           const newProduct: Product = {
+            _id: getIdFromBarcode(product.code),
             mainInfo: {
-              _id: getIdFromBarcode(product.code),
               barcode: product.code,
               name: product.product_name,
               createdAt: new Date(),
@@ -176,11 +206,10 @@ export class ProductService {
             isReviewed: false,
             createdBy: (this.store.userState.currentUser as User)._id
           };
-          console.log("product", newProduct.mainInfo._id, newProduct.mainInfo.name);
 
           await firebase
             .firestore()
-            .doc(`/products/${newProduct.mainInfo._id}`)
+            .doc(`/products/${newProduct._id}`)
             .set(newProduct);
 
           await delay(1);
