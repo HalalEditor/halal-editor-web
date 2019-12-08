@@ -6,7 +6,7 @@ import { ProductActionType } from "../store/product-store";
 import { ReduxStoreValueType } from "./../contexts/redux-value";
 import { Product } from "../models/product";
 import { isArray } from "util";
-import { delay } from "./helper";
+import { delay, getIdFromBarcode } from "./helper";
 import { User } from "../models/user";
 import { ProductDTO } from "../dto/product-dto";
 
@@ -27,7 +27,7 @@ export class ProductService {
     return new Promise(async (resolve, reject) => {
       try {
         const lastProduct =
-          productList.length > 0 ? productList[productList.length - 1] : undefined;
+          Object.values(productList).length > 0 ? Object.values(productList).pop() : undefined;
 
         const query = await firebase
           .firestore()
@@ -48,6 +48,8 @@ export class ProductService {
             return { ...data, isCurrentUserOwner, isFavProduct } as ProductDTO;
           });
 
+        console.log(queryResult.map(p => p.mainInfo.createdTimeStamp));
+
         this.dispatch({
           type: "AddProductList",
           payload: { productList: queryResult }
@@ -61,7 +63,7 @@ export class ProductService {
   }
 
   private isFavProduct(productId: string): boolean {
-    return !!this.store.productState.favoriteProductList.find(fp => fp.mainInfo._id === productId);
+    return !!this.store.productState.favoriteProductList[productId];
   }
 
   async getProductListCount() {
@@ -153,7 +155,7 @@ export class ProductService {
 
           const newProduct: Product = {
             mainInfo: {
-              _id: product.code,
+              _id: getIdFromBarcode(product.code),
               barcode: product.code,
               name: product.product_name,
               createdAt: new Date(),
@@ -174,6 +176,8 @@ export class ProductService {
             isReviewed: false,
             createdBy: (this.store.userState.currentUser as User)._id
           };
+          console.log("product", newProduct.mainInfo._id, newProduct.mainInfo.name);
+
           await firebase
             .firestore()
             .doc(`/products/${newProduct.mainInfo._id}`)

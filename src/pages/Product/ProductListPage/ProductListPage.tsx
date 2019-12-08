@@ -22,6 +22,10 @@ const ProductListPage = () => {
       productService.getProductListCount().then(count => {
         setListCount(count);
       });
+
+      return () => {
+        productService.clearFavoriteProductList();
+      };
     },
     // eslint-disable-next-line
     []
@@ -42,14 +46,14 @@ const ProductListPage = () => {
   );
 
   function loadMoreProduct() {
-    if (listCount > productList.length) {
+    if (listCount > Object.keys(productList).length) {
       setLoadListConfig({ ...loadListConfig });
     } else {
       setIsFetching(false);
     }
   }
 
-  const products = productList.map(product => {
+  const products = Object.values(productList).map(product => {
     return <ProductListItem key={product.mainInfo._id} product={product}></ProductListItem>;
   });
 

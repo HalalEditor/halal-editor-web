@@ -1,11 +1,11 @@
 import { Reducer } from "react";
 import { ActionType } from "./action-type";
-import { ProductDTO } from "../dto/product-dto";
+import { ProductDTO, ProductDictionary } from "../dto/product-dto";
 
 export type ProductStateType = {
-  productList: ProductDTO[];
-  favoriteProductList: ProductDTO[];
-  myProductList: ProductDTO[];
+  productList: ProductDictionary;
+  favoriteProductList: ProductDictionary;
+  myProductList: ProductDictionary;
   scannedProduct?: ProductDTO;
   selectedProduct?: ProductDTO;
 };
@@ -16,14 +16,15 @@ export type ProductActionType = {
 };
 
 export const initialProductState: ProductStateType = {
-  productList: [],
-  favoriteProductList: [],
-  myProductList: []
+  productList: {},
+  favoriteProductList: {},
+  myProductList: {}
 };
 type ActionPayloadType = {
   productList?: ProductDTO[];
   favoriteProductList?: ProductDTO[];
   myProductList?: ProductDTO[];
+  selectedProduct?: ProductDTO;
 };
 
 export const ProductReducer: Reducer<ProductStateType, ProductActionType> = (
@@ -35,16 +36,36 @@ export const ProductReducer: Reducer<ProductStateType, ProductActionType> = (
   switch (action.type) {
     case "AddProductList":
       if (!!action.payload.productList) {
-        return { ...state, productList: [...state.productList, ...action.payload.productList] };
+        const addProductList = action.payload.productList.reduce(
+          (list: ProductDictionary, product) => {
+            list[product.mainInfo._id] = product;
+            return list;
+          },
+          {}
+        );
+
+        return { ...state, productList: { ...state.productList, ...addProductList } };
       } else return { ...state };
+
     case "ClearProductList":
-      return { ...state, productList: [] };
+      return { ...state, productList: {} };
+
     case "SetFavoriteProductList":
       if (!!action.payload.favoriteProductList) {
-        return { ...state, favoriteProductList: [...action.payload.favoriteProductList] };
+        const favoriteProductList = action.payload.favoriteProductList.reduce(
+          (list: ProductDictionary, product) => {
+            list[product.mainInfo._id] = product;
+            return list;
+          },
+          state.favoriteProductList
+        );
+
+        return { ...state, favoriteProductList: { ...favoriteProductList } };
       } else return { ...state };
+
     case "ClearFavoriteProductList":
-      return { ...state, favoriteProductList: [] };
+      return { ...state, favoriteProductList: {} };
+
     default:
       return { ...state };
   }
