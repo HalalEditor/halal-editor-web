@@ -3,6 +3,7 @@ import { makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
 import { useReduxContextValue } from "../../../contexts/redux-context";
 import ProductListItem from "./components/ProductListItem";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
+import { ProductDTO } from "../../../dto/product-dto";
 
 const LOAD_LIMIT = 20;
 
@@ -53,8 +54,18 @@ const ProductListPage = () => {
     }
   }
 
+  const handleToggleFavorite = (product: ProductDTO) => {
+    productService.toggleFavoriteStatus(product);
+  };
+
   const products = Object.values(productList).map(product => {
-    return <ProductListItem key={product.mainInfo._id} product={product}></ProductListItem>;
+    return (
+      <ProductListItem
+        key={product._id}
+        product={product}
+        onToggleFavorite={() => handleToggleFavorite(product)}
+      ></ProductListItem>
+    );
   });
 
   return (
