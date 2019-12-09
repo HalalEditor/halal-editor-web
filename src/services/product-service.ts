@@ -37,8 +37,6 @@ export class ProductService {
           .limit(data.limit)
           .get();
 
-        console.log(query.size);
-
         const queryResult = query.docs
           .filter(p => p.exists)
           .map(product => {
@@ -47,8 +45,6 @@ export class ProductService {
             const isFavProduct = this.isFavProduct(data._id);
             return { ...data, isCurrentUserOwner, isFavProduct } as ProductDTO;
           });
-
-        console.log(queryResult.map(p => p.mainInfo.createdTimeStamp));
 
         this.dispatch({
           type: "AddProductList",
