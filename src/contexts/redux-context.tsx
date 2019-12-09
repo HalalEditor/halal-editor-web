@@ -43,6 +43,10 @@ const ReduxContextProvider = (props: Props) => {
 
   useEffect(() => {
     productService.loadAllFavoriteProduct();
+
+    if (!userState.currentUser) {
+      productService.clearProductList();
+    }
   }, [userState.currentUser]);
 
   const appReduxValue: ReduxValueType = {
