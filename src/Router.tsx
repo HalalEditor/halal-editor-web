@@ -3,60 +3,60 @@ import { Redirect, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 import { Router as BrowserRouter } from "react-router-dom";
 import { Route, PrivateRoute } from "./components";
-import * as l from "./layout";
-import * as p from "./pages";
+import * as layout from "./layout";
+import * as page from "./pages";
 const browserHistory = createBrowserHistory();
 
 const Router = () => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route path="/" component={p.Home} exact layout={l.DefaultLayout} />
-        <Route path="/login" component={p.Login} exact layout={l.EmptyLayout} />
-        <Route path="/signup" component={p.Signup} exact layout={l.EmptyLayout} />
+        <Route path="/" component={page.Home} exact layout={layout.Default} />
+        <Route path="/login" component={page.Login} exact layout={layout.Empty} />
+        <Route path="/signup" component={page.Signup} exact layout={layout.Empty} />
         <Route
           path="/recover-password"
-          component={p.RecoverPassword}
+          component={page.RecoverPassword}
           exact
-          layout={l.EmptyLayout}
+          layout={layout.Empty}
         />
         <PrivateRoute
           path="/dashboard"
-          component={p.Dashboard}
+          component={page.Dashboard}
           exact
-          layout={l.AdminLayout}
+          layout={layout.Dashboard}
           accessibleUserCategories={["root", "admin", "editor", "normal"]}
         />
         <PrivateRoute
           path="/profile"
-          component={p.Profile}
+          component={page.Profile}
           exact
-          layout={l.AdminLayout}
+          layout={layout.Dashboard}
           accessibleUserCategories={["root", "admin", "editor", "normal"]}
         />
         <PrivateRoute
           path="/user/:id"
-          component={p.User}
+          component={page.User}
           exact
-          layout={l.AdminLayout}
+          layout={layout.Dashboard}
           accessibleUserCategories={["root", "admin"]}
         />
         <PrivateRoute
           path="/users"
-          component={p.UserList}
+          component={page.UserList}
           exact
-          layout={l.AdminLayout}
+          layout={layout.Dashboard}
           accessibleUserCategories={["root", "admin"]}
         />
         <PrivateRoute
           path="/products"
-          component={p.ProductList}
+          component={page.ProductList}
           exact
-          layout={l.AdminLayout}
+          layout={layout.Dashboard}
           accessibleUserCategories={["root", "admin", "editor", "normal"]}
         />
-        <Route path="/404" component={p.Error404} exact layout={l.AdminLayout} />
-        <PrivateRoute path="/admin404" component={p.Error404} exact layout={l.AdminLayout} />
+        <Route path="/404" component={page.Error404} exact layout={layout.Dashboard} />
+        <PrivateRoute path="/admin404" component={page.Error404} exact layout={layout.Dashboard} />
         <Redirect to="/404" />
       </Switch>
     </BrowserRouter>

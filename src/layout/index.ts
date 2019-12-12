@@ -1,4 +1,4 @@
-export { default as AdminLayout } from "./Admin/AdminLayout";
-export { default as DefaultLayout } from "./Default/DefaultLayout";
-export { default as EmptyLayout } from "./Empty/EmptyLayout";
-export { default as ErrorLayout } from "./Error/ErrorLayout";
+export { default as Dashboard } from "./Dashboard/DashboardLayout";
+export { default as Default } from "./Default/DefaultLayout";
+export { default as Empty } from "./Empty/EmptyLayout";
+export { default as Error } from "./Error/ErrorLayout";

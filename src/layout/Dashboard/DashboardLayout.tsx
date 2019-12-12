@@ -4,11 +4,10 @@ import { Drawer, LinearProgress, useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
 import { AppBar } from "components";
-import Navigator from "./components/Sidebar/Navigator/Navigator";
-import Profile from "./components/Sidebar/Profile/Profile";
+import { Navigator, Profile } from "./components";
 
-import { useReduxContextValue } from "../../contexts/redux-context";
-import { User } from "../../models/user";
+import { useReduxContextValue } from "contexts/redux-context";
+import { User } from "models/user";
 
 type Props = {
   children: React.ReactNode;
