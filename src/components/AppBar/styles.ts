@@ -12,10 +12,9 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2)
     },
     title: {
-      flexGrow: 1,
       color: fade(theme.palette.common.white, 0.75),
       cursor: "pointer",
-      display: "block"
+      padding: theme.spacing(1)
     },
     search: {
       position: "relative",

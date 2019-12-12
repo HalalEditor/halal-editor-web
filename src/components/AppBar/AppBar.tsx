@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  AppBar as MuiAppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  MenuItem,
-  Button
-} from "@material-ui/core";
+import { AppBar as MuiAppBar, Toolbar, Typography, IconButton, Button } from "@material-ui/core";
 import { Menu as MenuIcon, Input as InputIcon } from "@material-ui/icons";
 import { useReduxContextValue } from "contexts/redux-context";
 import { useHistory } from "react-router-dom";
+import { Spacer } from "components";
 import { useStyles } from "./styles";
 
 interface Props {
@@ -41,7 +35,7 @@ const AppBar = ({ onDrawerOpen, isDesktop, showMenuIcon, currentUser }: Props) =
         <Typography variant="h3" className={classes.title} onClick={() => history.push("/")}>
           Halal Editor
         </Typography>
-
+        <Spacer />
         {store.userState.isAuth ? (
           isDesktop ? (
             <Button
@@ -59,6 +53,7 @@ const AppBar = ({ onDrawerOpen, isDesktop, showMenuIcon, currentUser }: Props) =
               aria-haspopup="true"
               onClick={() => services.userService.logout()}
               color="inherit"
+              edge="end"
             >
               <InputIcon />
             </IconButton>
