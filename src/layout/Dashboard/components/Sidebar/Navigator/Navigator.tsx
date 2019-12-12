@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useHistory } from "react-router-dom";
 import { ListItemIcon, ListItemText, Divider, List, ListItem, Button } from "@material-ui/core";
 import { useStyles } from "./styles";
-import { User } from "../../../../../models/user";
+import { User } from "models/user";
 import DrawerItems from "./DrawerItems";
 
 interface Props {

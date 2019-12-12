@@ -2,7 +2,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Avatar, Typography } from "@material-ui/core";
 import { useStyles } from "./styles";
-import { User } from "../../../../../models/user";
+import { User } from "models/user";
 
 interface Props {
   currentUser: User;
