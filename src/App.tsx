@@ -4,7 +4,7 @@ import Router from "./Router";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme/index";
-import CustomSnackbar from "./components/CustomSnackbar/CustomSnackbar";
+import { CustomSnackbar } from "components";
 
 const App: FC = () => {
   return (
