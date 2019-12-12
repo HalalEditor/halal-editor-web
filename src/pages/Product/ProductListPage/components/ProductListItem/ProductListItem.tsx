@@ -39,10 +39,11 @@ const ProductListItem = ({ product, onToggleFavorite }: Props) => {
         />
         <CardActions disableSpacing>
           <IconButton
+            onClick={onToggleFavorite}
             aria-label="add to favorites"
             color={product.isFavProduct ? "secondary" : "default"}
           >
-            <FavoriteIcon onClick={onToggleFavorite} />
+            <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="share">
             <ShareIcon />
