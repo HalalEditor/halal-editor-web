@@ -14,11 +14,8 @@ export const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
       color: fade(theme.palette.common.white, 0.75),
-      display: "none",
       cursor: "pointer",
-      [theme.breakpoints.up("sm")]: {
-        display: "block"
-      }
+      display: "block"
     },
     search: {
       position: "relative",
@@ -57,6 +54,12 @@ export const useStyles = makeStyles((theme: Theme) =>
           width: 200
         }
       }
+    },
+    logoutButton: {
+      marginLeft: theme.spacing(1)
+    },
+    logoutIcon: {
+      marginRight: theme.spacing(1)
     }
   })
 );
