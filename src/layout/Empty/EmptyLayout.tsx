@@ -9,9 +9,7 @@ const EmptyLayout = ({ children }: Props) => {
   return (
     <React.Fragment>
       <Container>
-        <Box my={4}>
-          <React.Suspense fallback={<LinearProgress />}>{children}</React.Suspense>
-        </Box>
+        <Box my={4}>{children}</Box>
       </Container>
     </React.Fragment>
   );

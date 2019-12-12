@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Route as ReactRoute } from "react-router-dom";
+import { LinearProgress } from "@material-ui/core";
 
 interface Props {
   component: any;
@@ -16,9 +17,11 @@ const Route = ({ component, layout, path, exact }: Props) => {
       path={path}
       exact={exact}
       render={matchProps => (
-        <Layout>
-          <Component {...matchProps} />
-        </Layout>
+        <React.Suspense fallback={<LinearProgress />}>
+          <Layout>
+            <Component {...matchProps} />
+          </Layout>
+        </React.Suspense>
       )}
     />
   );

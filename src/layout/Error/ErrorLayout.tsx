@@ -1,5 +1,4 @@
 import React from "react";
-import { LinearProgress } from "@material-ui/core";
 import { useStyles } from "./styles";
 
 type Props = {
@@ -9,11 +8,7 @@ type Props = {
 const Error = ({ children }: Props) => {
   const classes = useStyles();
 
-  return (
-    <main className={classes.root}>
-      <React.Suspense fallback={<LinearProgress />}>{children}</React.Suspense>
-    </main>
-  );
+  return <main className={classes.root}>{children}</main>;
 };
 
 export default Error;

@@ -2,6 +2,7 @@ import * as React from "react";
 import { Route as ReactRoute, Redirect } from "react-router-dom";
 import { useReduxContextValue } from "contexts/redux-context";
 import { UserCategory } from "models/user";
+import { LinearProgress } from "@material-ui/core";
 
 interface Props {
   component: any;
@@ -30,9 +31,11 @@ const PrivateRoute = ({ component, layout, path, exact, accessibleUserCategories
       path={path}
       exact={exact}
       render={matchProps => (
-        <Layout>
-          <Component {...matchProps} />
-        </Layout>
+        <React.Suspense fallback={<LinearProgress />}>
+          <Layout>
+            <Component {...matchProps} />
+          </Layout>
+        </React.Suspense>
       )}
     />
   );

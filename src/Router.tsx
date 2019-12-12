@@ -55,7 +55,7 @@ const Router = () => {
           layout={layout.Dashboard}
           accessibleUserCategories={["root", "admin", "editor", "normal"]}
         />
-        <Route path="/404" component={page.Error404} exact layout={layout.Dashboard} />
+        <Route path="/404" component={page.Error404} exact layout={layout.Error} />
         <PrivateRoute path="/admin404" component={page.Error404} exact layout={layout.Dashboard} />
         <Redirect to="/404" />
       </Switch>
