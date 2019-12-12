@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
-import { Drawer, LinearProgress, useMediaQuery } from "@material-ui/core";
+import { Drawer, LinearProgress, useMediaQuery, Toolbar, IconButton } from "@material-ui/core";
+import { Close as CloseIcon } from "@material-ui/icons";
 import { useTheme } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
 import { AppBar } from "components";
@@ -45,6 +46,7 @@ const AdminLayout = ({ children }: Props) => {
         currentUser={currentUser}
         onDrawerOpen={() => toggleDrawer(true)}
         showMenuIcon={showMenuIcon}
+        isDesktop={isDesktop}
       />
       <Drawer
         anchor="left"
@@ -53,7 +55,16 @@ const AdminLayout = ({ children }: Props) => {
         open={shouldOpenSidebar}
         variant={chooseVariant}
       >
-        <div className={classes.toolbar} />
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={() => toggleDrawer(false)}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
         {currentUser && <Profile currentUser={currentUser} />}
         <Navigator onMenuItemClick={() => toggleDrawer(false)} currentUser={currentUser} />
       </Drawer>
