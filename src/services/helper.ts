@@ -31,6 +31,17 @@ export const padLeft = (text: string, padChar: string, size: number): string => 
   return (String(padChar).repeat(size) + text).substr(size * -1, size);
 };
 
+export const getDeviceId = () => {
+  let deviceId = localStorage.getItem("deviceId");
+
+  if (!deviceId) {
+    deviceId = newGuid();
+    localStorage.setItem("deviceId", deviceId);
+  }
+
+  return deviceId;
+};
+
 export const newGuid = (length?: number) => {
   let id = "xxxxxxxxxxxxxxxxyxxxyxxxxyxx".replace(/[xy]/g, c => {
     var r = (Math.random() * 16) | 0,
