@@ -1,10 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { Drawer } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Drawer, LinearProgress, useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
-import { AppBar } from "../../components";
+import { AppBar } from "components";
 import Navigator from "./components/Sidebar/Navigator/Navigator";
 import Profile from "./components/Sidebar/Profile/Profile";
 
@@ -15,7 +14,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const AdminLayout = (props: Props) => {
+const AdminLayout = ({ children }: Props) => {
   const classes = useStyles();
   const theme = useTheme();
   const { store } = useReduxContextValue();
@@ -61,7 +60,7 @@ const AdminLayout = (props: Props) => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {props.children}
+        <React.Suspense fallback={<LinearProgress />}>{children}</React.Suspense>
       </main>
     </div>
   );

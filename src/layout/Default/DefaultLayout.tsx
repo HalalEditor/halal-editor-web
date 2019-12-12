@@ -1,12 +1,13 @@
 import React from "react";
 import { AppBar } from "../../components";
 import { useStyles } from "./styles";
+import { LinearProgress } from "@material-ui/core";
 
 type Props = {
   children: React.ReactNode;
 };
 
-const DefaultLayout = (props: Props) => {
+const DefaultLayout = ({ children }: Props) => {
   const classes = useStyles();
 
   return (
@@ -14,7 +15,7 @@ const DefaultLayout = (props: Props) => {
       <AppBar />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {props.children}
+        <React.Suspense fallback={<LinearProgress />}>{children}</React.Suspense>
       </main>
     </div>
   );
