@@ -28,9 +28,11 @@ const ReduxContextProvider = (props: Props) => {
     () => {
       userService.initCurrentUser();
       console.log("ReduxContextProvider useEffect");
-      const unsubscribe = userService.subscribeAuth();
+      const unsubscribeAuth = userService.subscribeAuth();
+      const unsubscribeToken = userService.subscribeToken();
       return () => {
-        unsubscribe();
+        unsubscribeAuth();
+        unsubscribeToken();
       };
     },
     /*
