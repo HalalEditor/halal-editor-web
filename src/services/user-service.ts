@@ -49,7 +49,7 @@ export class UserService {
   subscribeAuth = () => {
     const unSubscribe = firebase.auth().onAuthStateChanged(async res => {
       if (!!res) {
-        const currentUser = await this.getUser(res);
+        const currentUser = await this.getUserFromFirebaseUser(res);
         this.setLocalUser(currentUser);
         this.dispatch({
           type: "SetCurrentUser",
@@ -80,6 +80,7 @@ export class UserService {
   clearUserList = () => {
     this.dispatch({ type: "ClearUserList", payload: {} });
   };
+
   loadUserList = (data: {
     limit: number;
     lastUserId?: string;
@@ -166,7 +167,7 @@ export class UserService {
     }
   }
 
-  private async getUser(firebaseUser: firebase.User): Promise<User> {
+  private async getUserFromFirebaseUser(firebaseUser: firebase.User): Promise<User> {
     let defaultUser = this.getDefaultUser(firebaseUser);
     try {
       let result = await firebase
@@ -262,7 +263,7 @@ export class UserService {
         .createUserWithEmailAndPassword(`test${index + 1}@test.com`, "123456")
         .then(res => {
           if (!!res.user) {
-            this.getUser(res.user);
+            this.getUserFromFirebaseUser(res.user);
           }
         });
     }
