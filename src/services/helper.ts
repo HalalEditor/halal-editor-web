@@ -30,3 +30,12 @@ export const arrayToDictionary = (list: any[], keyPath: string): {} => {
 export const padLeft = (text: string, padChar: string, size: number): string => {
   return (String(padChar).repeat(size) + text).substr(size * -1, size);
 };
+
+export const newGuid = (length?: number) => {
+  let id = "xxxxxxxxxxxxxxxxyxxxyxxxxyxx".replace(/[xy]/g, c => {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+  return !!length ? id.substring(0, length) : id;
+};
