@@ -211,6 +211,14 @@ export class UserService {
     } as User;
   };
 
+  private getUser = async (userId: string): Promise<User> => {
+    const userRef = await firebase
+      .firestore()
+      .doc(`/users/${userId}`)
+      .get();
+    return userRef.data() as User;
+  };
+
   private setLocalUser = (user?: User) => {
     const lastUser = !!user
       ? JSON.stringify({
