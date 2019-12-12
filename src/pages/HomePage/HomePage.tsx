@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Typography } from "@material-ui/core";
-import { useReduxContextValue } from "../../contexts/redux-context";
+import { useReduxContextValue } from "contexts/redux-context";
 import { Redirect } from "react-router";
 
 const HomePage: FC = () => {

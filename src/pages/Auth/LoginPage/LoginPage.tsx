@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { useReduxContextValue } from "../../../contexts/redux-context";
+import { useReduxContextValue } from "contexts/redux-context";
 import { Redirect, useHistory } from "react-router";
 import {
   Avatar,
@@ -12,10 +12,10 @@ import {
   Typography
 } from "@material-ui/core";
 import { LockOutlined } from "@material-ui/icons";
-import { Copyright } from "../../../components";
-import { MailInput, PasswordInput, OrDivider } from "../../../components/UI";
+import { Copyright } from "components";
+import { MailInput, PasswordInput, OrDivider } from "components/UI";
 import { useStyles } from "../styles";
-import GoogleIcon from "../../../assets/google.svg";
+import GoogleIcon from "assets/google.svg";
 
 const LoginPage: FC = () => {
   let history = useHistory();

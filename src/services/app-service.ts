@@ -1,6 +1,6 @@
-import { ReduxStoreValueType } from "./../contexts/redux-value";
-import { SnackbarMessageVariantIcon } from "./../models/snackbar";
-import { AppActionType } from "./../store/app-store";
+import { ReduxStoreValueType } from "contexts/redux-value";
+import { SnackbarMessageVariantIcon } from "models/snackbar";
+import { AppActionType } from "store/app-store";
 import { Dispatch } from "react";
 
 export class AppService {

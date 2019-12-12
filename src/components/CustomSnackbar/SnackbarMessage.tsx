@@ -5,7 +5,7 @@ import { green, amber } from "@material-ui/core/colors";
 import clsx from "clsx";
 
 import { Close as CloseIcon } from "@material-ui/icons";
-import { SnackbarMessageVariantIcon } from "../../models/snackbar";
+import { SnackbarMessageVariantIcon } from "models/snackbar";
 
 type Props = {
   className?: string;

@@ -8,7 +8,7 @@ import {
   InputBase
 } from "@material-ui/core";
 import { Menu as MenuIcon, Search as SearchIcon } from "@material-ui/icons";
-import { useReduxContextValue } from "../../contexts/redux-context";
+import { useReduxContextValue } from "contexts/redux-context";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./styles";
 import AccountMenu from "./AccountMenu/AccountMenu";

@@ -1,14 +1,14 @@
-import { OpenFoodProduct } from "./../models/open-food";
+import { OpenFoodProduct } from "models/open-food";
 import * as firebase from "firebase/app";
 import "firebase/firebase-firestore";
 import { Dispatch } from "react";
-import { ProductActionType } from "../store/product-store";
-import { ReduxStoreValueType } from "./../contexts/redux-value";
-import { Product, FavProduct } from "./../models/product";
+import { ProductActionType } from "store/product-store";
+import { ReduxStoreValueType } from "contexts/redux-value";
+import { Product, FavProduct } from "models/product";
 import { isArray } from "util";
 import { delay, getIdFromBarcode } from "./helper";
-import { User } from "../models/user";
-import { ProductDTO } from "../dto/product-dto";
+import { User } from "models/user";
+import { ProductDTO } from "dto/product-dto";
 
 export class ProductService {
   constructor(private dispatch: Dispatch<ProductActionType>, private store: ReduxStoreValueType) {}

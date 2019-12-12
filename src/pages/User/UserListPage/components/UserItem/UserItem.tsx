@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, Card, CardHeader, Grid, Typography } from "@material-ui/core";
-import { User } from "../../../models/user";
+import { User } from "models/user";
 import { useStyles } from "./styles";
 
 interface Props {

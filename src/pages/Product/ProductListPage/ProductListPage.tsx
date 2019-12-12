@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
-import { useReduxContextValue } from "../../../contexts/redux-context";
-import ProductListItem from "./components/ProductListItem";
-import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
-import { ProductDTO } from "../../../dto/product-dto";
+import { useReduxContextValue } from "contexts/redux-context";
+import ProductListItem from "./components/ProductListItem/ProductListItem";
+import useInfiniteScroll from "hooks/useInfiniteScroll";
+import { ProductDTO } from "dto/product-dto";
 
 const LOAD_LIMIT = 20;
 

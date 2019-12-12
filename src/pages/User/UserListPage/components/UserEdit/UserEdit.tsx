@@ -8,9 +8,9 @@ import {
   Theme,
   createStyles
 } from "@material-ui/core";
-import { User, UserCategory } from "../../../models/user";
-import ModalDialog from "../../../hocs/ModalDialog";
-import { useReduxContextValue } from "../../../contexts/redux-context";
+import { User, UserCategory } from "models/user";
+import ModalDialog from "hocs/ModalDialog";
+import { useReduxContextValue } from "contexts/redux-context";
 
 export type UserEditRefType = {
   showDialog: (user: User) => void;

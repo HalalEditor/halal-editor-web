@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, IconButton, Menu, MenuItem } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
-import { useReduxContextValue } from "../../../contexts/redux-context";
+import { useReduxContextValue } from "contexts/redux-context";
 import { useHistory } from "react-router";
 import { useStyles } from "./styles";
 

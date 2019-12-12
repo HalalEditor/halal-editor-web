@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Route as ReactRoute, Redirect } from "react-router-dom";
-import { useReduxContextValue } from "../../contexts/redux-context";
-import { UserCategory } from "../../models/user";
+import { useReduxContextValue } from "contexts/redux-context";
+import { UserCategory } from "models/user";
 
 interface Props {
   component: any;

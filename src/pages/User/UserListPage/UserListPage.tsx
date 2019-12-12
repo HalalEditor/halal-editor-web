@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Grid, Typography, CircularProgress } from "@material-ui/core";
-import { SearchInput } from "../../../components";
-import UserItem from "../components/UserItem";
-import { useReduxContextValue } from "../../../contexts/redux-context";
+import { SearchInput } from "components";
+import UserItem from "./components/UserItem/UserItem";
+import { useReduxContextValue } from "contexts/redux-context";
 import { useStyles } from "./styles";
-import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
+import useInfiniteScroll from "hooks/useInfiniteScroll";
 
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import { UserCategory } from "../../../models/user";
-import UserEdit, { UserEditRefType } from "../components/UserEdit";
+import { UserCategory } from "models/user";
+import UserEdit, { UserEditRefType } from "./components/UserEdit/UserEdit";
 
 const LOAD_LIMIT = 20;
 

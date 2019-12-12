@@ -14,7 +14,7 @@ import {
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import { red } from "@material-ui/core/colors";
-import { ProductDTO } from "../../../../dto/product-dto";
+import { ProductDTO } from "dto/product-dto";
 
 type Props = {
   product: ProductDTO;

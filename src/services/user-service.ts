@@ -1,6 +1,6 @@
-import { ReduxStoreValueType } from "./../contexts/redux-value";
-import { User, UserCategory } from "./../models/user";
-import { UserActionType } from "./../store/user-store";
+import { ReduxStoreValueType } from "contexts/redux-value";
+import { User, UserCategory } from "models/user";
+import { UserActionType } from "store/user-store";
 import { Dispatch } from "react";
 
 import * as firebase from "firebase/app";

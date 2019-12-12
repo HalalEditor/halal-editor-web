@@ -1,4 +1,4 @@
-import { Product } from "../models/product";
+import { Product } from "models/product";
 
 export type ProductDTO = Product & {
   isFavProduct: boolean;

@@ -1,11 +1,11 @@
 import React, { createContext, useContext, ReactChild, useReducer, useEffect } from "react";
 import { ReduxValueType, ReduxStoreValueType } from "./redux-value";
-import { UserService } from "../services/user-service";
-import { UserReducer, initialUserState } from "../store/user-store";
-import { AppReducer, initialAppState } from "../store/app-store";
-import { AppService } from "../services/app-service";
-import { ProductReducer, initialProductState } from "../store/product-store";
-import { ProductService } from "../services/product-service";
+import { UserService } from "services/user-service";
+import { UserReducer, initialUserState } from "store/user-store";
+import { AppReducer, initialAppState } from "store/app-store";
+import { AppService } from "services/app-service";
+import { ProductReducer, initialProductState } from "store/product-store";
+import { ProductService } from "services/product-service";
 
 export const ReduxContext = createContext<ReduxValueType>({} as ReduxValueType);
 export const useReduxContextValue = () => useContext(ReduxContext);

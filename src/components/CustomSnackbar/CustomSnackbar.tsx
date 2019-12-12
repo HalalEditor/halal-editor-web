@@ -1,7 +1,7 @@
 import React from "react";
 import { Snackbar } from "@material-ui/core";
 import SnackbarMessage from "./SnackbarMessage";
-import { useReduxContextValue } from "../../contexts/redux-context";
+import { useReduxContextValue } from "contexts/redux-context";
 
 const CustomSnackbar = () => {
   const { services, store } = useReduxContextValue();

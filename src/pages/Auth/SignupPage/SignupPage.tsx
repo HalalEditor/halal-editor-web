@@ -1,12 +1,12 @@
 import React, { FC, useState } from "react";
-import { useReduxContextValue } from "../../../contexts/redux-context";
+import { useReduxContextValue } from "contexts/redux-context";
 import { Redirect, useHistory } from "react-router";
 import { Avatar, Button, Link, Box, Grid, Typography } from "@material-ui/core";
 import { LockOutlined } from "@material-ui/icons";
-import { Copyright } from "../../../components";
+import { Copyright } from "components";
 import { useStyles } from "../styles";
-import MailInput from "../../../components/UI/MailInput/MailInput";
-import PasswordInput from "../../../components/UI/PasswordInput/PasswordInput";
+import MailInput from "components/UI/MailInput/MailInput";
+import PasswordInput from "components/UI/PasswordInput/PasswordInput";
 
 const SignupPage: FC = () => {
   let history = useHistory();
