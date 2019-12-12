@@ -5,6 +5,16 @@ export type User = {
   emailVerified: boolean;
   photoURL: string;
   userCategory: UserCategory;
+  tokens: UserToken;
+};
+
+export type UserToken = {
+  [id: string]: {
+    deviceId: string;
+    token: string;
+    expirationTime: Date;
+    authTime: Date;
+  };
 };
 
 export type UserCategory = "root" | "admin" | "editor" | "normal";
