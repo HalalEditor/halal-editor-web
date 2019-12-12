@@ -45,6 +45,7 @@ const AdminLayout = ({ children }: Props) => {
         currentUser={currentUser}
         onDrawerOpen={() => toggleDrawer(true)}
         showMenuIcon={showMenuIcon}
+        isDesktop={isDesktop}
       />
       <Drawer
         anchor="left"

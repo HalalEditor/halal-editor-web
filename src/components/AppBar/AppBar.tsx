@@ -1,32 +1,31 @@
 import React from "react";
 import {
-  AppBar as MaterialAppBar,
+  AppBar as MuiAppBar,
   Toolbar,
   Typography,
   IconButton,
   MenuItem,
-  InputBase
+  Button
 } from "@material-ui/core";
-import { Menu as MenuIcon, Search as SearchIcon } from "@material-ui/icons";
+import { Menu as MenuIcon, Input as InputIcon } from "@material-ui/icons";
 import { useReduxContextValue } from "contexts/redux-context";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./styles";
-import AccountMenu from "./AccountMenu/AccountMenu";
 
 interface Props {
   onDrawerOpen?: () => void;
   showMenuIcon?: boolean;
   currentUser?: any;
+  isDesktop?: boolean;
 }
 
-const AppBar = ({ onDrawerOpen, showMenuIcon, currentUser }: Props) => {
+const AppBar = ({ onDrawerOpen, isDesktop, showMenuIcon, currentUser }: Props) => {
   let history = useHistory();
   const classes = useStyles();
-
-  const { store } = useReduxContextValue();
+  const { services, store } = useReduxContextValue();
 
   return (
-    <MaterialAppBar position="fixed">
+    <MuiAppBar position="fixed">
       <Toolbar>
         {showMenuIcon && (
           <IconButton
@@ -42,29 +41,41 @@ const AppBar = ({ onDrawerOpen, showMenuIcon, currentUser }: Props) => {
         <Typography variant="h3" className={classes.title} onClick={() => history.push("/")}>
           Halal Editor
         </Typography>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput
-            }}
-            inputProps={{ "aria-label": "search" }}
-          />
-        </div>
 
         {store.userState.isAuth ? (
-          <AccountMenu currentUser={currentUser} />
+          isDesktop ? (
+            <Button
+              className={classes.logoutButton}
+              color="inherit"
+              onClick={() => services.userService.logout()}
+            >
+              <InputIcon className={classes.logoutIcon} />
+              Sign Out
+            </Button>
+          ) : (
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={() => services.userService.logout()}
+              color="inherit"
+            >
+              <InputIcon />
+            </IconButton>
+          )
         ) : (
           <div>
-            <MenuItem onClick={() => history.push("/login")}>Login</MenuItem>
+            <Button
+              className={classes.logoutButton}
+              color="inherit"
+              onClick={() => history.push("/login")}
+            >
+              Login
+            </Button>
           </div>
         )}
       </Toolbar>
-    </MaterialAppBar>
+    </MuiAppBar>
   );
 };
 
