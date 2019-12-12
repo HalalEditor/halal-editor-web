@@ -8,4 +8,7 @@ export { default as User } from "./User/UserPage/UserPage";
 export { default as UserList } from "./User/UserListPage/UserListPage";
 export { default as Product } from "./Product/ProductPage/ProductPage";
 export { default as ProductList } from "./Product/ProductListPage/ProductListPage";
-export { default as Error404 } from "./Error/Error404Page";
+// Error Layouts
+export { default as Error401 } from "./Error/Error401/Error401";
+export { default as Error404 } from "./Error/Error404/Error404";
+export { default as Error500 } from "./Error/Error500/Error500";
