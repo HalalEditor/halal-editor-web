@@ -6,6 +6,7 @@ import { Dispatch } from "react";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firebase-firestore";
+import { getDeviceId } from "./helper";
 
 export class UserService {
   constructor(private dispatch: Dispatch<UserActionType>, private store: ReduxStoreValueType) {}
@@ -157,6 +158,29 @@ export class UserService {
       console.log(error);
       return error.message;
     }
+  };
+
+  subscribeToken = () => {
+    const unSubscribe = firebase.auth().onIdTokenChanged(async user => {
+      if (user) {
+        const currentUser = await this.getUser(user.uid);
+        const tokens = { ...currentUser.tokens };
+        if (currentUser) {
+          user.getIdTokenResult().then(tokenInfo => {
+            const deviceId = getDeviceId();
+            tokens[deviceId] = {
+              deviceId: deviceId,
+              token: tokenInfo.token,
+              authTime: new Date(tokenInfo.authTime),
+              expirationTime: new Date(tokenInfo.expirationTime)
+            };
+            this.updateUserTokens(currentUser._id, tokens);
+          });
+        }
+      }
+    });
+
+    return unSubscribe;
   };
 
   private updateUserTokens = (userId: string, tokens: UserToken) => {
