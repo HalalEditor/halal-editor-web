@@ -1,5 +1,5 @@
 import { ReduxStoreValueType } from "contexts/redux-value";
-import { User, UserCategory } from "models/user";
+import { User, UserCategory, UserToken } from "models/user";
 import { UserActionType } from "store/user-store";
 import { Dispatch } from "react";
 
@@ -157,6 +157,21 @@ export class UserService {
       console.log(error);
       return error.message;
     }
+  };
+
+  private updateUserTokens = (userId: string, tokens: UserToken) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await firebase
+          .firestore()
+          .doc(`users/${userId}`)
+          .update({ tokens: tokens });
+
+        resolve();
+      } catch (error) {
+        reject(error.message);
+      }
+    });
   };
 
   async sendPasswordResetEmail(email: string) {
