@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
-import { Page, Toolbar } from "components";
+import { Page, SearchInput, Toolbar } from "components";
 import { useReduxContextValue } from "contexts/redux-context";
 import ProductListItem from "./components/ProductListItem/ProductListItem";
 import useInfiniteScroll from "hooks/useInfiniteScroll";
@@ -18,7 +18,15 @@ const ProductListPage = () => {
   const { isFetching, setIsFetching } = useInfiniteScroll(loadMoreProduct);
   const [listCount, setListCount] = useState(0);
 
-  const [loadListConfig, setLoadListConfig] = useState<{ limit: number }>({ limit: LOAD_LIMIT });
+  // const [loadListConfig, setLoadListConfig] = useState<{ limit: number }>({ limit: LOAD_LIMIT });
+
+  const [loadPage, setLoadPage] = useState<{
+    limit: number;
+    searchKey: string;
+  }>({
+    limit: LOAD_LIMIT,
+    searchKey: ""
+  });
 
   useEffect(
     () => {
@@ -38,19 +46,20 @@ const ProductListPage = () => {
     () => {
       productService
         .loadProductList({
-          limit: loadListConfig.limit
+          limit: loadPage.limit,
+          searchingProductByID: loadPage.searchKey
         })
         .then(_ => {
           setIsFetching(false);
         });
     },
     // eslint-disable-next-line
-    [loadListConfig]
+    [loadPage]
   );
 
   function loadMoreProduct() {
     if (listCount > Object.keys(productList).length) {
-      setLoadListConfig({ ...loadListConfig });
+      setLoadPage({ ...loadPage });
     } else {
       setIsFetching(false);
     }
@@ -58,6 +67,14 @@ const ProductListPage = () => {
 
   const handleToggleFavorite = (product: ProductDTO) => {
     productService.toggleFavoriteStatus(product);
+  };
+
+  const handleSearchEvent = (searchKey: string) => {
+    productService.clearProductList();
+    setLoadPage({
+      searchKey: searchKey,
+      limit: LOAD_LIMIT
+    });
   };
 
   const products = Object.values(productList).map(product => {
@@ -73,7 +90,14 @@ const ProductListPage = () => {
   return (
     <Page>
       <Toolbar>
-        <Typography variant="h3">Products List</Typography>
+        <Typography variant="h3">Product List</Typography>
+        <span className={classes.spacer} />
+        <SearchInput
+          onChange={value => {
+            handleSearchEvent(value);
+          }}
+          placeholder="Search product"
+        />
       </Toolbar>
       <Grid className={classes.itemContainer} container spacing={3}>
         {products}

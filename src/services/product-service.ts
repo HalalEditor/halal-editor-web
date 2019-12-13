@@ -20,7 +20,7 @@ export class ProductService {
     });
   }
 
-  async loadProductList(data: { limit: number }) {
+  async loadProductList(data: { limit: number; searchingProductByID?: string }) {
     const { productList } = this.store.productState;
     const { currentUser } = this.store.userState;
 
@@ -29,13 +29,19 @@ export class ProductService {
         const lastProduct =
           Object.values(productList).length > 0 ? Object.values(productList).pop() : undefined;
 
-        const query = await firebase
-          .firestore()
-          .collection("products")
-          .orderBy("mainInfo.createdTimeStamp", "desc")
-          .startAfter(!!lastProduct ? lastProduct.mainInfo.createdTimeStamp : "")
-          .limit(data.limit)
-          .get();
+        const query = !!data.searchingProductByID
+          ? await firebase
+              .firestore()
+              .collection("products")
+              .where("_id", "==", data.searchingProductByID)
+              .get()
+          : await firebase
+              .firestore()
+              .collection("products")
+              .orderBy("mainInfo.createdTimeStamp", "desc")
+              .startAfter(!!lastProduct ? lastProduct.mainInfo.createdTimeStamp : "")
+              .limit(data.limit)
+              .get();
 
         const queryResult = query.docs
           .filter(p => p.exists)
