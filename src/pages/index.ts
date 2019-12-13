@@ -4,9 +4,7 @@ export { default as RecoverPassword } from "./Auth/RecoverPasswordPage/RecoverPa
 export { default as Home } from "./HomePage/HomePage";
 export { default as Profile } from "./ProfilePage/ProfilePage";
 export { default as Dashboard } from "./Dashboard/DashboardPage";
-export { default as User } from "./User/UserPage/UserPage";
 export { default as UserList } from "./User/UserListPage/UserListPage";
-export { default as Product } from "./Product/ProductPage/ProductPage";
 export { default as ProductList } from "./Product/ProductListPage/ProductListPage";
 // Error Layouts
 export { default as Error401 } from "./Error/Error401/Error401";
