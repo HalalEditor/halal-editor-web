@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface Props {
-  className: string;
+  className?: string;
   onChange: (value: string) => void;
   placeholder: string;
   debounceTime?: number;
