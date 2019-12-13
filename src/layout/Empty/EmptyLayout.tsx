@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Box, LinearProgress } from "@material-ui/core";
+import { Container, Box } from "@material-ui/core";
 
 type Props = {
   children: React.ReactNode;

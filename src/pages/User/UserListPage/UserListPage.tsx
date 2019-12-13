@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Grid, Typography, CircularProgress } from "@material-ui/core";
-import { SearchInput } from "components";
+import { Page, SearchInput, Toolbar } from "components";
 import UserItem from "./components/UserItem/UserItem";
 import { useReduxContextValue } from "contexts/redux-context";
 import { useStyles } from "./styles";
@@ -120,47 +120,44 @@ const UserListPage = () => {
   };
 
   return (
-    <React.Fragment>
-      <div className={classes.root}>
-        <div className={classes.row}>
-          <Typography variant="h3">User List</Typography>
-          <span className={classes.spacer} />
-          <div className={classes.toggleContainer}>
-            <ToggleButtonGroup
-              size="small"
-              value={loadPage.selectedUserCategory}
-              exclusive
-              onChange={handleSelectedUserCategory}
-            >
-              <ToggleButton value="all" aria-label="All Users">
-                <span className={classes.toggleButtonText}>All ({userCount.all})</span>
-              </ToggleButton>
-              <ToggleButton value="admin" aria-label="Admins">
-                <span className={classes.toggleButtonText}>Admins ({userCount.admin})</span>
-              </ToggleButton>
-              <ToggleButton value="editor" aria-label="Editors">
-                <span className={classes.toggleButtonText}>Editors ({userCount.editor})</span>
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </div>
-          <SearchInput
-            onChange={value => {
-              handleSearchEvent(value);
-            }}
-            className={classes.searchInput}
-            placeholder="Search user"
-          />
+    <Page>
+      <Toolbar>
+        <Typography variant="h3">User List</Typography>
+        <span className={classes.spacer} />
+        <div className={classes.toggleContainer}>
+          <ToggleButtonGroup
+            size="small"
+            value={loadPage.selectedUserCategory}
+            exclusive
+            onChange={handleSelectedUserCategory}
+          >
+            <ToggleButton value="all" aria-label="All Users">
+              <span className={classes.toggleButtonText}>All ({userCount.all})</span>
+            </ToggleButton>
+            <ToggleButton value="admin" aria-label="Admins">
+              <span className={classes.toggleButtonText}>Admins ({userCount.admin})</span>
+            </ToggleButton>
+            <ToggleButton value="editor" aria-label="Editors">
+              <span className={classes.toggleButtonText}>Editors ({userCount.editor})</span>
+            </ToggleButton>
+          </ToggleButtonGroup>
         </div>
+        <SearchInput
+          onChange={value => {
+            handleSearchEvent(value);
+          }}
+          className={classes.searchInput}
+          placeholder="Search user"
+        />
+      </Toolbar>
 
-        <Grid className={classes.itemContainer} container spacing={3}>
-          {users}
-        </Grid>
+      <Grid className={classes.itemContainer} container spacing={3}>
+        {users}
+      </Grid>
 
-        {isFetching && <CircularProgress color="secondary" />}
-      </div>
-
+      {isFetching && <CircularProgress color="secondary" />}
       <UserEdit ref={userEditRef}></UserEdit>
-    </React.Fragment>
+    </Page>
   );
 };
 

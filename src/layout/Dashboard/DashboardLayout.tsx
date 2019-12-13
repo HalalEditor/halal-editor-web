@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Drawer, useMediaQuery, Toolbar, IconButton } from "@material-ui/core";
+import { Drawer, Grid, useMediaQuery, Toolbar, IconButton } from "@material-ui/core";
 import { Close as CloseIcon } from "@material-ui/icons";
 import { useTheme } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
@@ -36,7 +36,7 @@ const AdminLayout = ({ children }: Props) => {
   const chooseVariant = isDesktop ? "persistent" : "temporary";
   const showMenuIcon = isDesktop ? false : true;
   return (
-    <div
+    <main
       className={clsx({
         [classes.root]: true,
         [classes.shiftContent]: isDesktop
@@ -55,7 +55,7 @@ const AdminLayout = ({ children }: Props) => {
         open={shouldOpenSidebar}
         variant={chooseVariant}
       >
-        <Toolbar className={classes.toolbar}>
+        <Toolbar>
           <IconButton
             edge="start"
             color="inherit"
@@ -68,11 +68,8 @@ const AdminLayout = ({ children }: Props) => {
         {currentUser && <Profile currentUser={currentUser} />}
         <Navigator onMenuItemClick={() => toggleDrawer(false)} currentUser={currentUser} />
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {children}
-      </main>
-    </div>
+      <Grid className={classes.content}>{children}</Grid>
+    </main>
   );
 };
 export default AdminLayout;

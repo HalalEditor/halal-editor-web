@@ -1,8 +1,15 @@
-import React, { FC } from "react";
-import Typography from "@material-ui/core/Typography";
+import React from "react";
+import { Typography } from "@material-ui/core";
+import { Page, Toolbar } from "components";
 
-const ProfilePage: FC = () => {
-  return <Typography variant="h3">Profile Page</Typography>;
+const ProfilePage = () => {
+  return (
+    <Page>
+      <Toolbar>
+        <Typography variant="h3">Profile Page</Typography>
+      </Toolbar>
+    </Page>
+  );
 };
 
 export default ProfilePage;
