@@ -35,13 +35,6 @@ const Router = () => {
           accessibleUserCategories={["root", "admin", "editor", "normal"]}
         />
         <PrivateRoute
-          path="/user/:id"
-          component={page.User}
-          exact
-          layout={layout.Dashboard}
-          accessibleUserCategories={["root", "admin"]}
-        />
-        <PrivateRoute
           path="/users"
           component={page.UserList}
           exact
