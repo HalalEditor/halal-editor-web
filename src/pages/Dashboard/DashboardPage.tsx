@@ -1,12 +1,14 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import { Toolbar } from "components";
+import { Typography } from "@material-ui/core";
+import { Page, Toolbar } from "components";
 
 const DashboardPage = () => {
   return (
-    <Toolbar>
-      <Typography variant="h3">Dashboard Page</Typography>
-    </Toolbar>
+    <Page>
+      <Toolbar>
+        <Typography variant="h3">Dashboard Page</Typography>
+      </Toolbar>
+    </Page>
   );
 };
 

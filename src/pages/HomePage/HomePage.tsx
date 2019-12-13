@@ -1,16 +1,19 @@
-import React, { FC } from "react";
+import React from "react";
+import { Redirect } from "react-router";
+import { Page, Toolbar } from "components";
 import { Typography } from "@material-ui/core";
 import { useReduxContextValue } from "contexts/redux-context";
-import { Redirect } from "react-router";
 
-const HomePage: FC = () => {
+const HomePage = () => {
   const { store } = useReduxContextValue();
   return store.userState.isAuth ? (
     <Redirect to="/dashboard"></Redirect>
   ) : (
-    <React.Fragment>
-      <Typography variant="h3">Home Page</Typography>
-    </React.Fragment>
+    <Page>
+      <Toolbar>
+        <Typography variant="h3">Home Page</Typography>
+      </Toolbar>
+    </Page>
   );
 };
 

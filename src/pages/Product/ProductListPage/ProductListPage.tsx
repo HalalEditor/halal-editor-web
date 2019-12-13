@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
+import { Page, Toolbar } from "components";
 import { useReduxContextValue } from "contexts/redux-context";
 import ProductListItem from "./components/ProductListItem/ProductListItem";
 import useInfiniteScroll from "hooks/useInfiniteScroll";
 import { ProductDTO } from "dto/product-dto";
+import { useStyles } from "./styles";
 
 const LOAD_LIMIT = 20;
 
@@ -69,41 +71,15 @@ const ProductListPage = () => {
   });
 
   return (
-    <div className={classes.root}>
-      <div className={classes.row}>
-        <Grid className={classes.itemContainer} container spacing={3}>
-          {products}
-        </Grid>
-      </div>
-    </div>
+    <Page>
+      <Toolbar>
+        <Typography variant="h3">Products List</Typography>
+      </Toolbar>
+      <Grid className={classes.itemContainer} container spacing={3}>
+        {products}
+      </Grid>
+    </Page>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1
-    },
-    itemContainer: {
-      marginTop: 20,
-      marginBottom: 20
-    },
-    spacer: {
-      flexGrow: 1
-    },
-    row: {
-      display: "flex",
-      alignItems: "center"
-    },
-
-    toggleContainer: {
-      margin: theme.spacing(0, 2),
-      padding: theme.spacing(0)
-    },
-    toggleButtonText: {
-      textTransform: "none"
-    }
-  })
-);
 
 export default ProductListPage;
