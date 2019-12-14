@@ -41,13 +41,17 @@ const ReduxContextProvider = (props: Props) => {
     []
   );
 
-  useEffect(() => {
-    productService.loadAllFavoriteProduct();
+  useEffect(
+    () => {
+      productService.loadAllFavoriteProduct();
 
-    if (!userState.currentUser) {
-      productService.clearProductList();
-    }
-  }, [userState.currentUser]);
+      if (!userState.currentUser) {
+        productService.clearProductList();
+      }
+    },
+    // eslint-disable-next-line
+    [userState.currentUser]
+  );
 
   const appReduxValue: ReduxValueType = {
     store: store,
