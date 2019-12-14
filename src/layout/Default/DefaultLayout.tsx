@@ -12,10 +12,7 @@ const DefaultLayout = ({ children }: Props) => {
   return (
     <div className={classes.root}>
       <AppBar />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {children}
-      </main>
+      {children}
     </div>
   );
 };

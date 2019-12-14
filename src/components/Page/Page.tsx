@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { Grid } from "@material-ui/core";
 import { useStyles } from "./styles";
 
 type Props = {
@@ -13,12 +14,11 @@ const Page = ({ children, className, ...rest }: Props) => {
   return (
     <div
       className={clsx({
-        [classes.root]: true,
-        [className]: className
+        [classes.root]: true
       })}
     >
       <div className={classes.toolbar} />
-      {children}
+      <Grid>{children}</Grid>
     </div>
   );
 };
