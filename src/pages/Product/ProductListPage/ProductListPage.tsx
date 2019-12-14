@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, CircularProgress } from "@material-ui/core";
 import { Page, SearchInput, Toolbar } from "components";
 import { useReduxContextValue } from "contexts/redux-context";
 import ProductListItem from "./components/ProductListItem/ProductListItem";
@@ -102,6 +102,7 @@ const ProductListPage = () => {
       <Grid className={classes.itemContainer} container spacing={3}>
         {products}
       </Grid>
+      {isFetching && <CircularProgress color="secondary" />}
     </Page>
   );
 };
