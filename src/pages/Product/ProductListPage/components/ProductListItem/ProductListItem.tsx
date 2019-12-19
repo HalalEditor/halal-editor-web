@@ -1,19 +1,15 @@
 import React from "react";
+import clsx from "clsx";
+import { Avatar, IconButton, ListItem, Tooltip, Typography, Chip } from "@material-ui/core";
 import {
-  Card,
-  CardHeader,
-  IconButton,
-  CardMedia,
-  CardActions,
-  Grid,
-  makeStyles,
-  Theme,
-  createStyles
-} from "@material-ui/core";
-
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import { red } from "@material-ui/core/colors";
+  Star as StarIcon,
+  StarBorder as StarBorderIcon,
+  LocalBarRounded as LocalBarIcon,
+  Eco as EcoIcon,
+  BugReport as BugReportIcon
+} from "@material-ui/icons";
+import { Spacer } from "components";
+import { useStyles } from "./styles";
 import { ProductDTO } from "dto/product-dto";
 
 type Props = {
@@ -23,59 +19,72 @@ type Props = {
 
 const ProductListItem = ({ product, onToggleFavorite }: Props) => {
   const classes = useStyles();
+  const isAlcoholFree = product.ingredientInfo.isAlcoholFree;
+  const isHaveFlavor = product.ingredientInfo.isHaveFlavor;
+  const isVegan = product.ingredientInfo.isVegan;
+  const isVegetarian = product.ingredientInfo.isVegetarian;
+
   return (
-    <Grid item xs={12} sm={6} md={6} lg={4}>
-      <Card className={classes.card}>
-        <CardHeader
-          title={product.mainInfo.name}
-          onClick={() => {
-            console.log(product);
-          }}
-        />
-        <CardMedia
-          className={classes.media}
-          image={product.mainInfo.imagePath}
-          title={product.mainInfo.name}
-        />
-        <CardActions disableSpacing>
-          <IconButton
-            onClick={onToggleFavorite}
-            aria-label="add to favorites"
-            color={product.isFavProduct ? "secondary" : "default"}
-          >
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-        </CardActions>
-      </Card>
-    </Grid>
+    <ListItem divider className={classes.root}>
+      <Tooltip title="Add to favs">
+        <IconButton className={classes.favoriteButton} onClick={onToggleFavorite}>
+          {product.isFavProduct ? (
+            <StarIcon className={clsx(classes.starIcon, classes.starFilledIcon)} />
+          ) : (
+            <StarBorderIcon className={classes.starIcon} />
+          )}
+        </IconButton>
+      </Tooltip>
+      <div className={classes.details} onClick={() => console.log("TODO: open product")}>
+        <Avatar className={classes.avatar} src={product.mainInfo.imagePath} />
+        <div className={classes.content}>
+          <Typography className={classes.name}>{product.mainInfo.name}</Typography>
+          <Spacer />
+          <div className={classes.labels}>
+            {isAlcoholFree != null && (
+              <Chip
+                size="small"
+                icon={<LocalBarIcon className={classes.labelIcon} />}
+                label={isAlcoholFree ? "No Alchohol" : "Alcohol"}
+                className={clsx(classes.label, [
+                  isAlcoholFree ? classes.labelSuccess : classes.labelDanger
+                ])}
+              />
+            )}
+
+            {isHaveFlavor != null && (
+              <Chip
+                size="small"
+                icon={<BugReportIcon className={classes.labelIcon} />}
+                label={isHaveFlavor ? "Flavor" : "No Flavor"}
+                className={clsx(classes.label, [
+                  isHaveFlavor ? classes.labelDanger : classes.labelSuccess
+                ])}
+              />
+            )}
+
+            {isVegan && (
+              <Chip
+                size="small"
+                icon={<EcoIcon className={classes.labelIcon} />}
+                label="Vegan"
+                className={(classes.label, classes.labelSuccess)}
+              />
+            )}
+
+            {isVegetarian && (
+              <Chip
+                size="small"
+                icon={<EcoIcon className={classes.labelIcon} />}
+                label="Vegetarian"
+                className={(classes.label, classes.labelSuccess)}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    </ListItem>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    card: {},
-    media: {
-      height: 0,
-      paddingTop: "56.25%", // 16:9
-      backgroundSize: "auto"
-    },
-    expand: {
-      transform: "rotate(0deg)",
-      marginLeft: "auto",
-      transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest
-      })
-    },
-    expandOpen: {
-      transform: "rotate(180deg)"
-    },
-    avatar: {
-      backgroundColor: red[500]
-    }
-  })
-);
 
 export default ProductListItem;
