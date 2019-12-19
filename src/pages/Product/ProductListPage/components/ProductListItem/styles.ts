@@ -3,10 +3,13 @@ import { grey, amber, red, green } from "@material-ui/core/colors";
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      position: "relative",
       cursor: "pointer",
       display: "flex",
       alignItems: "center",
       backgroundColor: "#FFFFFF",
+      paddingLeft: 8,
+      paddingRight: 8,
       "&:hover": {
         backgroundColor: grey[50]
       }
@@ -36,10 +39,13 @@ export const useStyles = makeStyles((theme: Theme) =>
       }
     },
     favoriteButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.down("sm")]: {
-        marginRight: theme.spacing(1)
-      }
+      position: "absolute",
+      right: 0,
+      top: -5
+      // marginRight: theme.spacing(1),
+      // [theme.breakpoints.down("sm")]: {
+      //   marginRight: theme.spacing(1)
+      // }
     },
     starIcon: {
       cursor: "pointer"
@@ -52,21 +58,34 @@ export const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexGrow: 1
     },
-    avatar: {
-      marginRight: theme.spacing(2)
+    thumbnail: {
+      width: 100,
+      minWidth: 100,
+      height: 60,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      borderRadius: 5,
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.down("sm")]: {
+        marginRight: theme.spacing(1)
+      }
     },
     name: {
       whiteSpace: "nowrap",
-      [theme.breakpoints.up("md")]: {
-        minWidth: 180,
-        flexBasis: 180
-      }
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      flexGrow: 1,
+      display: "flex"
+      // [theme.breakpoints.up("md")]: {
+      //   minWidth: 180,
+      //   flexBasis: 180
+      // }
     },
     content: {
+      display: "block",
       minWidth: 1,
       [theme.breakpoints.up("md")]: {
-        display: "flex",
-        alignItems: "center",
+        // alignItems: "center",
         flexGrow: 1
       }
     },
@@ -96,7 +115,8 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     labels: {
       display: "flex",
-      marginRight: theme.spacing(2),
+      flexGrow: 1,
+      // marginRight: theme.spacing(2),
       "& > * + *": {},
       [theme.breakpoints.down("sm")]: {
         marginRight: theme.spacing(0)
@@ -104,10 +124,10 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     label: {
       fontSize: 11,
+      fontWeight: 500,
       marginRight: theme.spacing(1),
-      [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing(0.5)
-      }
+      marginTop: theme.spacing(0.5),
+      height: 16
     },
     labelIcon: {
       width: 16,
@@ -115,7 +135,8 @@ export const useStyles = makeStyles((theme: Theme) =>
       border: 1,
       borderRadius: "50%",
       padding: theme.spacing(0.1),
-      background: "#fff"
+      background: "#fff",
+      marginLeft: 0
     },
 
     labelDanger: {

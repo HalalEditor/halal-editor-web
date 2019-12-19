@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Avatar, IconButton, ListItem, Tooltip, Typography, Chip } from "@material-ui/core";
+import { IconButton, ListItem, Tooltip, Typography, Chip } from "@material-ui/core";
 import {
   Star as StarIcon,
   StarBorder as StarBorderIcon,
@@ -24,22 +24,23 @@ const ProductListItem = ({ product, onToggleFavorite }: Props) => {
   const isVegan = product.ingredientInfo.isVegan;
   const isVegetarian = product.ingredientInfo.isVegetarian;
 
+  // const splitProductId = product._id.match(/.{3}/g);
+  // const dashedProductId = !!splitProductId && splitProductId.join("/");
+
+  // const smallImage =
+  //   "https://static.openfoodfacts.org/images/products/" + dashedProductId + "/front_fr.6.100.jpg";
+
   return (
     <ListItem divider className={classes.root}>
-      <Tooltip title="Add to favs">
-        <IconButton className={classes.favoriteButton} onClick={onToggleFavorite}>
-          {product.isFavProduct ? (
-            <StarIcon className={clsx(classes.starIcon, classes.starFilledIcon)} />
-          ) : (
-            <StarBorderIcon className={classes.starIcon} />
-          )}
-        </IconButton>
-      </Tooltip>
       <div className={classes.details} onClick={() => console.log("TODO: open product")}>
-        <Avatar className={classes.avatar} src={product.mainInfo.imagePath} />
+        <div
+          className={clsx(classes.thumbnail)}
+          style={{
+            backgroundImage: `url(${product.mainInfo.imagePath})`
+          }}
+        />
         <div className={classes.content}>
           <Typography className={classes.name}>{product.mainInfo.name}</Typography>
-          <Spacer />
           <div className={classes.labels}>
             {isAlcoholFree != null && (
               <Chip
@@ -68,7 +69,7 @@ const ProductListItem = ({ product, onToggleFavorite }: Props) => {
                 size="small"
                 icon={<EcoIcon className={classes.labelIcon} />}
                 label="Vegan"
-                className={(classes.label, classes.labelSuccess)}
+                className={clsx(classes.label, classes.labelSuccess)}
               />
             )}
 
@@ -77,12 +78,22 @@ const ProductListItem = ({ product, onToggleFavorite }: Props) => {
                 size="small"
                 icon={<EcoIcon className={classes.labelIcon} />}
                 label="Vegetarian"
-                className={(classes.label, classes.labelSuccess)}
+                className={clsx(classes.label, classes.labelSuccess)}
               />
             )}
           </div>
         </div>
+        <Spacer />
       </div>
+      <IconButton className={classes.favoriteButton} onClick={onToggleFavorite}>
+        <Tooltip title={product.isFavProduct ? "Remove from favs" : "Add to favs"}>
+          {product.isFavProduct ? (
+            <StarIcon className={clsx(classes.starIcon, classes.starFilledIcon)} />
+          ) : (
+            <StarBorderIcon className={classes.starIcon} />
+          )}
+        </Tooltip>
+      </IconButton>
     </ListItem>
   );
 };
