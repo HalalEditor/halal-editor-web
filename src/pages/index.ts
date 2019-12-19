@@ -5,7 +5,7 @@ export { default as Home } from "./HomePage/HomePage";
 export { default as Profile } from "./ProfilePage/ProfilePage";
 export { default as Dashboard } from "./Dashboard/DashboardPage";
 export { default as UserList } from "./User/UserListPage/UserListPage";
-export { default as ProductList } from "./Product/ProductListPage/ProductListPage";
+export { default as ProductList } from "./Product/ProductListPage/ProductsPage";
 // Error Layouts
 export { default as Error401 } from "./Error/Error401/Error401";
 export { default as Error404 } from "./Error/Error404/Error404";
