@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, CircularProgress } from "@material-ui/core";
-import { Page, SearchInput, Toolbar } from "components";
+import { Page, SearchInput, Toolbar, Spacer } from "components";
 import { useReduxContextValue } from "contexts/redux-context";
 import ProductCardItem from "./components/ProductCardItem/ProductCardItem";
 import ProductListItem from "./components/ProductListItem/ProductListItem";
@@ -103,30 +103,31 @@ const ProductsPage = () => {
 
   return (
     <Page>
+      {/* TODO:  Toolbar will be responsive*/}
       <Toolbar>
         <Typography variant="h3">Product List</Typography>
-        <span className={classes.spacer} />
-        <div className={classes.toggleContainer}>
-          <ToggleButtonGroup
-            size="small"
-            value={viewType}
-            exclusive
-            onChange={() => setViewType(viewType === "list" ? "card" : "list")}
-          >
-            <ToggleButton value="list" aria-label="View List">
-              <ViewListIcon />
-            </ToggleButton>
-            <ToggleButton value="card" aria-label="View Module">
-              <ViewModuleIcon />
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </div>
+        <Spacer />
         <SearchInput
           onChange={value => {
             handleSearchEvent(value);
           }}
           placeholder="Search product"
+          className={classes.searchInput}
         />
+        <ToggleButtonGroup
+          className={classes.toggleContainer}
+          size="small"
+          value={viewType}
+          exclusive
+          onChange={() => setViewType(viewType === "list" ? "card" : "list")}
+        >
+          <ToggleButton value="list" aria-label="View List">
+            <ViewListIcon />
+          </ToggleButton>
+          <ToggleButton value="card" aria-label="View Module">
+            <ViewModuleIcon />
+          </ToggleButton>
+        </ToggleButtonGroup>
       </Toolbar>
       <Grid className={classes.itemContainer} container spacing={3}>
         {products}

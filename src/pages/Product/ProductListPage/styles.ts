@@ -8,16 +8,15 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginTop: 20,
       marginBottom: 20
     },
-    spacer: {
-      flexGrow: 1
-    },
     row: {
       display: "flex",
       alignItems: "center"
     },
-
+    searchInput: {
+      marginRight: theme.spacing(1)
+    },
     toggleContainer: {
-      margin: theme.spacing(0, 2),
+      margin: theme.spacing(0),
       padding: theme.spacing(0)
     },
     toggleButtonText: {
