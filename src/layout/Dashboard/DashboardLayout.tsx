@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Drawer, Grid, useMediaQuery, Toolbar, IconButton } from "@material-ui/core";
+import { Drawer, useMediaQuery, Toolbar, IconButton } from "@material-ui/core";
 import { Close as CloseIcon } from "@material-ui/icons";
 import { useTheme } from "@material-ui/core/styles";
 import { useStyles } from "./styles";
@@ -68,7 +68,7 @@ const AdminLayout = ({ children }: Props) => {
         {currentUser && <Profile currentUser={currentUser} />}
         <Navigator onMenuItemClick={() => toggleDrawer(false)} currentUser={currentUser} />
       </Drawer>
-      <Grid className={classes.content}>{children}</Grid>
+      {children}
     </main>
   );
 };
