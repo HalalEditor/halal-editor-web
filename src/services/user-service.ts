@@ -159,23 +159,15 @@ export class UserService {
       return error.message;
     }
   };
+  subscribeFCMToken = () => {
+    if (this.store.userState.currentUser) {
+      this.updateCurrentUserFCMTokens(this.store.userState.currentUser._id);
+    }
 
-  subscribeToken = () => {
-    const unSubscribe = firebase.auth().onIdTokenChanged(async user => {
-      if (user) {
-        const currentUser = await this.getUser(user.uid);
-        const tokens = { ...currentUser.tokens };
-        if (currentUser) {
-          user.getIdTokenResult().then(tokenInfo => {
-            const deviceId = getDeviceId();
-            tokens[deviceId] = {
-              deviceId: deviceId,
-              token: tokenInfo.token,
-              authTime: new Date(tokenInfo.authTime),
-              expirationTime: new Date(tokenInfo.expirationTime)
-            };
-            this.updateUserTokens(currentUser._id, tokens);
-          });
+    const unSubscribe = firebase.messaging().onTokenRefresh(token => {
+      if (token) {
+        if (this.store.userState.currentUser) {
+          this.updateCurrentUserFCMTokens(this.store.userState.currentUser._id);
         }
       }
     });
