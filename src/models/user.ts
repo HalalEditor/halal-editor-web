@@ -12,8 +12,7 @@ export type UserToken = {
   [id: string]: {
     deviceId: string;
     token: string;
-    expirationTime: Date;
-    authTime: Date;
+    lastValidDate: Date;
   };
 };
 
