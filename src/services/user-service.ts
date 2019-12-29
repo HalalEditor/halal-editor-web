@@ -183,15 +183,45 @@ export class UserService {
     return unSubscribe;
   };
 
-  private updateUserTokens = (userId: string, tokens: UserToken) => {
+  private updateCurrentUserFCMTokens = async (currentUserId: string, _token?: string) => {
     return new Promise(async (resolve, reject) => {
       try {
-        await firebase
-          .firestore()
-          .doc(`users/${userId}`)
-          .update({ tokens: tokens });
+        const permission = await Notification.requestPermission();
+        console.log(permission);
 
-        resolve();
+        if (permission === "granted") {
+          const token = !!_token ? _token : await firebase.messaging().getToken();
+          console.log(currentUserId);
+
+          if (currentUserId) {
+            const currentUser = await this.getUser(currentUserId);
+            const tokens = { ...currentUser.tokens };
+            if (currentUser) {
+              const deviceId = getDeviceId();
+              console.log("deviceId:", deviceId);
+              console.log("token:", token);
+
+              const lastValidDate = new Date();
+              lastValidDate.setDate(30);
+
+              if (!!token) {
+                tokens[deviceId] = {
+                  deviceId: deviceId,
+                  token: token,
+                  lastValidDate
+                };
+              } else {
+                delete tokens[deviceId];
+              }
+              await firebase
+                .firestore()
+                .doc(`users/${currentUserId}`)
+                .update({ tokens: tokens });
+
+              resolve();
+            }
+          }
+        }
       } catch (error) {
         reject(error.message);
       }
