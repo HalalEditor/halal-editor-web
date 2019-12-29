@@ -159,6 +159,33 @@ export class UserService {
       return error.message;
     }
   };
+
+  subscribeCloudMessaging = () => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", ({ data: message }) => {
+        console.log(message);
+
+        const data = message["firebase-messaging-msg-data"].data;
+        const title = message["firebase-messaging-msg-data"].notification.title;
+        console.log("serviceWorker message:", data["options"]);
+        const options = JSON.parse(data["options"]);
+        console.log("serviceWorker message:", options);
+
+        if ("actions" in options) {
+          delete options.actions;
+        }
+        new Notification(title, options);
+      });
+    }
+    const messaging = firebase.messaging();
+
+    const unSubscribe = messaging.onMessage(message => {
+      console.log("message received:", message);
+    });
+
+    return unSubscribe;
+  };
+
   subscribeFCMToken = () => {
     if (this.store.userState.currentUser) {
       this.updateCurrentUserFCMTokens(this.store.userState.currentUser._id);

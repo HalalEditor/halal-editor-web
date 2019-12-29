@@ -29,10 +29,13 @@ const ReduxContextProvider = (props: Props) => {
       userService.initCurrentUser();
       console.log("ReduxContextProvider useEffect");
       const unsubscribeAuth = userService.subscribeAuth();
-      const unsubscribeToken = userService.subscribeToken();
+      const unsubscribeFCMToken = userService.subscribeFCMToken();
+      const unsubscribeMessaging = userService.subscribeCloudMessaging();
       return () => {
-        unsubscribeAuth();
-        unsubscribeToken();
+        console.log("unsubscribing...");
+        if (unsubscribeAuth) unsubscribeAuth();
+        if (unsubscribeFCMToken) unsubscribeFCMToken();
+        if (unsubscribeMessaging) unsubscribeMessaging();
       };
     },
     /*
