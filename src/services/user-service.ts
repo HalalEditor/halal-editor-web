@@ -1,12 +1,13 @@
 import { ReduxStoreValueType } from "contexts/redux-value";
-import { User, UserCategory, UserToken } from "models/user";
+import { User, UserCategory } from "models/user";
 import { UserActionType } from "store/user-store";
 import { Dispatch } from "react";
+import { getDeviceId } from "./helper";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firebase-firestore";
-import { getDeviceId } from "./helper";
+import "firebase/messaging";
 
 export class UserService {
   constructor(private dispatch: Dispatch<UserActionType>, private store: ReduxStoreValueType) {}
@@ -52,6 +53,8 @@ export class UserService {
       if (!!res) {
         const currentUser = await this.getUserFromFirebaseUser(res);
         this.setLocalUser(currentUser);
+        this.updateCurrentUserFCMTokens(currentUser._id);
+
         this.dispatch({
           type: "SetCurrentUser",
           payload: { user: currentUser, isCurrentUserFromFirebase: true }
